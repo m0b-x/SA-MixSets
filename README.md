@@ -6,7 +6,7 @@ It curently changes:
 * Muzzle flashes when driveby-ing as driver 
 * Muzzle flashes when driveby-ing as passenger
 
-## For SA:MP Users
+## For SA-MP Users
 
 Also, the version has been adapted to **SA-MP**. There is no need to reload Mixsets for the gunflashes to appear.
 

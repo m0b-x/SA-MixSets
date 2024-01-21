@@ -661,7 +661,9 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     //Fix offset while moving
                     if (ped->m_fMovingSpeed > 0.0f && needsCustomMat)
                     {
-                        const float onFootOffset = 1.75f;
+                        float onFootOffset = 1.75f;
+                        if (ped->m_nWeaponModelId == MODEL_COLT45)
+                            onFootOffset += 1.00f;
                         mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
                         mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
                         mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;

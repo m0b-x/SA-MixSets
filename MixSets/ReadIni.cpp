@@ -587,7 +587,8 @@ void MixSets::ReadIni()
 		}
 		else {
 			G_Fix2DGunflash = true;
-			Gunflashes::Setup();
+			bool experimental = ReadIniBool(ini, &lg, "Graphics", "ExperimentalGunFlash"); // fixes by m0b
+			Gunflashes::Setup(experimental);
 			Events::pedRenderEvent.before += Gunflashes::CreateGunflashEffectsForPed;
 			/*injector::MakeInline<0x73F3A5, 0x73F3A5 + 6>([](injector::reg_pack& regs)
 			{
@@ -1304,7 +1305,7 @@ void MixSets::ReadIni()
 			WriteMemory<float*>(0x00511DE4, &_flt_2_4, true);
 			WriteMemory<float*>(0x0052227F, &_flt_2_4, true);
 			WriteMemory<float*>(0x0050F022, &_flt_2_4, true);
-			if (ReadMemory<float*>(0x50F048, true) == &CCamera::m_fMouseAccelHorzntl)
+			if (ReadMemory<float*>(0x50F048, true) == &CCamera::m_fMouseAccelHorzntal)
 			{
 				WriteMemory<float*>(0x0050F048, &CCamera::m_fMouseAccelVertical, true);
 				WriteMemory<float*>(0x0050FB28, &CCamera::m_fMouseAccelVertical, true);
@@ -1320,14 +1321,14 @@ void MixSets::ReadIni()
 			WriteMemory<uint16_t>(0x005BC7BC, 0x0, true);
 
 			float hor = 0.0003125f + 0.0003125f / 2.0f;
-			while (hor <= CCamera::m_fMouseAccelHorzntl)
+			while (hor <= CCamera::m_fMouseAccelHorzntal)
 			{
 				hor += (0.005f / 16.0f);
 			}
 			hor -= 0.0003125f / 2.0f;
-			if (hor != CCamera::m_fMouseAccelHorzntl)
+			if (hor != CCamera::m_fMouseAccelHorzntal)
 			{
-				CCamera::m_fMouseAccelHorzntl = hor;
+				CCamera::m_fMouseAccelHorzntal = hor;
 				FrontEndMenuManager.SaveSettings();
 			}
 			hor *= (0.0015f / 0.0025f);
@@ -1543,7 +1544,7 @@ void MixSets::ReadIni()
 		injector::MakeInline<0x692653>([](injector::reg_pack& regs)
 		{
 			CWeaponInfo* weaponInfo = (CWeaponInfo*)regs.eax;
-			if (weaponInfo->m_dwAnimGroup != 29 && weaponInfo->m_dwAnimGroup != 30) {
+			if (weaponInfo->m_nAnimToPlay != 29 && weaponInfo->m_nAnimToPlay != 30) {
 				*(uintptr_t*)(regs.esp - 0x4) = 0x69267B;
 			}
 			else {

@@ -916,8 +916,9 @@ void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int
 	//3 = rear right
 	//5 = rear m left
 	//6 = rear m right
-	if (_this->m_pHandlingData->m_nModelFlags.m_bDoubleRwheels && (wheelId == 1 || wheelId == 3 || wheelId == 5 || wheelId == 6))
+	if (_this->m_pHandlingData->m_nModelFlags && (wheelId == 1 || wheelId == 3 || wheelId == 5 || wheelId == 6))
 	{
+		//_this->m_pHandlingData->m_nModelFlags.m_bDoubleRwheels
 		CColPoint *colPoint2 = new CColPoint(*colPoint);
 		float distance = 0.45f;
 

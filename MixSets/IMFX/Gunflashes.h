@@ -39,7 +39,7 @@ public:
     static bool bLeftHand;
     static bool bVehicleGunflash;
 
-    static void Setup();
+    static void Setup(bool experimental);
     //static void ReadSettings();
     static void __fastcall MyTriggerGunflash(Fx_c *fx, int, CEntity *owner, CVector &origin, CVector &target, bool doGunflash);
     static void __fastcall DoDriveByGunflash(CPed *driver, int, int, bool leftHand);

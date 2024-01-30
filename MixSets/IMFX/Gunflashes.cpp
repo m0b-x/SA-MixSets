@@ -461,6 +461,7 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, float& reversing
 {
     const float carDriverOffsetFactor = 2.0f;
     const float carPassengerOffsetFactor = 1.15f;
+    bool exitLoop = false;
 
     if (ped->m_pRwClump)
     {
@@ -470,61 +471,79 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, float& reversing
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
+                const unsigned int animHashKey = association->m_pHierarchy->m_hashKey;
+                switch (animHashKey)
+                {
                 //DRIVER DRIVEBY
-                if (association->m_pHierarchy->m_hashKey == 2872216017) //DBRIGHT CAR
+                case 2872216017: //DBRIGHT CAR
                 {
                     offset.z += ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
-                if (association->m_pHierarchy->m_hashKey == 1362998450) //DBLEFT CAR
+                case 1362998450: //DBLEFT CAR
                 {
                     offset.z -= ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
 
                 //PASSGENGER TOP RIGHT LEFT DRIVEBY
-                if (association->m_pHierarchy->m_hashKey == 2338707153) // TOP_DRIVEBY_RIGHT_SHOOTING_LEFT
+                case 2338707153: // TOP_DRIVEBY_RIGHT_SHOOTING_LEFT
                 {
                     offset.z -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
-                else if (association->m_pHierarchy->m_hashKey == 2648529067) // TOP_DRIVEBY_LEFT_SHOOTING_RIGHT
+                case 2648529067: // TOP_DRIVEBY_LEFT_SHOOTING_RIGHT
                 {
                     offset.z += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
 
                 //PASSGENGER TRIGHT SEATS DRIVEBY
-                else if (association->m_pHierarchy->m_hashKey == 2664255580) // RIGHT_DRIVEBY_SHOOTING_RIGHT
+                case 2664255580: // RIGHT_DRIVEBY_SHOOTING_RIGHT
                 {
                     offset.z += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
-                else if (association->m_pHierarchy->m_hashKey == 3887475062) // LEFT_DRIVEBY_SHOOTING_FRONT
+                case 3887475062: // LEFT_DRIVEBY_SHOOTING_FRONT
                 {
                     offset.x += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
-                else if (association->m_pHierarchy->m_hashKey == 3770646954) // LEFT_DRIVEBY_SHOOTING_BACK
+                case 3770646954: // LEFT_DRIVEBY_SHOOTING_BACK
                 {
                     offset.x -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
 
                 //PASSGENGER TLEFT SEATS DRIVEBY
-                else if (association->m_pHierarchy->m_hashKey == 2289425958) // LEFT_DRIVEBY_SHOOTING_LEFT
+                case 2289425958: // LEFT_DRIVEBY_SHOOTING_LEFT
                 {
                     offset.z -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
-                else if (association->m_pHierarchy->m_hashKey == 3495415525) // LEFT_DRIVEBY_SHOOTING_FRONT
+                case 3495415525: // LEFT_DRIVEBY_SHOOTING_FRONT
                 {
-                    offset.x += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor  * reversingFactor;
+                    offset.x += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
                     break;
                 }
-                else if (association->m_pHierarchy->m_hashKey == 3613287993) // LEFT_DRIVEBY_SHOOTING_BACK
+                case 3613287993: // LEFT_DRIVEBY_SHOOTING_BACK
                 {
                     offset.x -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+                    exitLoop = true;
+                    break;
+                }
+                }
+                if (exitLoop == true)
+                {
                     break;
                 }
                 association = RpAnimBlendGetNextAssociation(association);
@@ -532,6 +551,17 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, float& reversing
         }
     }
 }
+
+
+static void ChangeOnFootOffset(CPed* ped, RwMatrix* mat)
+{
+    const float onFootOffset = 2.00f;//was 1.75
+
+    mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
+    mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
+    mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;
+}
+
 
 
 static bool ChangeOnBikeMuzzleFlashOffset(CPed* ped, RwV3d& offset)
@@ -619,33 +649,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     offset.z *= -1.0f;
                 
                 }
-                /*this is my old function, not really accurate
-                if (ped->m_nPedFlags.bInVehicle == false)
-                {
-                    if(ped->m_fMovingSpeed > 0.0f)
-                    {
-                        ChangeOnFootMuzzleFlashOffset(ped, offset);
-                    }
-                }
-                else
-                if(IsVehiclePointerValid(ped->m_pVehicle))
-                {
-                    if (ped->m_pVehicle->m_fMovingSpeed > 0.0f)
-                    {
-                        float reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
-                        if (IsPedInBike(ped, inVehicle))
-                        {
-                            ChangeOffsetForBikeDriveBy(ped, offset, reversingFactor);
-                        }
-                        else
-                        {
-                            ChangeOffsetForCarDriveBy(ped, offset, reversingFactor);
-                        }
-                    }
-                }
-                */
 
-                //DebugPedAnim(ped);
                 static RwV3d axis_y = { 0.0f, 1.0f, 0.0f };
                 static RwV3d axis_z = { 0.0f, 0.0f, 1.0f };
                 RpHAnimHierarchy* hierarchy = GetAnimHierarchyFromSkinClump(ped->m_pRwClump);
@@ -658,15 +662,10 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
                 if (!IsVehiclePointerValid(ped->m_pVehicle))
                 {
-                    //Fix offset while moving
+                    //Fix offset while moving for certain weapons
                     if (ped->m_fMovingSpeed > 0.0f && needsCustomMat)
                     {
-                        float onFootOffset = 1.75f;
-                        if (ped->m_nWeaponModelId == MODEL_COLT45)
-                            onFootOffset += 1.00f;
-                        mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
-                        mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
-                        mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;
+                        ChangeOnFootOffset(ped, mat);
                     }
                 }
                 else

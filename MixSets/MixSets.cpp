@@ -145,14 +145,6 @@ MixSets::MixSets()
 		bProcessOnceOnScripts = true;
 		bProcessOnceAfterIntro = true;
 	};
-	//added by m0b - reload stuff in sa-mp
-	if (inSAMP)
-	{
-		Events::initGameEvent.before += []
-			{
-				MixSets::ReadIni();
-			};
-	}
 
 	Events::processScriptsEvent.before += [] // Note: gameProcessEvent doesn't work on SAMP
 	{
@@ -553,6 +545,15 @@ MixSets::MixSets()
 			}
 		}
 	};
+
+	Events::processScriptsEvent.after += [] 
+		{
+		//added by m0b - reload stuff in sa-mp
+		if (inSAMP)
+		{
+			MixSets::ReadIni();
+		}
+		};
 
 	Events::vehicleRenderEvent += [](CVehicle* vehicle) {
 

@@ -23,13 +23,10 @@ If you consider fixing something here, you should also consider fixing there: ht
 
 #include "..\MixSets.h"
 
-
 using namespace plugin;
 
-//RwMatrix Gunflashes::matrixAry[20];
 unsigned int Gunflashes::matrixCounter = 0;
 PedExtendedData<Gunflashes::PedExtension> Gunflashes::pedExt;
-//std::vector<GunflashInfo> Gunflashes::gunflashInfos;
 bool Gunflashes::bLeftHand = false;
 bool Gunflashes::bVehicleGunflash = false;
 
@@ -82,23 +79,6 @@ void Gunflashes::Setup(bool experimental)
         //ReadSettings();
     }
 }
-
-/*void Gunflashes::ReadSettings() {
-    std::ifstream settingsFile(PLUGIN_PATH("imfx\\gunflash.dat"));
-    if (settingsFile.is_open()) {
-        for (std::string line; getline(settingsFile, line); ) {
-            if (line[0] != ';' && line[0] != '#') {
-                GunflashInfo info;
-                unsigned int rotation; unsigned int smoke;
-                if (sscanf(line.c_str(), "%d %s %d %d", &info.weapId, info.fxName, &rotation, &smoke) == 4) {
-                    info.rotate = rotation ? true : false;
-                    info.smoke = smoke ? true : false;
-                    gunflashInfos.push_back(info);
-                }
-            }
-        }
-    }
-}*/
 
 void Gunflashes::ProcessPerFrame() {
     Gunflashes::matrixCounter = 0;
@@ -162,9 +142,9 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
     bVehicleGunflash = false;
 }
 
-////////////////
-//added by m0b//
-////////////////
+//////////////////////////////////////
+//added by m0b - debugging functions//
+//////////////////////////////////////
 /*
 template<typename T>
 static void WriteToDesktopFile(const T& data, const std::string& dataName = "")
@@ -188,8 +168,8 @@ static void DebugPedAnim(CPed* ped)
 {
     if (ped->m_pRwClump)
     {
-        unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-        if (numAnimations > 0)
+        unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+        if (totalAnims > 0)
         {
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
@@ -201,26 +181,35 @@ static void DebugPedAnim(CPed* ped)
     }
 }
 */
+
+//BIKEV animation group
 const unsigned int PIZZABOY = 448;
 const unsigned int FAGGIO = 462;
 
+//BIKEH animation group
 const unsigned int FREEWAY = 463;
 
+//BIKED animation group
 const unsigned int SANCHEZ = 468;
 
+//QUAD animation group
 const unsigned int QUAD = 471;
 
+//BMX animation group
 const unsigned int BMX = 481;
 
+//MTB animation group
 const unsigned int BIKE = 509;
 const unsigned int MBIKE = 510;
 
+//BIKES animation group
 const unsigned int FCR = 521;
 const unsigned int NRG = 522;
 const unsigned int PCJ = 461;
 const unsigned int BF = 581;
 const unsigned int HPV = 523;
 
+//WAYFARER animation group
 const unsigned int WAYFARER = 586;
 
 static bool IsPedInBike(CPed* ped, bool isInVehicle)
@@ -324,9 +313,9 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversin
 
     if (ped->m_pRwClump)
     {
-        unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+        unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
 
-        if (numAnimations > 0)
+        if (totalAnims > 0)
         {
             const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * bikeDriverOffsetFactor * reversingFactor;
             const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * bikePassengerOffsetFactor * reversingFactor;
@@ -374,77 +363,90 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversin
     }
 }
 
+// Named constants for animation hash keys
+const unsigned int ANIM_HASH_DBRIGHT_CAR = 2872216017;
+const unsigned int ANIM_HASH_DBLEFT_CAR = 1362998450;
+const unsigned int ANIM_HASH_TOP_DRIVEBY_RIGHT_SHOOTING_LEFT = 2338707153;
+const unsigned int ANIM_HASH_TOP_DRIVEBY_LEFT_SHOOTING_RIGHT = 2648529067;
+const unsigned int ANIM_HASH_RIGHT_DRIVEBY_SHOOTING_RIGHT = 2664255580;
+const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_FRONT = 3887475062;
+const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_BACK = 3770646954;
+const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_LEFT = 2289425958;
+const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_FRONT_2 = 3495415525;
+const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_BACK_2 = 3613287993;
+
 static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversingFactor)
 {
-    const RwReal carDriverOffsetFactor = 2.0f;
-    const RwReal carPassengerOffsetFactor = 1.15f;
+    const RwReal CAR_DRIVER_OFFSET_FACTOR = 2.0f;
+    const RwReal CAR_PASSENGER_OFFSET_FACTOR = 1.15f;
 
     if (ped->m_pRwClump)
     {
-        unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-        if (numAnimations > 0)
+        unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+        if (totalAnims > 0)
         {
-            const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
-            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
+            const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * CAR_DRIVER_OFFSET_FACTOR * reversingFactor;
+            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * CAR_PASSENGER_OFFSET_FACTOR * reversingFactor;
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
                 const unsigned int animHashKey = association->m_pHierarchy->m_hashKey;
+
                 switch (animHashKey)
                 {
-                //DRIVER DRIVEBY
-                case 2872216017: //DBRIGHT CAR
+                // DRIVER DRIVEBY
+                case ANIM_HASH_DBRIGHT_CAR:
                 {
                     offset.z += posDeltaDriver;
                     return;
                 }
-                case 1362998450: //DBLEFT CAR
+                case ANIM_HASH_DBLEFT_CAR:
                 {
                     offset.z -= posDeltaDriver;
                     return;
                 }
 
-                //PASSGENGER TOP RIGHT LEFT DRIVEBY
-                case 2338707153: // TOP_DRIVEBY_RIGHT_SHOOTING_LEFT
+                // PASSENGER TOP RIGHT LEFT DRIVEBY
+                case ANIM_HASH_TOP_DRIVEBY_RIGHT_SHOOTING_LEFT:
                 {
                     offset.z -= posDeltaPassenger;
                     return;
                 }
-                case 2648529067: // TOP_DRIVEBY_LEFT_SHOOTING_RIGHT
+                case ANIM_HASH_TOP_DRIVEBY_LEFT_SHOOTING_RIGHT:
                 {
                     offset.z += posDeltaPassenger;
                     return;
                 }
 
-                //PASSGENGER TRIGHT SEATS DRIVEBY
-                case 2664255580: // RIGHT_DRIVEBY_SHOOTING_RIGHT
+                // PASSENGER RIGHT SEATS DRIVEBY
+                case ANIM_HASH_RIGHT_DRIVEBY_SHOOTING_RIGHT:
                 {
                     offset.z += posDeltaPassenger;
                     return;
                 }
-                case 3887475062: // LEFT_DRIVEBY_SHOOTING_FRONT
+                case ANIM_HASH_LEFT_DRIVEBY_SHOOTING_FRONT:
                 {
                     offset.x += posDeltaPassenger;
                     return;
                 }
-                case 3770646954: // LEFT_DRIVEBY_SHOOTING_BACK
+                case ANIM_HASH_LEFT_DRIVEBY_SHOOTING_BACK:
                 {
                     offset.x -= posDeltaPassenger;
                     return;
                 }
 
-                //PASSGENGER TLEFT SEATS DRIVEBY
-                case 2289425958: // LEFT_DRIVEBY_SHOOTING_LEFT
+                // PASSENGER LEFT SEATS DRIVEBY
+                case ANIM_HASH_LEFT_DRIVEBY_SHOOTING_LEFT:
                 {
                     offset.z -= posDeltaPassenger;
                     return;
                 }
-                case 3495415525: // LEFT_DRIVEBY_SHOOTING_FRONT
+                case ANIM_HASH_LEFT_DRIVEBY_SHOOTING_FRONT_2:
                 {
                     offset.x += posDeltaPassenger;
                     return;
                 }
-                case 3613287993: // LEFT_DRIVEBY_SHOOTING_BACK
+                case ANIM_HASH_LEFT_DRIVEBY_SHOOTING_BACK_2:
                 {
                     offset.x -= posDeltaPassenger;
                     return;
@@ -457,9 +459,10 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversin
 }
 
 
+
 static void ChangeOnFootOffset(CPed* ped, RwMatrix* mat)
 {
-    const RwReal onFootOffset = 2.00f;//was 1.75
+    const RwReal onFootOffset = 2.00f;//can also be 1.75f, depends on the effects
 
     mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
     mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
@@ -513,15 +516,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 bool rotate = true;
                 bool smoke = true;
                 char* fxName = "gunflash";
-
-                /*for (GunflashInfo &info : gunflashInfos) {
-                    if (info.weapId == ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_nType) {
-                        rotate = info.rotate;
-                        smoke = info.smoke;
-                        fxName = info.fxName;
-                        break;
-                    }
-                }*/
 
                 char weapSkill = ped->GetWeaponSkill(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
                 CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, weapSkill);

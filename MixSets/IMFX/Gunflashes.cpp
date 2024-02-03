@@ -13,10 +13,8 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "game_sa\CTimer.h"
 #include <fstream>
 #include <string>
-/*added by m0b
-#include <Windows.h>
-#include <shlobj.h>
-*/
+//#include <Windows.h>
+//#include <shlobj.h>
 #include <CAnimManager.h>
 #include <CAnimBlendAssociation.h>
 #include <CAnimBlendHierarchy.h>
@@ -167,29 +165,6 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
 ////////////////
 //added by m0b//
 ////////////////
-
-const unsigned int PIZZABOY = 448;
-const unsigned int FAGGIO = 462;
-
-const unsigned int FREEWAY = 463;
-
-const unsigned int SANCHEZ = 468;
-
-const unsigned int QUAD = 471;
-
-const unsigned int BMX = 481;
-
-const unsigned int BIKE = 509;
-const unsigned int MBIKE = 510;
-
-const unsigned int FCR = 521;
-const unsigned int NRG = 522;
-const unsigned int PCJ = 461;
-const unsigned int BF = 581;
-const unsigned int HPV = 523;
-
-const unsigned int WAYFARER = 586;
-
 /*
 template<typename T>
 static void WriteToDesktopFile(const T& data, const std::string& dataName = "")
@@ -225,98 +200,36 @@ static void DebugPedAnim(CPed* ped)
         }
     }
 }
-
-static void ChangeOnFootMuzzleFlashOffset(CPed* ped, RwV3d& offset)
-{
-    int weaponModel = ped->m_nWeaponModelId;
-    if (ped->m_nWeaponModelId == MODEL_MICRO_UZI ||
-        ped->m_nWeaponModelId == MODEL_TEC9 ||
-        ped->m_nWeaponModelId == MODEL_SAWNOFF
-        )
-    {
-        const float pedOffsetFactor = 5.5f;
-        offset.x += ped->m_fMovingSpeed * pedOffsetFactor;
-    }
-    else
-    {
-        if (ped->m_pRwClump)
-        {
-            float pedOffsetFactor = 3.0;
-
-            if( ped->m_nWeaponModelId == MODEL_DESERT_EAGLE ||
-                ped->m_nWeaponModelId == MODEL_SILENCED
-                )
-            {
-                pedOffsetFactor = 5.5f;
-            }
-
-            const float pedSidewaysOffsetFactor = 3.0f;
-            unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-            if (numAnimations > 0)
-            {
-                CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-                while (association)
-                {
-                    if (association->m_pHierarchy->m_hashKey == 189503749) //ANIM_DEFAULT_GUNMOVE_FWD hashkey
-                    {
-                        offset.x += ped->m_fMovingSpeed * pedOffsetFactor;
-                    }
-                    else
-                    if (association->m_pHierarchy->m_hashKey == 205664729) //ANIM_DEFAULT_GUNMOVE_BWD hashkey
-                    {
-                        offset.x -= ped->m_fMovingSpeed * pedOffsetFactor;
-                    }
-                    if (association->m_pHierarchy->m_hashKey == 434959174) //ANIM_DEFAULT_GUNMOVE_L hashkey
-                    {
-                        offset.y += ped->m_fMovingSpeed * pedSidewaysOffsetFactor;
-                    }
-                    else
-                    if (association->m_pHierarchy->m_hashKey == 3823357477) //ANIM_DEFAULT_GUNMOVE_R hashkey
-                    {
-                        offset.y -= ped->m_fMovingSpeed * pedSidewaysOffsetFactor;
-                    }
-                    association = RpAnimBlendGetNextAssociation(association);
-                }
-            }
-        }
-    }
-}
 */
-static bool IsPedInBike(CPed* ped, bool inVehicle)
+const unsigned int PIZZABOY = 448;
+const unsigned int FAGGIO = 462;
+
+const unsigned int FREEWAY = 463;
+
+const unsigned int SANCHEZ = 468;
+
+const unsigned int QUAD = 471;
+
+const unsigned int BMX = 481;
+
+const unsigned int BIKE = 509;
+const unsigned int MBIKE = 510;
+
+const unsigned int FCR = 521;
+const unsigned int NRG = 522;
+const unsigned int PCJ = 461;
+const unsigned int BF = 581;
+const unsigned int HPV = 523;
+
+const unsigned int WAYFARER = 586;
+
+static bool IsPedInBike(CPed* ped, bool isInVehicle)
 {
-    const int BIKE_APPEREANCE = 2;
-    if (!inVehicle)
+    if (isInVehicle == false)
         return false;
+    const int BIKE_APPEREANCE = 2;
     return ( ped->m_pVehicle->GetVehicleAppearance() ) == BIKE_APPEREANCE ? true : false;
 }
-
-static void IsPedSideCarLeftDrivebying(CPed* ped, bool& left, bool& driver)
-{
-    driver = false;
-    if (ped->m_pRwClump)
-    {
-        unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-        if (numAnimations > 0)
-        {
-            CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-            while (association)
-            {
-                if (association->m_pHierarchy->m_hashKey == 2872216017) //DBRIGHT CAR
-                {
-                    left = false;
-                    driver = true;
-                }
-                if (association->m_pHierarchy->m_hashKey == 1362998450) //DBLEFT CAR
-                {
-                    left = true;
-                    driver = true;
-                }
-                association = RpAnimBlendGetNextAssociation(association);
-            }
-        }
-    }
-}
-
 
 static void GetBikeDriverDrivebyAnimations(unsigned short id, unsigned int& front, unsigned int& left, unsigned int& right)
 {
@@ -398,9 +311,10 @@ static void GetBikePassengerDrivebyAnimations(unsigned short id, unsigned int& f
     back = 910920601;
 }
 
-static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, float reversingFactor)
+static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
 {
-    const float bikeOffsetFactor = 2.0f;
+    const RwReal bikeDriverOffsetFactor = 2.0f;
+    const RwReal bikePassengerOffsetFactor = 1.15f;
 
     unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
     unsigned int dFrontAnim, dLeftAnim, dRightAnim;
@@ -411,45 +325,48 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, float reversing
     if (ped->m_pRwClump)
     {
         unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+
         if (numAnimations > 0)
         {
+            const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * bikeDriverOffsetFactor * reversingFactor;
+            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * bikePassengerOffsetFactor * reversingFactor;
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
                 if (association->m_pHierarchy->m_hashKey == dFrontAnim)
                 {
-                    offset.x += ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.x += posDeltaDriver;
+                    return;
                 }
                 else if (association->m_pHierarchy->m_hashKey == dLeftAnim)
                 {
-                    offset.z -= ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.z -= posDeltaDriver;
+                    return;
                 }
                 else if (association->m_pHierarchy->m_hashKey == dRightAnim)
                 {
-                    offset.z += ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.z += posDeltaDriver;
+                    return;
                 }
-                if (association->m_pHierarchy->m_hashKey == pFrontAnim)
+                else if (association->m_pHierarchy->m_hashKey == pFrontAnim)
                 {
-                    offset.x += ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.x += posDeltaPassenger;
+                    return;
                 }
                 else if (association->m_pHierarchy->m_hashKey == pLeftAnim)
                 {
-                    offset.z -= ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.y -= posDeltaPassenger;
+                    return;
                 }
                 else if (association->m_pHierarchy->m_hashKey == pRightAnim)
                 {
-                    offset.z += ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.z += posDeltaPassenger;
+                    return;
                 }
                 else if (association->m_pHierarchy->m_hashKey == pBackAnim)
                 {
-                    offset.x -= ped->m_pVehicle->m_fMovingSpeed * bikeOffsetFactor * reversingFactor;
-                    break;
+                    offset.x -= posDeltaPassenger;
+                    return;
                 }
                 association = RpAnimBlendGetNextAssociation(association);
             }
@@ -457,17 +374,18 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, float reversing
     }
 }
 
-static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, float& reversingFactor)
+static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversingFactor)
 {
-    const float carDriverOffsetFactor = 2.0f;
-    const float carPassengerOffsetFactor = 1.15f;
-    bool exitLoop = false;
+    const RwReal carDriverOffsetFactor = 2.0f;
+    const RwReal carPassengerOffsetFactor = 1.15f;
 
     if (ped->m_pRwClump)
     {
         unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
         if (numAnimations > 0)
         {
+            const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
+            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
@@ -477,74 +395,60 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, float& reversing
                 //DRIVER DRIVEBY
                 case 2872216017: //DBRIGHT CAR
                 {
-                    offset.z += ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.z += posDeltaDriver;
+                    return;
                 }
                 case 1362998450: //DBLEFT CAR
                 {
-                    offset.z -= ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.z -= posDeltaDriver;
+                    return;
                 }
 
                 //PASSGENGER TOP RIGHT LEFT DRIVEBY
                 case 2338707153: // TOP_DRIVEBY_RIGHT_SHOOTING_LEFT
                 {
-                    offset.z -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.z -= posDeltaPassenger;
+                    return;
                 }
                 case 2648529067: // TOP_DRIVEBY_LEFT_SHOOTING_RIGHT
                 {
-                    offset.z += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.z += posDeltaPassenger;
+                    return;
                 }
 
                 //PASSGENGER TRIGHT SEATS DRIVEBY
                 case 2664255580: // RIGHT_DRIVEBY_SHOOTING_RIGHT
                 {
-                    offset.z += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.z += posDeltaPassenger;
+                    return;
                 }
                 case 3887475062: // LEFT_DRIVEBY_SHOOTING_FRONT
                 {
-                    offset.x += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.x += posDeltaPassenger;
+                    return;
                 }
                 case 3770646954: // LEFT_DRIVEBY_SHOOTING_BACK
                 {
-                    offset.x -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.x -= posDeltaPassenger;
+                    return;
                 }
 
                 //PASSGENGER TLEFT SEATS DRIVEBY
                 case 2289425958: // LEFT_DRIVEBY_SHOOTING_LEFT
                 {
-                    offset.z -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.z -= posDeltaPassenger;
+                    return;
                 }
                 case 3495415525: // LEFT_DRIVEBY_SHOOTING_FRONT
                 {
-                    offset.x += ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.x += posDeltaPassenger;
+                    return;
                 }
                 case 3613287993: // LEFT_DRIVEBY_SHOOTING_BACK
                 {
-                    offset.x -= ped->m_pVehicle->m_fMovingSpeed * carPassengerOffsetFactor * reversingFactor;
-                    exitLoop = true;
-                    break;
+                    offset.x -= posDeltaPassenger;
+                    return;
                 }
-                }
-                if (exitLoop == true)
-                {
-                    break;
                 }
                 association = RpAnimBlendGetNextAssociation(association);
             }
@@ -555,32 +459,11 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, float& reversing
 
 static void ChangeOnFootOffset(CPed* ped, RwMatrix* mat)
 {
-    const float onFootOffset = 2.00f;//was 1.75
+    const RwReal onFootOffset = 2.00f;//was 1.75
 
     mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
     mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
     mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;
-}
-
-
-
-static bool ChangeOnBikeMuzzleFlashOffset(CPed* ped, RwV3d& offset)
-{
-    bool driver = false;
-    if (ped->m_pRwClump)
-    {
-        unsigned int numAnimations = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-        if (numAnimations > 0)
-        {
-            float reversingFactor = 1.0f;
-            CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-            while (association)
-            {
-                association = RpAnimBlendGetNextAssociation(association);
-            }
-        }
-    }
-    return false;
 }
 
 static bool CanWeaponBeDualWielded(const int model)
@@ -617,7 +500,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
     bool ary[2];
     ary[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
     ary[1] = pedExt.Get(ped).bRightHandGunflashThisFrame;
-    bool inVehicle = pedExt.Get(ped).bInVehicle;
 
     for (int i = 0; i < 2; i++) {
         if (ary[i]) {
@@ -658,9 +540,10 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 RwMatrixUpdate(mat);
 
                 //added by m0b
+                bool isInVehicle = IsVehiclePointerValid(ped->m_pVehicle);
                 bool needsCustomMat = CanWeaponBeDualWielded(ped->m_nWeaponModelId);
 
-                if (!IsVehiclePointerValid(ped->m_pVehicle))
+                if (!isInVehicle)
                 {
                     //Fix offset while moving for certain weapons
                     if (ped->m_fMovingSpeed > 0.0f && needsCustomMat)
@@ -672,8 +555,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 {
                     if (ped->m_pVehicle->m_fMovingSpeed > 0.0f)
                     {
-                        float reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
-                        if (IsPedInBike(ped, inVehicle))
+                        RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
+                        if (IsPedInBike(ped, isInVehicle))
                         {
                             ChangeOffsetForBikeDriveBy(ped, offset, reversingFactor);
                         }
@@ -688,7 +571,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 //if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
                 if (gunflashFx) 
                 {
-                    if (ped->m_nPedFlags.bInVehicle || !needsCustomMat)
+                    if (isInVehicle || !needsCustomMat)
                     {
                         gunflashFx->m_pParentMatrix = boneMat;
                     }

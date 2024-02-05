@@ -458,15 +458,35 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversin
     }
 }
 
+const unsigned int GUNMOVE_BWD_HASHKEY = 205664729;
 
-
-static void ChangeOnFootOffset(CPed* ped, RwMatrix* mat)
+static bool IsPedWalkingBackWhileShooting(CPed* ped)
 {
+    if (ped->m_pRwClump)
+    {
+        unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+        if (totalAnims > 0)
+        {
+            CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
+            while (association)
+            {
+                if (association->m_pHierarchy->m_hashKey == GUNMOVE_BWD_HASHKEY)
+                    return true;
+                association = RpAnimBlendGetNextAssociation(association);
+            }
+        }
+    }
+    return false;
+}
+
+static void ChangeOnFootOffsetForTwoHandedWeapons(CPed* ped, RwMatrix* mat)
+{
+    const RwReal reverseFactor = IsPedWalkingBackWhileShooting(ped) ? -1.0f : 1.0f;
     const RwReal onFootOffset = 2.00f;//can also be 1.75f, depends on the effects
 
-    mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
-    mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
-    mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;
+    mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset * reverseFactor;
+    mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset * reverseFactor;
+    mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset * reverseFactor;
 }
 
 static bool CanWeaponBeDualWielded(const int model)
@@ -542,7 +562,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     //Fix offset while moving for certain weapons
                     if (ped->m_fMovingSpeed > 0.0f && needsCustomMat)
                     {
-                        ChangeOnFootOffset(ped, mat);
+                        ChangeOnFootOffsetForTwoHandedWeapons(ped, mat);
                     }
                 }
                 else

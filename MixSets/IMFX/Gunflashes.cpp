@@ -178,6 +178,14 @@ static void DebugPedAnim(CPed* ped)
         }
     }
 }
+
+static void GetBikePassengerDrivebyAnimations(unsigned short id, unsigned int& front, unsigned int& left, unsigned int& right, unsigned int& back)
+{
+    front = 826417989;
+    left = 1918643658;
+    right = 1692705712;
+    back = 910920601;
+}
 */
 
 //BIKEV animation group
@@ -316,14 +324,6 @@ static void GetBikeDriverDrivebyAnimations(unsigned short id, unsigned int& fron
     }
 }
 
-static void GetBikePassengerDrivebyAnimations(unsigned short id, unsigned int& front, unsigned int& left, unsigned int& right, unsigned int& back)
-{
-    front = 826417989;
-    left = 1918643658;
-    right = 1692705712;
-    back = 910920601;
-}
-
 static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
 {
     const RwReal bikeDriverOffsetFactor = 2.0f;
@@ -363,13 +363,17 @@ static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& offset, RwReal re
     }
 }
 
+const unsigned int ANIM_HASH_PASSENGER_DBFRONT_BIKE = 826417989;
+const unsigned int ANIM_HASH_PASSENGER_DBLEFT_BIKE = 1918643658;
+const unsigned int ANIM_HASH_PASSENGER_DBRIGHT_BIKE = 1692705712;
+const unsigned int ANIM_HASH_PASSENGER_DBBACK_BIKE = 910920601;
+
 static void ChangeOffsetForPassengerBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
 {
     const RwReal bikePassengerOffsetFactor = 1.15f;
 
     unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
     unsigned int pFrontAnim, pLeftAnim, pRightAnim, pBackAnim;
-    GetBikePassengerDrivebyAnimations(carModel, pFrontAnim, pLeftAnim, pRightAnim, pBackAnim);
 
     if (ped->m_pRwClump)
     {
@@ -381,25 +385,30 @@ static void ChangeOffsetForPassengerBikeDriveBy(CPed* ped, RwV3d& offset, RwReal
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
-                if (association->m_pHierarchy->m_hashKey == pFrontAnim)
+                const unsigned int animHashKey = association->m_pHierarchy->m_hashKey;
+
+                switch (animHashKey)
+                {
+                case ANIM_HASH_PASSENGER_DBFRONT_BIKE:
                 {
                     offset.x += posDeltaPassenger;
                     return;
                 }
-                else if (association->m_pHierarchy->m_hashKey == pLeftAnim)
+                case ANIM_HASH_PASSENGER_DBLEFT_BIKE:
                 {
                     offset.y -= posDeltaPassenger;
                     return;
                 }
-                else if (association->m_pHierarchy->m_hashKey == pRightAnim)
+                case ANIM_HASH_PASSENGER_DBRIGHT_BIKE:
                 {
                     offset.z += posDeltaPassenger;
                     return;
                 }
-                else if (association->m_pHierarchy->m_hashKey == pBackAnim)
+                case ANIM_HASH_PASSENGER_DBBACK_BIKE:
                 {
                     offset.x -= posDeltaPassenger;
                     return;
+                }
                 }
                 association = RpAnimBlendGetNextAssociation(association);
             }

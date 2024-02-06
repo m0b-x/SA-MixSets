@@ -23,6 +23,7 @@ If you consider fixing something here, you should also consider fixing there: ht
 
 #include "..\MixSets.h"
 
+
 using namespace plugin;
 
 unsigned int Gunflashes::matrixCounter = 0;
@@ -50,7 +51,7 @@ Gunflashes::PedExtension::~PedExtension() {
     if (pMats[1] != nullptr) delete pMats[1];
 }
 
-void Gunflashes::Setup(bool experimental) 
+void Gunflashes::Setup(bool experimental)
 {
     if (experimental)
     {
@@ -142,9 +143,6 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
     bVehicleGunflash = false;
 }
 
-//////////////////////////////////////
-//added by m0b - debugging functions//
-//////////////////////////////////////
 /*
 template<typename T>
 static void WriteToDesktopFile(const T& data, const std::string& dataName = "")
@@ -212,12 +210,38 @@ const unsigned int HPV = 523;
 //WAYFARER animation group
 const unsigned int WAYFARER = 586;
 
-static bool IsPedInBike(CPed* ped, bool isInVehicle)
+static bool IsPedInVehicle(CPed* ped, bool& driverDB, bool& passengerDB)
 {
-    if (isInVehicle == false)
+    if (!ped->m_pIntelligence) {
         return false;
-    const int BIKE_APPEREANCE = 2;
-    return ( ped->m_pVehicle->GetVehicleAppearance() ) == BIKE_APPEREANCE ? true : false;
+    }
+
+    CTask* activeTask = ped->m_pIntelligence->m_TaskMgr.GetSimplestActiveTask();
+
+    if (activeTask)
+    {
+        eTaskType taskType = activeTask->GetId();
+        if (taskType == TASK_SIMPLE_CAR_DRIVE)
+        {
+            driverDB = true;
+            return true;
+        }
+        else if (taskType == TASK_SIMPLE_GANG_DRIVEBY)
+        {
+            passengerDB = true;
+            return true;
+        }
+        return false;
+    }
+
+    return false;
+}
+
+
+const int BIKE_APPEREANCE = 2;
+static bool IsPedInBike(CPed* ped)
+{
+    return (ped->m_pVehicle->GetVehicleAppearance()) == BIKE_APPEREANCE ? true : false;
 }
 
 static void GetBikeDriverDrivebyAnimations(unsigned short id, unsigned int& front, unsigned int& left, unsigned int& right)
@@ -300,16 +324,13 @@ static void GetBikePassengerDrivebyAnimations(unsigned short id, unsigned int& f
     back = 910920601;
 }
 
-static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
+static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
 {
     const RwReal bikeDriverOffsetFactor = 2.0f;
-    const RwReal bikePassengerOffsetFactor = 1.15f;
 
     unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
     unsigned int dFrontAnim, dLeftAnim, dRightAnim;
-    unsigned int pFrontAnim, pLeftAnim, pRightAnim, pBackAnim;
     GetBikeDriverDrivebyAnimations(carModel, dFrontAnim, dLeftAnim, dRightAnim);
-    GetBikePassengerDrivebyAnimations(carModel, pFrontAnim, pLeftAnim, pRightAnim, pBackAnim);
 
     if (ped->m_pRwClump)
     {
@@ -318,7 +339,6 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversin
         if (totalAnims > 0)
         {
             const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * bikeDriverOffsetFactor * reversingFactor;
-            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * bikePassengerOffsetFactor * reversingFactor;
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
@@ -337,7 +357,31 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversin
                     offset.z += posDeltaDriver;
                     return;
                 }
-                else if (association->m_pHierarchy->m_hashKey == pFrontAnim)
+                association = RpAnimBlendGetNextAssociation(association);
+            }
+        }
+    }
+}
+
+static void ChangeOffsetForPassengerBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
+{
+    const RwReal bikePassengerOffsetFactor = 1.15f;
+
+    unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
+    unsigned int pFrontAnim, pLeftAnim, pRightAnim, pBackAnim;
+    GetBikePassengerDrivebyAnimations(carModel, pFrontAnim, pLeftAnim, pRightAnim, pBackAnim);
+
+    if (ped->m_pRwClump)
+    {
+        unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+
+        if (totalAnims > 0)
+        {
+            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * bikePassengerOffsetFactor * reversingFactor;
+            CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
+            while (association)
+            {
+                if (association->m_pHierarchy->m_hashKey == pFrontAnim)
                 {
                     offset.x += posDeltaPassenger;
                     return;
@@ -363,6 +407,7 @@ static void ChangeOffsetForBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversin
     }
 }
 
+
 // Named constants for animation hash keys
 const unsigned int ANIM_HASH_DBRIGHT_CAR = 2872216017;
 const unsigned int ANIM_HASH_DBLEFT_CAR = 1362998450;
@@ -375,18 +420,15 @@ const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_LEFT = 2289425958;
 const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_FRONT_2 = 3495415525;
 const unsigned int ANIM_HASH_LEFT_DRIVEBY_SHOOTING_BACK_2 = 3613287993;
 
-static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversingFactor)
+static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& offset, RwReal& reversingFactor)
 {
-    const RwReal CAR_DRIVER_OFFSET_FACTOR = 2.0f;
-    const RwReal CAR_PASSENGER_OFFSET_FACTOR = 1.15f;
-
     if (ped->m_pRwClump)
     {
         unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
         if (totalAnims > 0)
         {
+            const RwReal CAR_DRIVER_OFFSET_FACTOR = 2.0f;
             const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * CAR_DRIVER_OFFSET_FACTOR * reversingFactor;
-            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * CAR_PASSENGER_OFFSET_FACTOR * reversingFactor;
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
             while (association)
             {
@@ -405,7 +447,30 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversin
                     offset.z -= posDeltaDriver;
                     return;
                 }
+                }
+                association = RpAnimBlendGetNextAssociation(association);
+            }
+        }
+    }
+}
 
+static void ChangeOffsetForCarPassengerDriveBy(CPed* ped, RwV3d& offset, RwReal& reversingFactor)
+{
+
+    if (ped->m_pRwClump)
+    {
+        unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+        if (totalAnims > 0)
+        {
+            const RwReal CAR_PASSENGER_OFFSET_FACTOR = 1.15f;
+            const RwReal posDeltaPassenger = ped->m_pVehicle->m_fMovingSpeed * CAR_PASSENGER_OFFSET_FACTOR * reversingFactor;
+            CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
+            while (association)
+            {
+                const unsigned int animHashKey = association->m_pHierarchy->m_hashKey;
+
+                switch (animHashKey)
+                {
                 // PASSENGER TOP RIGHT LEFT DRIVEBY
                 case ANIM_HASH_TOP_DRIVEBY_RIGHT_SHOOTING_LEFT:
                 {
@@ -458,6 +523,7 @@ static void ChangeOffsetForCarDriveBy(CPed* ped, RwV3d& offset, RwReal& reversin
     }
 }
 
+
 const unsigned int GUNMOVE_BWD_HASHKEY = 205664729;
 
 static bool IsPedWalkingBackWhileShooting(CPed* ped)
@@ -482,11 +548,11 @@ static bool IsPedWalkingBackWhileShooting(CPed* ped)
 static void ChangeOnFootOffsetForTwoHandedWeapons(CPed* ped, RwMatrix* mat)
 {
     const RwReal reverseFactor = IsPedWalkingBackWhileShooting(ped) ? -1.0f : 1.0f;
-    const RwReal onFootOffset = 2.00f;//can also be 1.75f, depends on the effects
+    const RwReal onFootOffset = 2.00f * reverseFactor;
 
-    mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset * reverseFactor;
-    mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset * reverseFactor;
-    mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset * reverseFactor;
+    mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
+    mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
+    mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;
 }
 
 static bool CanWeaponBeDualWielded(const int model)
@@ -515,9 +581,6 @@ static bool CanWeaponBeDualWielded(const int model)
     }
     }
 }
-///////////////
-///end added///
-///////////////
 
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
     bool ary[2];
@@ -543,7 +606,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 if (leftHand)
                 {
                     offset.z *= -1.0f;
-                
+
                 }
 
                 static RwV3d axis_y = { 0.0f, 1.0f, 0.0f };
@@ -553,8 +616,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 memcpy(mat, boneMat, sizeof(RwMatrix));
                 RwMatrixUpdate(mat);
 
-                //added by m0b
-                bool isInVehicle = IsVehiclePointerValid(ped->m_pVehicle);
+                bool driverDB = false, passengerDB = false;
+                bool isInVehicle = IsPedInVehicle(ped, driverDB, passengerDB);
                 bool needsCustomMat = CanWeaponBeDualWielded(ped->m_nWeaponModelId);
 
                 if (!isInVehicle)
@@ -570,35 +633,49 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     if (ped->m_pVehicle->m_fMovingSpeed > 0.0f)
                     {
                         RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
-                        if (IsPedInBike(ped, isInVehicle))
+                        if (IsPedInBike(ped))
                         {
-                            ChangeOffsetForBikeDriveBy(ped, offset, reversingFactor);
+                            if (driverDB)
+                            {
+                                ChangeOffsetForDriverBikeDriveBy(ped, offset, reversingFactor);
+                            }
+                            else
+                            {
+                                ChangeOffsetForPassengerBikeDriveBy(ped, offset, reversingFactor);
+                            }
                         }
                         else
                         {
-                            ChangeOffsetForCarDriveBy(ped, offset, reversingFactor);
+                            if (driverDB)
+                            {
+                                ChangeOffsetForCarDriverDriveBy(ped, offset, reversingFactor);
+                            }
+                            else
+                            {
+                                ChangeOffsetForCarPassengerDriveBy(ped, offset, reversingFactor);
+                            }
                         }
                     }
                 }
 
                 FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(fxName, &offset, mat, true);
                 //if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
-                if (gunflashFx) 
+                if (gunflashFx)
                 {
                     if (isInVehicle || !needsCustomMat)
                     {
                         gunflashFx->m_pParentMatrix = boneMat;
                     }
                     RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
-                    if (rotate) 
+                    if (rotate)
                     {
                         RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_y, CGeneral::GetRandomNumberInRange(0.0f, 360.0f), rwCOMBINEPRECONCAT);
                     }
                     gunflashFx->PlayAndKill();
                 }
-                if (smoke) 
+                if (smoke)
                 {
-                    if (!ped->m_pVehicle || ped->m_pVehicle->m_vecMoveSpeed.Magnitude() < 0.15f) 
+                    if (!ped->m_pVehicle || ped->m_pVehicle->m_vecMoveSpeed.Magnitude() < 0.15f)
                     {
                         FxSystem_c* smokeFx = g_fxMan.CreateFxSystem("gunsmoke", &offset, mat, true);
                         if (smokeFx) {

@@ -142,12 +142,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CMatrix::m_pAttachMatrix' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CMatrix::m_bOwnsAttachedMatrix' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CMatrix::{ctor}</FUNCTION>
     <DECORATED>??0CMatrix@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>32</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CMatrix::m_pAttachMatrix</targetSymbol>
+      <targetSymbol>CMatrix::m_bOwnsAttachedMatrix</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -158,12 +158,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVector2D::y' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVector2D::x' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVector2D::{ctor}</FUNCTION>
     <DECORATED>??0CVector2D@@QAE@XZ</DECORATED>
     <FUNCLINE>16</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVector2D::y</targetSymbol>
+      <targetSymbol>CVector2D::x</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -206,12 +206,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bDontStream' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::m_bRemoveFromWorld' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bDontStream</targetSymbol>
+      <targetSymbol>CEntity::m_bRemoveFromWorld</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -366,12 +366,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAddedIdleAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_pFxSysL' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_bAddedIdleAnim</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_pFxSysL</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -414,12 +414,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_34' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_pEntity' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_34</targetSymbol>
+      <targetSymbol>CTaskSimpleSwim::m_pEntity</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -446,12 +446,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_nFallAfterVault' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_nGetToPosCounter' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>27</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleClimb::m_nFallAfterVault</targetSymbol>
+      <targetSymbol>CTaskSimpleClimb::m_nGetToPosCounter</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -478,12 +478,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CWeapon::m_nAmmoInClip' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CWeapon::m_nTotalAmmo' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CWeapon::{ctor}</FUNCTION>
     <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>90</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CWeapon::m_nAmmoInClip</targetSymbol>
+      <targetSymbol>CWeapon::m_nTotalAmmo</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>
@@ -606,12 +606,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_44' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::m_nNextPathNodeInfo' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_44</targetSymbol>
+      <targetSymbol>CAutoPilot::m_nNextPathNodeInfo</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT><DEFECT>

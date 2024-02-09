@@ -564,7 +564,8 @@ void MixSets::ReadIni()
 	}
 	else G_GunflashEmissionMult = -1.0f;
 
-	if (!bReloading && ReadIniBool(ini, &lg, "Graphics", "Fix2DGunflash")) {
+	if (!bReloading && ReadIniBool(ini, &lg, "Graphics", "Fix2DGunflash")) 
+	{
 		if (bGunFuncs) {
 			if (lang == languages::PT)
 			{
@@ -575,7 +576,8 @@ void MixSets::ReadIni()
 			}
 			G_Fix2DGunflash = false;
 		}
-		else if (bIMFX && ReadMemory<uint8_t>(0x73306D, true) == 0x90) {
+		else if (bIMFX && ReadMemory<uint8_t>(0x73306D, true) == 0x90) 
+		{
 			if (lang == languages::PT)
 			{
 				lg << "Fix2DGunflash desativado pois você já está usando a correção de efeito de tiro do IMFX." << "\n";

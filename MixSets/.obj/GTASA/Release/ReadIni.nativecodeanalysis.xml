@@ -222,12 +222,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CMatrix::m_pAttachMatrix' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CMatrix::pad1' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CMatrix::{ctor}</FUNCTION>
     <DECORATED>??0CMatrix@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>32</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CMatrix::m_pAttachMatrix</targetSymbol>
+      <targetSymbol>CMatrix::pad1</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -256,12 +256,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CMatrix::pad1' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CMatrix::m_pAttachMatrix' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CMatrix::{ctor}</FUNCTION>
     <DECORATED>??0CMatrix@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>32</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CMatrix::pad1</targetSymbol>
+      <targetSymbol>CMatrix::m_pAttachMatrix</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -324,12 +324,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVector2D::x' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVector2D::y' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVector2D::{ctor}</FUNCTION>
     <DECORATED>??0CVector2D@@QAE@XZ</DECORATED>
     <FUNCLINE>16</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVector2D::x</targetSymbol>
+      <targetSymbol>CVector2D::y</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -341,12 +341,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVector2D::y' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVector2D::x' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVector2D::{ctor}</FUNCTION>
     <DECORATED>??0CVector2D@@QAE@XZ</DECORATED>
     <FUNCLINE>16</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVector2D::y</targetSymbol>
+      <targetSymbol>CVector2D::x</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -392,46 +392,29 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bHasRoadsignText' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bHasRoadsignText</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bDontStream' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bDontStream</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CEntity::m_bDontCastShadowsOn' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CEntity::m_bDontCastShadowsOn</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bIsVisible' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bIsVisible</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -460,12 +443,46 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bCollisionProcessed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::m_bBackfaceCulled' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bCollisionProcessed</targetSymbol>
+      <targetSymbol>CEntity::m_bBackfaceCulled</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bDontUpdateHierarchy' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bDontUpdateHierarchy</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::&lt;unnamed-tag&gt;::m_pRwObject' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::&lt;unnamed-tag&gt;::m_pRwObject</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -511,91 +528,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::&lt;unnamed-tag&gt;::m_pRwObject' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::&lt;unnamed-tag&gt;::m_pRwObject</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_nRandomSeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_nRandomSeed</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bIsStatic' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bIsStatic</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bRenderDamaged' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bRenderDamaged</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bIsProcObject' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bIsProcObject</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CEntity::m_bHasHitWall' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -613,46 +545,46 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bIsTempBuilding' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bIsTempBuilding</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bDontUpdateHierarchy' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bDontUpdateHierarchy</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CEntity::m_bImBeingRendered' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CEntity::m_bImBeingRendered</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bCollisionProcessed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bCollisionProcessed</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bIsTempBuilding' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bIsTempBuilding</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -698,12 +630,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bRemoveFromWorld' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::m_bDistanceFade' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bRemoveFromWorld</targetSymbol>
+      <targetSymbol>CEntity::m_bDistanceFade</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -732,63 +664,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bDrawLast' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::&lt;unnamed-tag&gt;::m_pRwAtomic' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bDrawLast</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_nModelIndex' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_nModelIndex</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bTunnelTransition' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bTunnelTransition</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bHasPreRenderEffects' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bHasPreRenderEffects</targetSymbol>
+      <targetSymbol>CEntity::&lt;unnamed-tag&gt;::m_pRwAtomic</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -817,12 +698,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::&lt;unnamed-tag&gt;::m_pRwAtomic' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::m_nModelIndex' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::&lt;unnamed-tag&gt;::m_pRwAtomic</targetSymbol>
+      <targetSymbol>CEntity::m_nModelIndex</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -834,97 +715,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bDistanceFade' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::m_bIsProcObject' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bDistanceFade</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bUsesCollision' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bUsesCollision</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bIsVisible' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bIsVisible</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bUnderwater' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bUnderwater</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bOffscreen' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bOffscreen</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CEntity.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bDisplayedSuperLowLOD' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CEntity::{ctor}</FUNCTION>
-    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bDisplayedSuperLowLOD</targetSymbol>
+      <targetSymbol>CEntity::m_bIsProcObject</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -953,6 +749,193 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bTunnelTransition' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bTunnelTransition</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_nRandomSeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_nRandomSeed</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bDrawLast' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bDrawLast</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bUsesCollision' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bUsesCollision</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bHasPreRenderEffects' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bHasPreRenderEffects</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bDisplayedSuperLowLOD' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bDisplayedSuperLowLOD</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bRemoveFromWorld' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bRemoveFromWorld</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bUnderwater' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bUnderwater</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bIsStatic' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bIsStatic</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bOffscreen' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bOffscreen</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bDontStream' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bDontStream</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CEntity::m_bIsInSafePosition' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -970,12 +953,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CEntity::m_bBackfaceCulled' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CEntity::m_bRenderDamaged' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CEntity::{ctor}</FUNCTION>
     <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CEntity::m_bBackfaceCulled</targetSymbol>
+      <targetSymbol>CEntity::m_bRenderDamaged</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -993,6 +976,23 @@
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CEntity::m_bIsBIGBuilding</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CEntity.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CEntity::m_bHasRoadsignText' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CEntity::{ctor}</FUNCTION>
+    <DECORATED>??0CEntity@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CEntity::m_bHasRoadsignText</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1259,6 +1259,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CPhysical::m_fContactSurfaceBrightness' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CPhysical::{ctor}</FUNCTION>
+    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CPhysical::m_fContactSurfaceBrightness</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CPhysical.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CPhysical::m_nPhysicalFlags' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CPhysical::{ctor}</FUNCTION>
     <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -1299,23 +1316,6 @@
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CPhysical::m_fMovingSpeed</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CPhysical.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CPhysical::m_pEntityIgnoredCollision' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CPhysical::{ctor}</FUNCTION>
-    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CPhysical::m_pEntityIgnoredCollision</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1395,12 +1395,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CPhysical::m_fTurnMass' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CPhysical::m_pEntityIgnoredCollision' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CPhysical::{ctor}</FUNCTION>
     <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CPhysical::m_fTurnMass</targetSymbol>
+      <targetSymbol>CPhysical::m_pEntityIgnoredCollision</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1418,6 +1418,40 @@
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CPhysical::m_pAttachedTo</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CPhysical.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CPhysical::m_fTurnMass' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CPhysical::{ctor}</FUNCTION>
+    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CPhysical::m_fTurnMass</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CPhysical.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CPhysical::m_apCollidedEntities' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CPhysical::{ctor}</FUNCTION>
+    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CPhysical::m_apCollidedEntities</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1463,63 +1497,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CPhysical::m_apCollidedEntities' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CPhysical::{ctor}</FUNCTION>
-    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CPhysical::m_apCollidedEntities</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CPhysical.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CPhysical::m_pMovingList' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CPhysical::{ctor}</FUNCTION>
-    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CPhysical::m_pMovingList</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CPhysical.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CPhysical::m_fVelocityFrequency' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CPhysical::{ctor}</FUNCTION>
     <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>19</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CPhysical::m_fVelocityFrequency</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CPhysical.h</FILENAME>
-      <LINE>19</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CPhysical::m_fContactSurfaceBrightness' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CPhysical::{ctor}</FUNCTION>
-    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>19</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CPhysical::m_fContactSurfaceBrightness</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1633,6 +1616,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CPhysical::m_pMovingList' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CPhysical::{ctor}</FUNCTION>
+    <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>19</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CPhysical::m_pMovingList</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CPhysical.h</FILENAME>
+      <LINE>19</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CPhysical::m_nContactSurface' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CPhysical::{ctor}</FUNCTION>
     <DECORATED>??0CPhysical@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -1735,12 +1735,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskTimer::_pad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskTimer::m_bStopped' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
     <DECORATED>??0CTaskTimer@@QAE@HH@Z</DECORATED>
     <FUNCLINE>22</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskTimer::_pad</targetSymbol>
+      <targetSymbol>CTaskTimer::m_bStopped</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1752,12 +1752,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskTimer::m_bStopped' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskTimer::_pad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
     <DECORATED>??0CTaskTimer@@QAE@HH@Z</DECORATED>
     <FUNCLINE>22</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskTimer::m_bStopped</targetSymbol>
+      <targetSymbol>CTaskTimer::_pad</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1773,23 +1773,6 @@
     <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
     <DECORATED>??0CTaskTimer@@QAE@XZ</DECORATED>
     <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskTimer::_pad</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskTimer.h</FILENAME>
-      <LINE>35</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskTimer::_pad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskTimer@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>35</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskTimer::_pad</targetSymbol>
     </ADDITIONALINFO>
@@ -1820,23 +1803,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskTimer::m_nStartTime' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskTimer@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>35</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskTimer::m_nStartTime</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskTimer.h</FILENAME>
-      <LINE>35</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskTimer::m_bStarted' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
     <DECORATED>??0CTaskTimer@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -1854,12 +1820,97 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskTimer::m_nStartTime' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskTimer@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>35</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskTimer::m_nStartTime</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskTimer.h</FILENAME>
+      <LINE>35</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskTimer::m_bStopped' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
     <DECORATED>??0CTaskTimer@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>35</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskTimer::m_bStopped</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskTimer.h</FILENAME>
+      <LINE>35</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskTimer::_pad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskTimer::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskTimer@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>35</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskTimer::_pad</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
+      <LINE>20</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_pTarget' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>20</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleUseGun::m_pTarget</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
+      <LINE>20</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bIsInControl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>20</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleUseGun::m_bIsInControl</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
+      <LINE>20</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_ArmIKInUse' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>20</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleUseGun::m_ArmIKInUse</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -1905,40 +1956,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bLefttHand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>20</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bLefttHand</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
-      <LINE>20</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_nNextCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>20</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_nNextCommand</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
-      <LINE>20</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_pWeaponInfo' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -1973,29 +1990,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_pTarget' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bLefttHand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>20</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_pTarget</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
-      <LINE>20</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_ArmIKInUse' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>20</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_ArmIKInUse</targetSymbol>
+      <targetSymbol>CTaskSimpleUseGun::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bLefttHand</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2024,6 +2024,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_nLastCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>20</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleUseGun::m_nLastCommand</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
+      <LINE>20</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bFiredGun' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -2041,12 +2058,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bMoveControl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bSkipAim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>20</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_bMoveControl</targetSymbol>
+      <targetSymbol>CTaskSimpleUseGun::m_bSkipAim</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2126,12 +2143,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_nLastCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bMoveControl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>20</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_nLastCommand</targetSymbol>
+      <targetSymbol>CTaskSimpleUseGun::m_bMoveControl</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2143,12 +2160,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bIsInControl' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_nNextCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>20</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_bIsInControl</targetSymbol>
+      <targetSymbol>CTaskSimpleUseGun::m_nNextCommand</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2166,23 +2183,6 @@
     <FUNCLINE>20</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleUseGun::m_LookIKInUse</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleUseGun.h</FILENAME>
-      <LINE>20</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleUseGun::m_bSkipAim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleUseGun::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleUseGun@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>20</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleUseGun::m_bSkipAim</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2228,12 +2228,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAnimsReferenced' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fThrustAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_bAnimsReferenced</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_fThrustAngle</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2245,12 +2245,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_pTargetEnt' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAttackButtonPressed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_pTargetEnt</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_bAttackButtonPressed</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2262,12 +2262,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_nThrustFwd' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fLegTwistSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_nThrustFwd</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_fLegTwistSpeed</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2279,12 +2279,29 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_nStartHover' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_nThrustStop' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_nStartHover</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_nThrustStop</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fLegSwingSideSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleJetPack::m_fLegSwingSideSpeed</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2313,46 +2330,29 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bIsFinished' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_bIsFinished</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fThrustAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_fThrustAngle</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fLegSwingFwd' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleJetPack::m_fLegSwingFwd</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bIsFinished' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleJetPack::m_bIsFinished</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2398,23 +2398,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_nThrustStop' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_nThrustStop</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fLegSwingFwdSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -2432,29 +2415,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fLegSwingSideSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAnimsReferenced' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_fLegSwingSideSpeed</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fLegTwistSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_fLegTwistSpeed</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_bAnimsReferenced</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2500,23 +2466,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAddedIdleAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_bAddedIdleAnim</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fCruiseHeight' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -2540,6 +2489,57 @@
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleJetPack::m_nHoverTime</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fOldHeading' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleJetPack::m_fOldHeading</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_nStartHover' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleJetPack::m_nStartHover</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_pTargetEnt' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleJetPack::m_pTargetEnt</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2585,12 +2585,29 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_fOldHeading' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_nThrustFwd' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_fOldHeading</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_nThrustFwd</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bSwitchedWeapons' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleJetPack::m_bSwitchedWeapons</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2619,29 +2636,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAttackButtonPressed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bAddedIdleAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_bAttackButtonPressed</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleJetpack.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleJetPack::m_bSwitchedWeapons' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleJetPack::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleJetPack@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleJetPack::m_bSwitchedWeapons</targetSymbol>
+      <targetSymbol>CTaskSimpleJetPack::m_bAddedIdleAnim</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2687,12 +2687,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleFight::m_nChainCounter' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleFight::_pad2' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleFight::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleFight@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>17</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleFight::m_nChainCounter</targetSymbol>
+      <targetSymbol>CTaskSimpleFight::_pad2</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2704,12 +2704,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleFight::_pad2' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleFight::m_nChainCounter' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleFight::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleFight@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>17</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleFight::_pad2</targetSymbol>
+      <targetSymbol>CTaskSimpleFight::m_nChainCounter</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2755,12 +2755,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleFight::m_nLastCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleFight::m_nNextCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleFight::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleFight@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>17</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleFight::m_nLastCommand</targetSymbol>
+      <targetSymbol>CTaskSimpleFight::m_nNextCommand</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2772,12 +2772,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleFight::m_nNextCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleFight::m_nLastCommand' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleFight::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleFight@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>17</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleFight::m_nNextCommand</targetSymbol>
+      <targetSymbol>CTaskSimpleFight::m_nLastCommand</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -2959,46 +2959,29 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleThrowProjectile::m_pAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleThrowProjectile::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleThrowProjectile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>16</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleThrowProjectile::m_pAnim</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleThrowProjectile.h</FILENAME>
-      <LINE>16</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleThrowProjectile::m_pTarget' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleThrowProjectile::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleThrowProjectile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>16</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleThrowProjectile::m_pTarget</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleThrowProjectile.h</FILENAME>
-      <LINE>16</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleThrowProjectile::pad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleThrowProjectile::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleThrowProjectile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>16</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleThrowProjectile::pad</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleThrowProjectile.h</FILENAME>
+      <LINE>16</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleThrowProjectile::m_pAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleThrowProjectile::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleThrowProjectile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>16</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleThrowProjectile::m_pAnim</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3056,51 +3039,17 @@
   <DEFECT>
     <SFA>
       <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
+      <FILENAME>CTaskSimpleThrowProjectile.h</FILENAME>
+      <LINE>16</LINE>
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_fAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
+    <DESCRIPTION>Variable 'CTaskSimpleThrowProjectile::m_pTarget' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleThrowProjectile::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleThrowProjectile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>16</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::m_fAngle</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_50' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_50</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_AnimID' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::m_AnimID</targetSymbol>
+      <targetSymbol>CTaskSimpleThrowProjectile::m_pTarget</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3118,6 +3067,40 @@
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleSwim::pad2</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_pFxSystem' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::m_pFxSystem</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_30' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::flt_30</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3163,12 +3146,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_pFxSystem' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_fAnimSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::m_pFxSystem</targetSymbol>
+      <targetSymbol>CTaskSimpleSwim::m_fAnimSpeed</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3180,12 +3163,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_24' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_28' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_24</targetSymbol>
+      <targetSymbol>CTaskSimpleSwim::flt_28</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3214,6 +3197,57 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_34' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::flt_34</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_50' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::flt_50</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_24' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::flt_24</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleSwim::m_nProcessTimeCounter' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -3231,12 +3265,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_fAnimSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_nSurfaceType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::m_fAnimSpeed</targetSymbol>
+      <targetSymbol>CTaskSimpleSwim::m_nSurfaceType</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3254,6 +3288,74 @@
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleSwim::flt_54</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_AnimID' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::m_AnimID</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_2C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::flt_2C</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_fAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::m_fAngle</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleSwim.h</FILENAME>
+      <LINE>28</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_pEntity' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleSwim::m_pEntity</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3288,108 +3390,6 @@
     <FUNCLINE>28</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleSwim::_pad</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_2C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_2C</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_34' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_34</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_28' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_28</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_nSurfaceType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::m_nSurfaceType</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::m_pEntity' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::m_pEntity</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleSwim.h</FILENAME>
-      <LINE>28</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleSwim::flt_30' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleSwim::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleSwim@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>28</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleSwim::flt_30</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3452,23 +3452,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_pMoveAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>25</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleDuck::m_pMoveAnim</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleDuck.h</FILENAME>
-      <LINE>25</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleDuck::m_nLengthOfDuck' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -3486,46 +3469,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_bNeedToSetDuckFlag' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_pMoveAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>25</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleDuck::m_bNeedToSetDuckFlag</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleDuck.h</FILENAME>
-      <LINE>25</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_nDuckControlType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>25</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleDuck::m_nDuckControlType</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleDuck.h</FILENAME>
-      <LINE>25</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_nCountDownFrames' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>25</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleDuck::m_nCountDownFrames</targetSymbol>
+      <targetSymbol>CTaskSimpleDuck::m_pMoveAnim</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3600,6 +3549,74 @@
   <DEFECT>
     <SFA>
       <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleDuck.h</FILENAME>
+      <LINE>25</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_bNeedToSetDuckFlag' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>25</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleDuck::m_bNeedToSetDuckFlag</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleDuck.h</FILENAME>
+      <LINE>25</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_nCountDownFrames' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>25</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleDuck::m_nCountDownFrames</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleDuck.h</FILENAME>
+      <LINE>25</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleDuck::m_nDuckControlType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleDuck::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleDuck@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>25</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleDuck::m_nDuckControlType</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleClimb.h</FILENAME>
+      <LINE>27</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_nGetToPosCounter' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>27</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleClimb::m_nGetToPosCounter</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
       <FILENAME>CTaskSimpleClimb.h</FILENAME>
       <LINE>27</LINE>
       <COLUMN>4</COLUMN>
@@ -3622,12 +3639,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_nGetToPosCounter' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_pClimbEnt' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>27</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleClimb::m_nGetToPosCounter</targetSymbol>
+      <targetSymbol>CTaskSimpleClimb::m_pClimbEnt</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3673,23 +3690,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_pClimbEnt' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>27</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleClimb::m_pClimbEnt</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleClimb.h</FILENAME>
-      <LINE>27</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleClimb::m_nHeightForAnim' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -3713,23 +3713,6 @@
     <FUNCLINE>27</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleClimb::m_bIsFinished</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleClimb.h</FILENAME>
-      <LINE>27</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_bChangePosition' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>27</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleClimb::m_bChangePosition</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3775,6 +3758,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_bChangePosition' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>27</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleClimb::m_bChangePosition</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleClimb.h</FILENAME>
+      <LINE>27</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleClimb::m_bInvalidClimb' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -3792,12 +3792,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_fHandholdHeading' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_bChangeAnimation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>27</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleClimb::m_fHandholdHeading</targetSymbol>
+      <targetSymbol>CTaskSimpleClimb::m_bChangeAnimation</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3809,12 +3809,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_bChangeAnimation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleClimb::m_fHandholdHeading' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleClimb::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleClimb@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>27</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleClimb::m_bChangeAnimation</targetSymbol>
+      <targetSymbol>CTaskSimpleClimb::m_fHandholdHeading</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3860,46 +3860,29 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleInAir::m_pEntity' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleInAir::m_pEntity</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleInAir.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleInAir::m_nSurfaceType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleInAir::m_nSurfaceType</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleInAir.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CTaskSimpleInAir::m_fHeight' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CTaskSimpleInAir::m_fHeight</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleInAir.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleInAir::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bUsingFallGlide' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleInAir::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bUsingFallGlide</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -3945,29 +3928,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleInAir::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bUsingFallGlide' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CTaskSimpleInAir::m_pEntity' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
     <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleInAir::&lt;unnamed-tag&gt;::&lt;unnamed-tag&gt;::bUsingFallGlide</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CTaskSimpleInAir.h</FILENAME>
-      <LINE>18</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CTaskSimpleInAir::_pad2' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
-    <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>18</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CTaskSimpleInAir::_pad2</targetSymbol>
+      <targetSymbol>CTaskSimpleInAir::m_pEntity</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -4025,17 +3991,34 @@
   <DEFECT>
     <SFA>
       <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CWeapon.h</FILENAME>
-      <LINE>90</LINE>
+      <FILENAME>CTaskSimpleInAir.h</FILENAME>
+      <LINE>18</LINE>
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CWeapon::field_14' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CWeapon::{ctor}</FUNCTION>
-    <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>90</FUNCLINE>
+    <DESCRIPTION>Variable 'CTaskSimpleInAir::m_nSurfaceType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CWeapon::field_14</targetSymbol>
+      <targetSymbol>CTaskSimpleInAir::m_nSurfaceType</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CTaskSimpleInAir.h</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CTaskSimpleInAir::_pad2' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CTaskSimpleInAir::{ctor}</FUNCTION>
+    <DECORATED>??0CTaskSimpleInAir@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>18</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CTaskSimpleInAir::_pad2</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -4053,6 +4036,40 @@
     <FUNCLINE>90</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CWeapon::m_nTotalAmmo</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CWeapon.h</FILENAME>
+      <LINE>90</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CWeapon::m_nTimeForNextShot' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CWeapon::{ctor}</FUNCTION>
+    <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>90</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CWeapon::m_nTimeForNextShot</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CWeapon.h</FILENAME>
+      <LINE>90</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CWeapon::m_nState' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CWeapon::{ctor}</FUNCTION>
+    <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>90</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CWeapon::m_nState</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -4132,23 +4149,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CWeapon::m_nState' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CWeapon::{ctor}</FUNCTION>
-    <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>90</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CWeapon::m_nState</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CWeapon.h</FILENAME>
-      <LINE>90</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CWeapon::m_nAmmoInClip' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CWeapon::{ctor}</FUNCTION>
     <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -4166,12 +4166,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CWeapon::m_nTimeForNextShot' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CWeapon::field_14' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CWeapon::{ctor}</FUNCTION>
     <DECORATED>??0CWeapon@@QAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>90</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CWeapon::m_nTimeForNextShot</targetSymbol>
+      <targetSymbol>CWeapon::field_14</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -6733,12 +6733,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlags' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlagsIntValue' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlags</targetSymbol>
+      <targetSymbol>CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlagsIntValue</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -6835,6 +6835,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CVehicle::m_pFlyingHandlingData' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CVehicle::{ctor}</FUNCTION>
+    <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>108</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CVehicle::m_pFlyingHandlingData</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CVehicle.h</FILENAME>
+      <LINE>108</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CVehicle::m_anUpgrades' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -6869,12 +6886,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_pEntityWeAreOn' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_nSpecialColModel' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_pEntityWeAreOn</targetSymbol>
+      <targetSymbol>CVehicle::m_nSpecialColModel</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -6920,12 +6937,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_fSteerAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_pEntityWeAreOn' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_fSteerAngle</targetSymbol>
+      <targetSymbol>CVehicle::m_pEntityWeAreOn</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -6988,29 +7005,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlagsIntValue' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_pFire' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlagsIntValue</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CVehicle.h</FILENAME>
-      <LINE>108</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_fBreakPedal' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CVehicle::{ctor}</FUNCTION>
-    <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>108</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_fBreakPedal</targetSymbol>
+      <targetSymbol>CVehicle::m_pFire</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7243,12 +7243,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_fGasPedal' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_fSteerAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_fGasPedal</targetSymbol>
+      <targetSymbol>CVehicle::m_fSteerAngle</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7277,12 +7277,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_nSpecialColModel' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_nCreatedBy' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_nSpecialColModel</targetSymbol>
+      <targetSymbol>CVehicle::m_nCreatedBy</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7311,12 +7311,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_pFire' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_f2ndSteerAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_pFire</targetSymbol>
+      <targetSymbol>CVehicle::m_f2ndSteerAngle</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7447,12 +7447,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_nWinchType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_nOverrideLights' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_nWinchType</targetSymbol>
+      <targetSymbol>CVehicle::m_nOverrideLights</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7583,12 +7583,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_f2ndSteerAngle' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_fGasPedal' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_f2ndSteerAngle</targetSymbol>
+      <targetSymbol>CVehicle::m_fGasPedal</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7600,12 +7600,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_nOverrideLights' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_nWinchType' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_nOverrideLights</targetSymbol>
+      <targetSymbol>CVehicle::m_nWinchType</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7685,12 +7685,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_nCreatedBy' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_fBreakPedal' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_nCreatedBy</targetSymbol>
+      <targetSymbol>CVehicle::m_fBreakPedal</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7906,23 +7906,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_pFlyingHandlingData' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CVehicle::{ctor}</FUNCTION>
-    <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>108</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_pFlyingHandlingData</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CVehicle.h</FILENAME>
-      <LINE>108</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CVehicle::&lt;unnamed-tag&gt;::m_renderLights' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -7957,12 +7940,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_nVehicleClass' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlags' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_nVehicleClass</targetSymbol>
+      <targetSymbol>CVehicle::&lt;unnamed-tag&gt;::m_nHandlingFlags</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -7980,6 +7963,23 @@
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CVehicle::m_pCustomCarPlate</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CVehicle.h</FILENAME>
+      <LINE>108</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CVehicle::m_nRemapTxd' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CVehicle::{ctor}</FUNCTION>
+    <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>108</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CVehicle::m_nRemapTxd</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -8025,12 +8025,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CVehicle::m_nRemapTxd' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CVehicle::m_nVehicleClass' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CVehicle::{ctor}</FUNCTION>
     <DECORATED>??0CVehicle@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>108</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CVehicle::m_nRemapTxd</targetSymbol>
+      <targetSymbol>CVehicle::m_nVehicleClass</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9215,148 +9215,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_44' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::m_nNextPathNodeInfo' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_44</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_52' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_52</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::m_fMaxTrafficSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::m_fMaxTrafficSpeed</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_4E' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_4E</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_38' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_38</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_50' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_50</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_4F' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_4F</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_4C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_4C</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_51' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_51</targetSymbol>
+      <targetSymbol>CAutoPilot::m_nNextPathNodeInfo</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9385,6 +9249,91 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::field_44' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::field_44</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::m_fMaxTrafficSpeed' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::m_fMaxTrafficSpeed</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::field_4C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::field_4C</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::field_41' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::field_41</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::field_4E' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::field_4E</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutoPilot::m_nCarCtrlFlags' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
@@ -9402,12 +9351,29 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_4A' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_50' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_4A</targetSymbol>
+      <targetSymbol>CAutoPilot::field_50</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::field_51' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::field_51</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9436,12 +9402,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_42' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_48' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_42</targetSymbol>
+      <targetSymbol>CAutoPilot::field_48</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9453,12 +9419,29 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_48' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_52' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_48</targetSymbol>
+      <targetSymbol>CAutoPilot::field_52</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::field_42' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::field_42</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9487,12 +9470,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::m_nNextPathNodeInfo' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_38' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::m_nNextPathNodeInfo</targetSymbol>
+      <targetSymbol>CAutoPilot::field_38</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9589,12 +9572,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_24' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_4F' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_24</targetSymbol>
+      <targetSymbol>CAutoPilot::field_4F</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9606,12 +9589,29 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::field_41' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_4A' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::field_41</targetSymbol>
+      <targetSymbol>CAutoPilot::field_4A</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::m_nSpeedScaleFactor' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::m_nSpeedScaleFactor</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9657,6 +9657,23 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutoPilot::m_nCurrentLane' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
+    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutoPilot::m_nCurrentLane</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutoPilot.h</FILENAME>
+      <LINE>75</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutoPilot::m_nNextLane' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
@@ -9691,12 +9708,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::m_nCarMission' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::field_24' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::m_nCarMission</targetSymbol>
+      <targetSymbol>CAutoPilot::field_24</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9708,12 +9725,12 @@
       <COLUMN>0</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::m_nSpeedScaleFactor' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutoPilot::m_nCarMission' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
     <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::m_nSpeedScaleFactor</targetSymbol>
+      <targetSymbol>CAutoPilot::m_nCarMission</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -9782,23 +9799,6 @@
     <FUNCLINE>75</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutoPilot::_someStartTime</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutoPilot.h</FILENAME>
-      <LINE>75</LINE>
-      <COLUMN>0</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutoPilot::m_nCurrentLane' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutoPilot::{ctor}</FUNCTION>
-    <DECORATED>??0CAutoPilot@@QAE@XZ</DECORATED>
-    <FUNCLINE>75</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutoPilot::m_nCurrentLane</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10065,12 +10065,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::m_fForcedOrientation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_936' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::m_fForcedOrientation</targetSymbol>
+      <targetSymbol>CAutomobile::field_936</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10088,23 +10088,6 @@
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutomobile::field_878</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_92D' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_92D</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10167,6 +10150,40 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::m_fForcedOrientation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::m_fForcedOrientation</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::field_92D' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::field_92D</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::field_88C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -10201,12 +10218,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_938' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::m_fRearHeightAboveRoad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_938</targetSymbol>
+      <targetSymbol>CAutomobile::m_fRearHeightAboveRoad</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10218,12 +10235,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::m_fRearHeightAboveRoad' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_937' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::m_fRearHeightAboveRoad</targetSymbol>
+      <targetSymbol>CAutomobile::field_937</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10269,12 +10286,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_939' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_938' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_939</targetSymbol>
+      <targetSymbol>CAutomobile::field_938</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10303,12 +10320,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_93A' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_939' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_93A</targetSymbol>
+      <targetSymbol>CAutomobile::field_939</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10326,6 +10343,23 @@
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutomobile::m_fRotationBalance</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::field_93A' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::field_93A</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10371,12 +10405,46 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::m_nNumContactWheels' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::m_nNumContactWheels</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::m_fBurningTimer' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutomobile::m_fBurningTimer</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::field_93C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::field_93C</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10422,12 +10490,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_93C' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_93D' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_93C</targetSymbol>
+      <targetSymbol>CAutomobile::field_93D</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10462,23 +10530,6 @@
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutomobile::m_fMoveDirection</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_93D' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_93D</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10558,6 +10609,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::field_940' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::field_940</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::wheelsDistancesToGround2' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -10581,23 +10649,6 @@
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutomobile::field_927</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_940' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_940</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10762,23 +10813,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::m_nNumContactWheels' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::m_nNumContactWheels</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::field_804' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -10830,23 +10864,6 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_936' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_936</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::field_930' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -10864,12 +10881,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_937' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_93B' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_937</targetSymbol>
+      <targetSymbol>CAutomobile::field_93B</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -10915,6 +10932,23 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Variable 'CAutomobile::m_fDoomHorizontalRotation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
+    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
+    <FUNCLINE>48</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>CAutomobile::m_fDoomHorizontalRotation</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
+      <FILENAME>CAutomobile.h</FILENAME>
+      <LINE>48</LINE>
+      <COLUMN>4</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::field_933' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
@@ -10949,46 +10983,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::m_fDoomHorizontalRotation' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::m_fDoomHorizontalRotation</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
     <DESCRIPTION>Variable 'CAutomobile::field_810' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
       <targetSymbol>CAutomobile::field_810</targetSymbol>
-    </ADDITIONALINFO>
-    <PATH></PATH>
-  </DEFECT>
-  <DEFECT>
-    <SFA>
-      <FILEPATH>D:\Alex\Games\San Andreas\plugin sdk\plugin_sa\game_sa\</FILEPATH>
-      <FILENAME>CAutomobile.h</FILENAME>
-      <LINE>48</LINE>
-      <COLUMN>4</COLUMN>
-    </SFA>
-    <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_93B' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
-    <FUNCTION>CAutomobile::{ctor}</FUNCTION>
-    <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
-    <FUNCLINE>48</FUNCLINE>
-    <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_93B</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -11374,12 +11374,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_982' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_981' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_982</targetSymbol>
+      <targetSymbol>CAutomobile::field_981</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -11391,12 +11391,12 @@
       <COLUMN>4</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'CAutomobile::field_981' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'CAutomobile::field_982' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>CAutomobile::{ctor}</FUNCTION>
     <DECORATED>??0CAutomobile@@IAE@Udummy_func_t@plugin@@@Z</DECORATED>
     <FUNCLINE>48</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>CAutomobile::field_981</targetSymbol>
+      <targetSymbol>CAutomobile::field_982</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -12433,12 +12433,12 @@
       <COLUMN>12</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'injector::scoped_basic&lt;5&gt;::vp' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'injector::scoped_basic&lt;5&gt;::buf' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>injector::scoped_basic&lt;5&gt;::{ctor}</FUNCTION>
     <DECORATED>??0?$scoped_basic@$04@injector@@QAE@XZ</DECORATED>
     <FUNCLINE>95</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>injector::scoped_basic&lt;5&gt;::vp</targetSymbol>
+      <targetSymbol>injector::scoped_basic&lt;5&gt;::buf</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>
@@ -12450,12 +12450,12 @@
       <COLUMN>12</COLUMN>
     </SFA>
     <DEFECTCODE>26495</DEFECTCODE>
-    <DESCRIPTION>Variable 'injector::scoped_basic&lt;5&gt;::buf' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
+    <DESCRIPTION>Variable 'injector::scoped_basic&lt;5&gt;::vp' is uninitialized. Always initialize a member variable (type.6).</DESCRIPTION>
     <FUNCTION>injector::scoped_basic&lt;5&gt;::{ctor}</FUNCTION>
     <DECORATED>??0?$scoped_basic@$04@injector@@QAE@XZ</DECORATED>
     <FUNCLINE>95</FUNCLINE>
     <ADDITIONALINFO>
-      <targetSymbol>injector::scoped_basic&lt;5&gt;::buf</targetSymbol>
+      <targetSymbol>injector::scoped_basic&lt;5&gt;::vp</targetSymbol>
     </ADDITIONALINFO>
     <PATH></PATH>
   </DEFECT>

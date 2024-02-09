@@ -218,7 +218,7 @@ const unsigned int HPV = 523;
 //WAYFARER animation group
 const unsigned int WAYFARER = 586;
 
-static bool IsPedInVehicle(CPed* ped, bool& driverDB, bool& passengerDB)
+static bool IsPedInVehicle(CPed* ped, bool& driverDB)
 {
     if (!ped->m_pIntelligence) {
         return false;
@@ -236,7 +236,6 @@ static bool IsPedInVehicle(CPed* ped, bool& driverDB, bool& passengerDB)
         }
         else if (taskType == TASK_SIMPLE_GANG_DRIVEBY)
         {
-            passengerDB = true;
             return true;
         }
         return false;
@@ -373,7 +372,6 @@ static void ChangeOffsetForPassengerBikeDriveBy(CPed* ped, RwV3d& offset, RwReal
     const RwReal bikePassengerOffsetFactor = 1.15f;
 
     unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
-    unsigned int pFrontAnim, pLeftAnim, pRightAnim, pBackAnim;
 
     if (ped->m_pRwClump)
     {
@@ -445,7 +443,7 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& offset, RwReal& re
 
                 switch (animHashKey)
                 {
-                // DRIVER DRIVEBY
+                    // DRIVER DRIVEBY
                 case ANIM_HASH_DBRIGHT_CAR:
                 {
                     offset.z += posDeltaDriver;
@@ -480,7 +478,7 @@ static void ChangeOffsetForCarPassengerDriveBy(CPed* ped, RwV3d& offset, RwReal&
 
                 switch (animHashKey)
                 {
-                // PASSENGER TOP RIGHT LEFT DRIVEBY
+                    // PASSENGER TOP RIGHT LEFT DRIVEBY
                 case ANIM_HASH_TOP_DRIVEBY_RIGHT_SHOOTING_LEFT:
                 {
                     offset.z -= posDeltaPassenger;
@@ -596,6 +594,11 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
     ary[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
     ary[1] = pedExt.Get(ped).bRightHandGunflashThisFrame;
 
+    bool driverDB = false;
+    const bool isInVehicle = IsPedInVehicle(ped, driverDB);
+    const bool needsCustomMat = CanWeaponBeDualWielded(ped->m_nWeaponModelId);
+    const bool isInBike = isInVehicle ? IsPedInBike(ped) : false;
+
     for (int i = 0; i < 2; i++) {
         if (ary[i]) {
 
@@ -615,7 +618,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 if (leftHand)
                 {
                     offset.z *= -1.0f;
-
                 }
 
                 static RwV3d axis_y = { 0.0f, 1.0f, 0.0f };
@@ -624,10 +626,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, 24 + (10 * leftHand))];
                 memcpy(mat, boneMat, sizeof(RwMatrix));
                 RwMatrixUpdate(mat);
-
-                bool driverDB = false, passengerDB = false;
-                bool isInVehicle = IsPedInVehicle(ped, driverDB, passengerDB);
-                bool needsCustomMat = CanWeaponBeDualWielded(ped->m_nWeaponModelId);
 
                 if (!isInVehicle)
                 {
@@ -642,7 +640,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     if (ped->m_pVehicle->m_fMovingSpeed > 0.0f)
                     {
                         RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
-                        if (IsPedInBike(ped))
+                        if (isInBike)
                         {
                             if (driverDB)
                             {
@@ -671,7 +669,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                 //if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
                 if (gunflashFx)
                 {
-                    if (isInVehicle || !needsCustomMat)
+                    if (isInVehicle || !needsCustomMat || (!leftHand && ped->m_nWeaponSkill > (char)2))
                     {
                         gunflashFx->m_pParentMatrix = boneMat;
                     }

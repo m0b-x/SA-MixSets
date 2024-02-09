@@ -153,6 +153,11 @@ MixSets::MixSets()
 			if (Read)
 			{
 				ReadIni();
+				//added by m0b - reload stuff in sa-mp
+				if (inSAMP)
+				{
+					MixSets::ReadIni();
+				}
 
 				if (lang == languages::PT)
 					lg << "\n" << "Terminado de ler o ini no primeiro frame." << "\n\n";
@@ -546,14 +551,6 @@ MixSets::MixSets()
 		}
 	};
 
-	Events::processScriptsEvent.after += [] 
-		{
-		//added by m0b - reload stuff in sa-mp
-		if (inSAMP)
-		{
-			MixSets::ReadIni();
-		}
-		};
 
 	Events::vehicleRenderEvent += [](CVehicle* vehicle) {
 

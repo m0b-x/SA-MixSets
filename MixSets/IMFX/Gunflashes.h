@@ -24,10 +24,10 @@ public:
         bool bLeftHandGunflashThisFrame;
         bool bRightHandGunflashThisFrame;
         bool bInVehicle;
-		RwMatrix *pMats[2];
+        RwMatrix* pMats[2];
 
-        PedExtension(CPed *);
-		~PedExtension();
+        PedExtension(CPed*);
+        ~PedExtension();
 
         void Reset();
     };
@@ -41,9 +41,9 @@ public:
 
     static void Setup(bool experimental);
     //static void ReadSettings();
-    static void __fastcall MyTriggerGunflash(Fx_c *fx, int, CEntity *owner, CVector &origin, CVector &target, bool doGunflash);
-    static void __fastcall DoDriveByGunflash(CPed *driver, int, int, bool leftHand);
-    static bool __fastcall MyProcessUseGunTask(CTaskSimpleUseGun *task, int, CPed *ped);
+    static void __fastcall MyTriggerGunflash(Fx_c* fx, int, CEntity* owner, CVector& origin, CVector& target, bool doGunflash);
+    static void __fastcall DoDriveByGunflash(CPed* driver, int, int, bool leftHand);
+    static bool __fastcall MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CPed* ped);
     static void ProcessPerFrame();
-    static void CreateGunflashEffectsForPed(CPed *ped);
+    static void CreateGunflashEffectsForPed(CPed* ped);
 };

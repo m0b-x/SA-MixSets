@@ -418,6 +418,9 @@ static void ChangeOffsetForPassengerBikeDriveBy(CPed* ped, RwV3d& offset, RwReal
 // Named constants for animation hash keys
 const unsigned int ANIM_HASH_DBRIGHT_CAR = 2872216017;
 const unsigned int ANIM_HASH_DBLEFT_CAR = 1362998450;
+const unsigned int ANIM_HASH_DBLEFT2_CAR = 115705905;
+const unsigned int ANIM_HASH_DBRIGHT2_CAR = 4243240274;
+
 const unsigned int ANIM_HASH_TOP_DRIVEBY_RIGHT_SHOOTING_LEFT = 2338707153;
 const unsigned int ANIM_HASH_TOP_DRIVEBY_LEFT_SHOOTING_RIGHT = 2648529067;
 const unsigned int ANIM_HASH_RIGHT_DRIVEBY_SHOOTING_RIGHT = 2664255580;
@@ -443,13 +446,24 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& offset, RwReal& re
 
                 switch (animHashKey)
                 {
-                    // DRIVER DRIVEBY
+                // DRIVER DRIVEBY
                 case ANIM_HASH_DBRIGHT_CAR:
                 {
                     offset.z += posDeltaDriver;
                     return;
                 }
                 case ANIM_HASH_DBLEFT_CAR:
+                {
+                    offset.z -= posDeltaDriver;
+                    return;
+                }
+                // DRIVER DRIVEBY
+                case ANIM_HASH_DBRIGHT2_CAR:
+                {
+                    offset.z += posDeltaDriver;
+                    return;
+                }
+                case ANIM_HASH_DBLEFT2_CAR:
                 {
                     offset.z -= posDeltaDriver;
                     return;

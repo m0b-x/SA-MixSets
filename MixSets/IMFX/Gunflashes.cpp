@@ -323,9 +323,9 @@ static void GetBikeDriverDrivebyAnimations(unsigned short id, unsigned int& fron
     }
 }
 
+const RwReal bikeDriverOffsetFactor = 2.0f;
 static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
 {
-    const RwReal bikeDriverOffsetFactor = 2.0f;
 
     unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
     unsigned int dFrontAnim, dLeftAnim, dRightAnim;
@@ -367,9 +367,9 @@ const unsigned int ANIM_HASH_PASSENGER_DBLEFT_BIKE = 1918643658;
 const unsigned int ANIM_HASH_PASSENGER_DBRIGHT_BIKE = 1692705712;
 const unsigned int ANIM_HASH_PASSENGER_DBBACK_BIKE = 910920601;
 
+const RwReal bikePassengerOffsetFactor = 1.15f;
 static void ChangeOffsetForPassengerBikeDriveBy(CPed* ped, RwV3d& offset, RwReal reversingFactor)
 {
-    const RwReal bikePassengerOffsetFactor = 1.15f;
 
     unsigned int carModel = ped->m_pVehicle->m_nModelIndex;
 
@@ -546,7 +546,6 @@ static void ChangeOffsetForCarPassengerDriveBy(CPed* ped, RwV3d& offset, RwReal&
 
 
 const unsigned int GUNMOVE_BWD_HASHKEY = 205664729;
-
 static bool IsPedWalkingBackWhileShooting(CPed* ped)
 {
     if (ped->m_pRwClump)
@@ -603,6 +602,8 @@ static bool CanWeaponBeDualWielded(const int model)
     }
 }
 
+const float inVehMult = 1.35f;
+const float dualWeildingMult = 1.25;
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
     bool ary[2];
     ary[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
@@ -686,6 +687,12 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     if (isInVehicle || !needsCustomMat || (!leftHand && ped->m_nWeaponSkill > (char)2))
                     {
                         gunflashFx->m_pParentMatrix = boneMat;
+                        if (isInVehicle)
+                            gunflashFx->SetTimeMult(inVehMult);
+                    }
+                    if (needsCustomMat)
+                    {
+                        gunflashFx->SetTimeMult(dualWeildingMult);
                     }
                     RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
                     if (rotate)

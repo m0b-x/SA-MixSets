@@ -13,8 +13,8 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "game_sa\CTimer.h"
 #include <fstream>
 #include <string>
-//#include <Windows.h>
-//#include <shlobj.h>
+#include <Windows.h>
+#include <shlobj.h>
 #include <CAnimManager.h>
 #include <CAnimBlendAssociation.h>
 #include <CAnimBlendHierarchy.h>
@@ -143,7 +143,6 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
     bVehicleGunflash = false;
 }
 
-/*
 template<typename T>
 static void WriteToDesktopFile(const T& data, const std::string& dataName = "")
 {
@@ -186,7 +185,6 @@ static void GetBikePassengerDrivebyAnimations(unsigned short id, unsigned int& f
     right = 1692705712;
     back = 910920601;
 }
-*/
 
 //BIKEV animation group
 const unsigned int PIZZABOY = 448;
@@ -248,7 +246,7 @@ static bool IsPedInVehicle(CPed* ped, bool& driverDB)
 const int BIKE_APPEREANCE = 2;
 static bool IsPedInBike(CPed* ped)
 {
-    return (ped->m_pVehicle->GetVehicleAppearance()) == BIKE_APPEREANCE ? true : false;
+    return (ped->m_pVehicle->GetVehicleAppearance() == BIKE_APPEREANCE || ped->m_pVehicle->m_nModelIndex == QUAD) ? true : false;
 }
 
 static void GetBikeDriverDrivebyAnimations(unsigned short id, unsigned int& front, unsigned int& left, unsigned int& right)
@@ -602,8 +600,9 @@ static bool CanWeaponBeDualWielded(const int model)
     }
 }
 
-const float inVehMult = 1.35f;
-const float dualWeildingMult = 1.25;
+const float IN_VEHICLE_TIME_MULT = 1.35f;
+const float DUAL_WEILDING_TIME_MULT = 1.25f;
+const float SURFING_SPEED = 0.1f;
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
     bool ary[2];
     ary[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
@@ -614,8 +613,12 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
     const bool needsCustomMat = CanWeaponBeDualWielded(ped->m_nWeaponModelId);
     const bool isInBike = isInVehicle ? IsPedInBike(ped) : false;
 
+    //Is ped surfing on a vehicle? => Don't make the gun effect
+    if (!isInVehicle && ped->m_fMovingSpeed > SURFING_SPEED)
+        return;
     for (int i = 0; i < 2; i++) {
         if (ary[i]) {
+
 
             if (pedExt.Get(ped).pMats[i] == nullptr) pedExt.Get(ped).pMats[i] = new RwMatrix();
             RwMatrix* mat = pedExt.Get(ped).pMats[i];
@@ -688,11 +691,11 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
                     {
                         gunflashFx->m_pParentMatrix = boneMat;
                         if (isInVehicle)
-                            gunflashFx->SetTimeMult(inVehMult);
+                            gunflashFx->SetTimeMult(IN_VEHICLE_TIME_MULT);
                     }
                     if (needsCustomMat)
                     {
-                        gunflashFx->SetTimeMult(dualWeildingMult);
+                        gunflashFx->SetTimeMult(DUAL_WEILDING_TIME_MULT);
                     }
                     RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
                     if (rotate)

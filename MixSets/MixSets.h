@@ -90,6 +90,7 @@ public:
 	static bool ReadIniFloat(CIniReader ini, fstream* lg, string section, string key, float* f);
 	static bool ReadIniInt(CIniReader ini, fstream* lg, string section, string key, int* i);
 	static bool ReadIniBool(CIniReader ini, fstream* lg, string section, string key);
+	static bool ReadIniString(CIniReader ini, fstream* lg, string section, string key, string* value);
 
 	static bool IncreaseMemoryValueIfValid(uintptr_t address, int32_t value, uint8_t validation, bool vp);
 	static bool IncreaseMemoryValueIfValid_Byte(uintptr_t address, int8_t value, uint8_t validation, bool vp);

@@ -46,4 +46,19 @@ public:
     static bool __fastcall MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CPed* ped);
     static void ProcessPerFrame();
     static void CreateGunflashEffectsForPed(CPed* ped);
+
+    static void AddDefaultWeaponData();
+    static void AddOrUpdateWeaponData(unsigned int weaponID, const std::string particle, bool rotate = true, bool smoke = true);
+
+    static void SetBikePassengerOffsetFactor(const RwReal newValue);
+    static void SetBikeDriverOffsetFactor(const RwReal newValue);
+    static void SetCarDriverOffsetFactor(const RwReal newValue);
+    static void SetCarPassengerOffsetFactor(const RwReal newValue);
+    static void SetOnFootOffsetFactor(const RwReal newValue);
+
+    static void SetInVehicleTimeMult(const float value);
+    static void SetDualWeildingTimeMult(const float value);
+    static void SetSingleWeaponWeildingTimeMult(const float value);
+    static void SetSurfingSpeed(const float value);
+
 };

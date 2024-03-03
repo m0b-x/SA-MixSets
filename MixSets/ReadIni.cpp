@@ -430,6 +430,7 @@ void MixSets::ReadIni()
 
 	int i;
 	float f;
+	std::string s;
 
 	CIniReader ini("MixSets.ini");
 
@@ -590,8 +591,11 @@ void MixSets::ReadIni()
 		else {
 			G_Fix2DGunflash = true;
 			bool experimental = ReadIniBool(ini, &lg, "Graphics", "ExperimentalGunFlash"); // fixes by m0b
+
 			Gunflashes::Setup(experimental);
+
 			Events::pedRenderEvent.before += Gunflashes::CreateGunflashEffectsForPed;
+
 			/*injector::MakeInline<0x73F3A5, 0x73F3A5 + 6>([](injector::reg_pack& regs)
 			{
 				//mov     eax, [esi+460h]
@@ -655,6 +659,88 @@ void MixSets::ReadIni()
 	}
 	else {
 		G_Fix2DGunflash = false;
+	} 
+
+	if (ReadIniBool(ini, &lg, "Graphics", "Fix2DGunflash") && ReadIniBool(ini, &lg, "Graphics", "ExperimentalGunFlash"))
+	{
+		//Read Moving Weapon Offsets
+		if (ReadIniFloat(ini, &lg, "Graphics", "OnFootOffset", &f))
+			Gunflashes::SetOnFootOffsetFactor(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "CarDriverOffset", &f))
+			Gunflashes::SetCarDriverOffsetFactor(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "CarPassengerOffset", &f))
+			Gunflashes::SetCarPassengerOffsetFactor(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "BikeDriverOffset", &f))
+			Gunflashes::SetBikeDriverOffsetFactor(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "BikePassengerOffset", &f))
+			Gunflashes::SetBikePassengerOffsetFactor(f);
+
+		//Read Time Multipliers
+		if (ReadIniFloat(ini, &lg, "Graphics", "InVehicleTimeMult", &f))
+			Gunflashes::SetInVehicleTimeMult(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "DualWeildingTimeMult", &f))
+			Gunflashes::SetDualWeildingTimeMult(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "SingleWeaponTimeMult", &f))
+			Gunflashes::SetSingleWeaponWeildingTimeMult(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "SurfingSpeed", &f))
+			Gunflashes::SetSurfingSpeed(f);
+
+
+		//Read Weapon data 
+		for (int i = 22; i <= 34; ++i) {
+			//Convert the integer to string
+			std::ostringstream oss;
+			oss << i;
+
+			std::string s = oss.str();
+
+			if (ReadIniString(ini, &lg, "IMFX_Gunflashes", s, &s)) {
+				
+				//Convert string to: partName rotate smoke
+				std::istringstream iss(s);
+				std::string particleName;
+				int rotate, smoke;
+
+				if (!(iss >> particleName)) {
+					particleName = "gunflash";
+				}
+
+				if (!(iss >> rotate >> smoke)) {
+					rotate = true;
+					smoke = true;
+				}
+
+				Gunflashes::AddOrUpdateWeaponData(i, particleName, (bool)rotate, (bool)smoke);
+			}
+		}
+
+		//Read settings for minigun 
+		if (ReadIniString(ini, &lg, "IMFX_Gunflashes", "38", &s)) {
+
+			const int MinigunID = 38;
+
+			std::istringstream iss(s);
+			std::string particleName;
+			bool rotate, smoke;
+
+			if (!(iss >> particleName)) {
+				particleName = "gunflash";
+			}
+
+			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
+				rotate = true;
+				smoke = true;
+			}
+
+			Gunflashes::AddOrUpdateWeaponData(MinigunID, particleName, rotate, smoke);;
+		}
 	}
 
 

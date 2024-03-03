@@ -841,6 +841,18 @@ bool MixSets::ReadIniBool(CIniReader ini, fstream* lg, string section, string ke
 	else return false;
 }
 
+bool MixSets::ReadIniString(CIniReader ini, fstream* lg, string section, string key, string* value)
+{
+	if (MixSets::bReadOldINI) ReadOldINI(ini, lg, section, key);
+	*value = ini.ReadString(section, key, "");  
+	if (!value->empty())
+	{
+		*lg << section << ": " << key << " = " << *value << "\n";
+		return true;
+	}
+	else return false;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool MixSets::IncreaseMemoryValueIfValid(uintptr_t address, int32_t value, uint8_t validation, bool vp)

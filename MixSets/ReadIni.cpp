@@ -693,6 +693,10 @@ void MixSets::ReadIni()
 			Gunflashes::SetSurfingSpeed(f);
 
 
+		//Read "Fix" Values
+		if (ReadIniFloat(ini, &lg, "Graphics", "MopedDriverOffsetFix", &f))
+			Gunflashes::SetMopedFixOffset(f);
+
 		//Read Weapon data 
 		for (int i = 22; i <= 34; ++i) {
 			//Convert the integer to string

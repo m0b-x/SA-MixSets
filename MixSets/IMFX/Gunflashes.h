@@ -61,4 +61,5 @@ public:
     static void SetSingleWeaponWeildingTimeMult(const float value);
     static void SetSurfingSpeed(const float value);
 
+    static void SetMopedFixOffset(const float newValue);
 };

@@ -39,10 +39,12 @@ RwReal carPassengerOffsetFactor = 1.15f;
 RwReal bikePassengerOffsetFactor = 1.15f;
 RwReal bikeDriverOffsetFactor = 2.0f;
 
-float inVehicleTimeMult = 1.35f;
-float dualWeildingTimeMult = 1.25f;
-float singleWeaponWeildingTimeMult = 1.15f;
+float inVehicleTimeMult = 1.0f; //was 1.35f
+float dualWeildingTimeMult = 1.0f;//was 1.25f
+float singleWeaponWeildingTimeMult = 1.0f;//was 1.15f
 float surfingSpeed = 0.1f;
+
+RwReal mopedFixOffset = 2.5f;
 
 const int BikeAppereance = 2;
 
@@ -130,13 +132,17 @@ void Gunflashes::SetSurfingSpeed(const float newValue) {
 	surfingSpeed = newValue;
 }
 
+void Gunflashes::SetMopedFixOffset(const RwReal newValue) {
+	mopedFixOffset = newValue;
+}
+
 struct WeaponData
 {
 	char* particleName = "gunflash";
 	bool rotate = true;
 	bool smoke = true;
 };
-std::map<unsigned int, WeaponData> weaponMap;
+std::unordered_map<unsigned int, WeaponData> weaponMap;
 
 void Gunflashes::AddDefaultWeaponData()
 {
@@ -507,8 +513,8 @@ static void ChangeOffsetForDriverMopedDriveBy(CPed* ped, RwV3d& offset, RwReal r
 				{
 					offset.y -= posDeltaDriver;
 					//moped upward/forward pos correction
-					offset.x -= posDeltaDriver / 3.0f;
-					offset.z -= posDeltaDriver / 3.0f;
+					offset.x -= posDeltaDriver / mopedFixOffset;
+					offset.z -= posDeltaDriver / mopedFixOffset;
 					return;
 				}
 				else if (association->m_pHierarchy->m_hashKey == dRightAnim)
@@ -740,15 +746,16 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 	bool driverDriveby = false;
 	const bool isInVehicle = IsPedDrivebyingInVehicle(ped, driverDriveby);
+
+	//Is ped surfing on a vehicle? => Don't make the gun effect
+	if (!isInVehicle && ped->m_fMovingSpeed > surfingSpeed)
+		return;
+
 	const bool needsCustomMat = CanWeaponBeDualWeilded(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
 	const bool isInBike = isInVehicle ? IsPedInBike(ped) : false;
 	const bool isInMoped = isInBike ? IsPedInMoped(ped) : false;
 	const bool weapSkill = ped->m_nWeaponSkill > (char)2;
 	const bool dualWeildedWeapon = needsCustomMat && weapSkill;
-
-	//Is ped surfing on a vehicle? => Don't make the gun effect
-	if (!isInVehicle && ped->m_fMovingSpeed > surfingSpeed)
-		return;
 
 	for (int i = 0; i < 2; i++) {
 		if (handThisFrame[i])

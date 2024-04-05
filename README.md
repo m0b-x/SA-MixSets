@@ -100,20 +100,20 @@ SurfingSpeed 		 = 0.3     # (0.1) Surfing speed detection (sitting on a moving v
 MopedDriverOffsetFix = 2.5		# (2.5) Moving offset fix for mopeds while shooting left
 
 [IMFX_Gunflashes]
-22 = gf_colt45 	 	1 1 # (gunflash 1 1) particle for firing a pistol, then rotation and smoke
-23 = gf_silenced 	1 1 # (gunflash 1 1) particle for firing a silenced pistol, then rotation and smoke
-24 = gf_deserteagle 1 1 # (gunflash 1 1) particle for firing a desert eagle, then rotation and smoke
-25 = gf_chromegun 	1 1 # (gunflash 1 1) particle for firing a shotgun, then rotation and smoke
-26 = gf_sawnoff 	1 1 # (gunflash 1 1) particle for firing a sawn-off shotgun, then rotation and smoke
-27 = gf_shotgspa 	1 1 # (gunflash 1 1) particle for firing a spas-12, then rotation and smoke
-28 = gf_uzi 		1 1 # (gunflash 1 1) particle for firing a micro-uzi, then rotation and smoke
-29 = gf_mp5 		1 1 # (gunflash 1 1) particle for firing a mp5, then rotation and smoke
-30 = gf_ak47 		1 1 # (gunflash 1 1) particle for firing a ak47, then rotation and smoke
-31 = gf_m16 		1 1 # (gunflash 1 1) particle for firing a m4 , then rotation and smoke
-32 = gf_tec9 		1 1 # (gunflash 1 1) particle for firing a tec9, then rotation and smoke
-33 = gf_cuntgun 	1 1 # (gunflash 1 1) particle for firing a country rifle, then rotation and smoke
-34 = gf_sniper 		1 1 # (gunflash 1 1) particle for firing a sniper rifle, then rotation and smoke
-38 = gf_minigun 	1 1 # (gunflash 1 1) particle for firing a minigun, then rotation and smoke
+22 = gunflash 1 1 # (gunflash 1 1) particle for firing a pistol, then rotation and smoke
+23 = gunflash 1 1 # (gunflash 1 1) particle for firing a silenced pistol, then rotation and smoke
+24 = gunflash 1 1 # (gunflash 1 1) particle for firing a desert eagle, then rotation and smoke
+25 = gunflash 1 1 # (gunflash 1 1) particle for firing a shotgun, then rotation and smoke
+26 = gunflash 1 1 # (gunflash 1 1) particle for firing a sawn-off shotgun, then rotation and smoke
+27 = gunflash 1 1 # (gunflash 1 1) particle for firing a spas-12, then rotation and smoke
+28 = gunflash 1 1 # (gunflash 1 1) particle for firing a micro-uzi, then rotation and smoke
+29 = gunflash 1 1 # (gunflash 1 1) particle for firing a mp5, then rotation and smoke
+30 = gunflash 1 1 # (gunflash 1 1) particle for firing a ak47, then rotation and smoke
+31 = gunflash 1 1 # (gunflash 1 1) particle for firing a m4 , then rotation and smoke
+32 = gunflash 1 1 # (gunflash 1 1) particle for firing a tec9, then rotation and smoke
+33 = gunflash 1 1 # (gunflash 1 1) particle for firing a country rifle, then rotation and smoke
+34 = gunflash 1 1 # (gunflash 1 1) particle for firing a sniper rifle, then rotation and smoke
+38 = gunflash 1 1 # (gunflash 1 1) particle for firing a minigun, then rotation and smoke
    ```
 
 

@@ -56,6 +56,7 @@ public:
     static void SetCarPassengerOffsetFactor(const RwReal newValue);
     static void SetOnFootOffsetFactor(const RwReal newValue);
 
+    static void SetGunflashLowerLight(const bool newValue);
     static void SetInVehicleTimeMult(const float value);
     static void SetDualWeildingTimeMult(const float value);
     static void SetSingleWeaponWeildingTimeMult(const float value);

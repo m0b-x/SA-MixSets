@@ -925,6 +925,26 @@ void MixSets::VehFlipDamage_Process(CVehicle* veh)
 	}
 }
 
+void MixSets::InstallEmptyRadioPatches() {
+	patch::RedirectCall(0x4E9F3F, SetEmptyRadioNameScale);
+	patch::RedirectCall(0x4E9F4D, DrawEmptyRadioName);
+	patch::RedirectCall(0x4E9FF1, SetEmptyRadioNameAlignment);
+}
+
+void MixSets::SetEmptyRadioNameScale(float x, float y) {
+	
+}
+
+void MixSets::DrawEmptyRadioName(float x, float y, char* name) {
+
+}
+
+void MixSets::SetEmptyRadioNameAlignment(eFontAlignment alignment) {
+
+}
+
+
+
 void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int a, int wheelState, int a3, float a4, float a5, CColPoint* colPoint, CVector* from, int id, signed int wheelId, int skidMarkType, bool *_bloodState, char flags)
 {
 	_this->AddSingleWheelParticles(wheelState, a3, a4, a5, colPoint, from, id, wheelId, skidMarkType, _bloodState, flags);

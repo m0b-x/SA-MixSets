@@ -663,6 +663,12 @@ void MixSets::ReadIni()
 
 	if (ReadIniBool(ini, &lg, "Graphics", "Fix2DGunflash") && ReadIniBool(ini, &lg, "Graphics", "ExperimentalGunFlash"))
 	{
+		//Read Additional Options
+		if (ReadIniBool(ini, &lg, "Graphics", "GunflashLowerLight"))
+			Gunflashes::SetGunflashLowerLight(true);
+		else
+			Gunflashes::SetGunflashLowerLight(false);
+
 		//Read Moving Weapon Offsets
 		if (ReadIniFloat(ini, &lg, "Graphics", "OnFootOffset", &f))
 			Gunflashes::SetOnFootOffsetFactor(f);
@@ -1502,6 +1508,11 @@ void MixSets::ReadIni()
 			int seed = (int)(x + y * (z + 123.5f));
 			Call<0x821B11, int>(seed); //srand
 		});
+	}
+
+
+	if (ReadIniBool(ini, &lg, "Gameplay", "NoRadioText")) {
+		InstallEmptyRadioPatches();
 	}
 	 
 	if (ReadIniBool(ini, &lg, "Gameplay", "FixBoatRadioAnim")) {

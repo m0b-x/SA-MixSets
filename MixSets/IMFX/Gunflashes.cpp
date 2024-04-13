@@ -25,8 +25,25 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include <CAnimBlendAssocGroup.h>
 
 #include "..\MixSets.h"
+#include "extensions\ScriptCommands.h"
 
 using namespace plugin;
+
+
+const int GUNFLASH_LIGHT_R = 70;
+const int GUNFLASH_LIGHT_G = 55;
+const int GUNFLASH_LIGHT_B = 22;
+
+const float GUNFLASH_LIGHT_RANGE = 3.5f;
+
+const float GUNFLASH_PLAYER_OFFSET_X = 0.0f;
+const float GUNFLASH_PLAYER_OFFSET_Y = 1.3f;
+const float GUNFLASH_PLAYER_OFFSET_Z = 1.0f;
+
+const int GUNFLASH_SHADOW_ID = 3;
+const int GUNFLASH_SHADOW_INTENSITY = 1;
+const float GUNFLASH_SHADOW_RADIUS = 2.0f;
+const float GUNFLASH_SHADOW_ANGLE = 0.0f;
 
 unsigned int Gunflashes::matrixCounter = 0;
 PedExtendedData<Gunflashes::PedExtension> Gunflashes::pedExt;
@@ -39,12 +56,14 @@ RwReal carPassengerOffsetFactor = 1.15f;
 RwReal bikePassengerOffsetFactor = 1.15f;
 RwReal bikeDriverOffsetFactor = 2.0f;
 
+bool gunflashLowerLight = true;
 float inVehicleTimeMult = 1.0f; //was 1.35f
 float dualWeildingTimeMult = 1.0f;//was 1.25f
 float singleWeaponWeildingTimeMult = 1.0f;//was 1.15f
 float surfingSpeed = 0.1f;
 
 RwReal mopedFixOffset = 2.5f;
+RwReal carXFixOffset = 3.0f;
 
 const int BikeAppereance = 2;
 
@@ -114,6 +133,10 @@ void Gunflashes::SetCarPassengerOffsetFactor(const RwReal newValue) {
 
 void Gunflashes::SetOnFootOffsetFactor(const RwReal newValue) {
 	onfootOffsetFactor = newValue;
+}
+
+void Gunflashes::SetGunflashLowerLight(const bool newValue) {
+	gunflashLowerLight = newValue;
 }
 
 void Gunflashes::SetInVehicleTimeMult(const float newValue) {
@@ -501,6 +524,8 @@ static void ChangeOffsetForDriverMopedDriveBy(CPed* ped, RwV3d& offset, RwReal r
 		if (totalAnims > 0)
 		{
 			const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * bikeDriverOffsetFactor * reversingFactor;
+			const RwReal posMopedFix = posDeltaDriver / mopedFixOffset;
+
 			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
 			while (association)
 			{
@@ -513,8 +538,8 @@ static void ChangeOffsetForDriverMopedDriveBy(CPed* ped, RwV3d& offset, RwReal r
 				{
 					offset.y -= posDeltaDriver;
 					//moped upward/forward pos correction
-					offset.x -= posDeltaDriver / mopedFixOffset;
-					offset.z -= posDeltaDriver / mopedFixOffset;
+					offset.x -= posMopedFix;
+					offset.z -= posMopedFix;
 					return;
 				}
 				else if (association->m_pHierarchy->m_hashKey == dRightAnim)
@@ -580,6 +605,8 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& offset, RwReal& re
 		if (totalAnims > 0)
 		{
 			const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
+			const RwReal posCarFix = posDeltaDriver / carXFixOffset;
+
 			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
 			while (association)
 			{
@@ -587,10 +614,12 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& offset, RwReal& re
 
 				switch (animHashKey)
 				{
-					// DRIVER DRIVEBY
+				// DRIVER DRIVEBY
 				case ANIM_HASH_DBRIGHT_CAR:
 				{
 					offset.z += posDeltaDriver;
+					//Offset Fix
+					offset.x -= posCarFix;
 					return;
 				}
 				case ANIM_HASH_DBLEFT_CAR:
@@ -738,6 +767,19 @@ static bool CanWeaponBeDualWeilded(const eWeaponType weaponType)
 	}
 	}
 }
+static void DrawGunflashLowerLight(CPed* ped)
+{
+	/*Source: DK22Pac - GTA IV Lights
+	04C4: store_coords_to 10@ 11@ 12@ from_actor 3@ with_offset PED_OFFSET_X PED_OFFSET_Y PED_OFFSET_Z
+	09E5: create_flash_light_at 10@ 11@ 12@ SHOT_LIGHT_R SHOT_LIGHT_G SHOT_LIGHT_B SHOT_FLASH_LIGHT_RADIUS
+	016F: particle 3 rot 0.0 size SHOT_LIGHT_SIZE SHOT_LIGHT_INTENSITY SHOT_LIGHT_R SHOT_LIGHT_G SHOT_LIGHT_B at 10@ 11@ 12@
+	*/
+	float x = 0.0f, y = 0.0f, z = 0.0f;
+	Command<Commands::GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS>(ped, GUNFLASH_PLAYER_OFFSET_X, GUNFLASH_PLAYER_OFFSET_Y, GUNFLASH_PLAYER_OFFSET_Z, &x, &y, &z);
+	Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, GUNFLASH_LIGHT_R, GUNFLASH_LIGHT_G, GUNFLASH_LIGHT_B, GUNFLASH_LIGHT_RANGE);
+	Command<Commands::DRAW_SHADOW>(GUNFLASH_SHADOW_ID, x, y, z, GUNFLASH_SHADOW_ANGLE, GUNFLASH_SHADOW_RADIUS, GUNFLASH_SHADOW_INTENSITY, GUNFLASH_LIGHT_R, GUNFLASH_LIGHT_G, GUNFLASH_LIGHT_B);
+}
+
 
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 	bool handThisFrame[2];
@@ -799,18 +841,33 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 				if (!isInVehicle)
 				{
+					if (gunflashLowerLight)
+						DrawGunflashLowerLight(ped);
+
 					//Fix offset while moving for certain weapons
 					if (ped->m_fMovingSpeed > 0.0f && needsCustomMat)
 					{
 						ChangeOnFootOffsetForTwoHandedWeapons(ped, mat);
 					}
+
 				}
-				else if (!leftHand)
+				else
 				{
 					if (ped->m_pVehicle->m_fMovingSpeed > 0.0f)
 					{
 						RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
-						if (isInBike)
+						if (!isInBike)
+						{
+							if (driverDriveby)
+							{
+								ChangeOffsetForCarDriverDriveBy(ped, offset, reversingFactor);
+							}
+							else
+							{
+								ChangeOffsetForCarPassengerDriveBy(ped, offset, reversingFactor);
+							}
+						}
+						else
 						{
 							if (driverDriveby)
 							{
@@ -822,17 +879,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 							else
 							{
 								ChangeOffsetForPassengerBikeDriveBy(ped, offset, reversingFactor);
-							}
-						}
-						else
-						{
-							if (driverDriveby)
-							{
-								ChangeOffsetForCarDriverDriveBy(ped, offset, reversingFactor);
-							}
-							else
-							{
-								ChangeOffsetForCarPassengerDriveBy(ped, offset, reversingFactor);
 							}
 						}
 					}

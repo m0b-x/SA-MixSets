@@ -86,13 +86,9 @@ SurfingSpeed 		 = 0.1      # (0.1) Surfing speed detection (sitting on a moving 
 
 ```ini
 #m0b's gunflashes system
-<<<<<<< HEAD
 ExperimentalGunFlash = 1		# (0|1) Adds m0b's gunflash fixes, to be used along with No3DGunflash Fix2DGunflash
 #Additional Effects
 GunflashLowerLight 	 = 1 		# (0|1) Adds light and shadow effects under the muzzle flash (Credits go to DK22Pac's GTA IV Lights)
-=======
-ExperimentalGunFlash = 1		# (0|1) Add's m0b's gunflash fixes, to be used along with No3DGunflash Fix2DGunflash
->>>>>>> 1250e1a91d2a96a7e61a7ef0dfb9bcfa7acc9aa0
 #Offsets for m0b's gunflashes system
 OnFootOffset 		 = 1.0		# (1.0) Moving offset distance multiplier for firing weapon while on foot (needs ExperimentalGunFlash = 1)
 CarDriverOffset		 = 1.0		# (1.0) Moving offset distance multiplier for firing weapon while driving a car (needs ExperimentalGunFlash = 1)

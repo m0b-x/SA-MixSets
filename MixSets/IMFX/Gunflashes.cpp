@@ -17,7 +17,6 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include <Windows.h>
 #include <shlobj.h>
 */
-#include <map>
 #include <CAnimManager.h>
 #include <CAnimBlendAssociation.h>
 #include <CAnimBlendHierarchy.h>
@@ -29,6 +28,7 @@ If you consider fixing something here, you should also consider fixing there: ht
 
 using namespace plugin;
 
+const bool leftHand[2] = { true, false };
 
 const int GUNFLASH_LIGHT_R = 70;
 const int GUNFLASH_LIGHT_G = 55;
@@ -159,13 +159,14 @@ void Gunflashes::SetMopedFixOffset(const RwReal newValue) {
 	mopedFixOffset = newValue;
 }
 
+const int weaponArraySize = WEAPON_MINIGUN + 1;
 struct WeaponData
 {
 	char* particleName = "gunflash";
 	bool rotate = true;
 	bool smoke = true;
 };
-std::unordered_map<unsigned int, WeaponData> weaponMap;
+WeaponData weaponArray[weaponArraySize];
 
 void Gunflashes::AddDefaultWeaponData()
 {
@@ -176,8 +177,9 @@ void Gunflashes::AddDefaultWeaponData()
 		weapon.smoke = true;
 		weapon.rotate = true;
 
-		weaponMap[weaponID] = weapon;
+		weaponArray[weaponID] = weapon;
 	}
+
 	//minigun exception
 	unsigned int minigunID = 38;
 
@@ -186,20 +188,23 @@ void Gunflashes::AddDefaultWeaponData()
 	weapon.smoke = true;
 	weapon.rotate = true;
 
-	weaponMap[minigunID] = weapon;
+	weaponArray[minigunID] = weapon;
 }
 
-void Gunflashes::AddOrUpdateWeaponData(unsigned int weaponID, const std::string particle, bool rotate, bool smoke)
+void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string particle, bool rotate, bool smoke)
 {
-	WeaponData weapon;
+	if (weaponID < weaponArraySize)
+	{
+		WeaponData weapon;
 
-	char* particleCharPointer = _strdup(particle.c_str());
+		char* particleCharPointer = _strdup(particle.c_str());
 
-	weapon.particleName = particleCharPointer;
-	weapon.smoke = smoke;
-	weapon.rotate = rotate;
+		weapon.particleName = particleCharPointer;
+		weapon.smoke = smoke;
+		weapon.rotate = rotate;
 
-	weaponMap[weaponID] = weapon;
+		weaponArray[weaponID] = weapon;
+	}
 }
 
 Gunflashes::PedExtension::PedExtension(CPed*) {
@@ -234,6 +239,7 @@ void Gunflashes::Setup(bool experimental)
 		patch::RedirectCall(0x742299, DoDriveByGunflash);
 		patch::RedirectJump(0x4A0DE0, MyTriggerGunflash);
 		patch::SetPointer(0x86D744, MyProcessUseGunTask);
+
 		AddDefaultWeaponData();
 		//ReadSettings();
 	}
@@ -614,7 +620,7 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& offset, RwReal& re
 
 				switch (animHashKey)
 				{
-				// DRIVER DRIVEBY
+					// DRIVER DRIVEBY
 				case ANIM_HASH_DBRIGHT_CAR:
 				{
 					offset.z += posDeltaDriver;
@@ -660,7 +666,7 @@ static void ChangeOffsetForCarPassengerDriveBy(CPed* ped, RwV3d& offset, RwReal&
 
 				switch (animHashKey)
 				{
-				// PASSENGER TOP RIGHT LEFT DRIVEBY
+					// PASSENGER TOP RIGHT LEFT DRIVEBY
 				case ANIM_HASH_TOP_DRIVEBY_RIGHT_SHOOTING_LEFT:
 				{
 					offset.z -= posDeltaPassenger;
@@ -780,7 +786,6 @@ static void DrawGunflashLowerLight(CPed* ped)
 	Command<Commands::DRAW_SHADOW>(GUNFLASH_SHADOW_ID, x, y, z, GUNFLASH_SHADOW_ANGLE, GUNFLASH_SHADOW_RADIUS, GUNFLASH_SHADOW_INTENSITY, GUNFLASH_LIGHT_R, GUNFLASH_LIGHT_G, GUNFLASH_LIGHT_B);
 }
 
-
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 	bool handThisFrame[2];
 	handThisFrame[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
@@ -798,6 +803,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 	const bool isInMoped = isInBike ? IsPedInMoped(ped) : false;
 	const bool weapSkill = ped->m_nWeaponSkill > (char)2;
 	const bool dualWeildedWeapon = needsCustomMat && weapSkill;
+	const unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
 
 	for (int i = 0; i < 2; i++) {
 		if (handThisFrame[i])
@@ -806,27 +812,24 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 			RwMatrix* mat = pedExt.Get(ped).pMats[i];
 			if (!mat) break;
 
-			bool leftHand = i == 0;
 			if (ped->m_pRwObject && ped->m_pRwObject->type == rpCLUMP) {
 				bool rotate = true;
 				bool smoke = true;
 				char* fxName = "gunflash";
 
-				unsigned int mapKey = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
-
-				auto it = weaponMap.find(mapKey);
-				if (it != weaponMap.end())
+				//Check if the player's weapons matches the array
+				if (arrayIndex < weaponArraySize)
 				{
-					WeaponData weaponData = weaponMap[mapKey];
-					fxName = weaponData.particleName;
-					rotate = weaponData.rotate;
-					smoke = weaponData.smoke;
+					fxName = weaponArray[arrayIndex].particleName;
+					rotate = weaponArray[arrayIndex].rotate;
+					smoke = weaponArray[arrayIndex].smoke;
 				}
 
 				char dualWeildingSKill = ped->GetWeaponSkill(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
 				CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, dualWeildingSKill);
 				RwV3d offset = weapInfo->m_vecFireOffset.ToRwV3d();
-				if (leftHand)
+
+				if (leftHand[i])
 				{
 					offset.z *= -1.0f;
 				}
@@ -835,7 +838,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				static RwV3d axis_z = { 0.0f, 0.0f, 1.0f };
 
 				RpHAnimHierarchy* hierarchy = GetAnimHierarchyFromSkinClump(ped->m_pRwClump);
-				RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, 24 + (10 * leftHand))];
+				RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, 24 + (10 * leftHand[i]))];
 				memcpy(mat, boneMat, sizeof(RwMatrix));
 				RwMatrixUpdate(mat);
 
@@ -849,7 +852,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 					{
 						ChangeOnFootOffsetForTwoHandedWeapons(ped, mat);
 					}
-
 				}
 				else
 				{
@@ -888,13 +890,12 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				//if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 				if (gunflashFx)
 				{
-					if (isInVehicle || !needsCustomMat || (!leftHand && dualWeildedWeapon))
+					if (isInVehicle)
 					{
 						gunflashFx->m_pParentMatrix = boneMat;
-						if (isInVehicle)
-							gunflashFx->SetTimeMult(inVehicleTimeMult);
+						gunflashFx->SetTimeMult(inVehicleTimeMult);
 					}
-					if (needsCustomMat)
+					else if (needsCustomMat)
 					{
 						if (dualWeildingSKill)
 						{
@@ -905,6 +906,11 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 							gunflashFx->SetTimeMult(singleWeaponWeildingTimeMult);
 						}
 					}
+					else if (!needsCustomMat || (!leftHand[i] && dualWeildedWeapon))
+					{
+						gunflashFx->m_pParentMatrix = boneMat;
+					}
+
 					RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 					if (rotate)
 					{

@@ -926,6 +926,9 @@ void MixSets::VehFlipDamage_Process(CVehicle* veh)
 }
 
 void MixSets::InstallEmptyRadioPatches() {
+
+	//patch::Nop(0x4EB9F4, 5);    //  disable radio scrolling
+
 	patch::RedirectCall(0x4E9F3F, SetEmptyRadioNameScale);
 	patch::RedirectCall(0x4E9F4D, DrawEmptyRadioName);
 	patch::RedirectCall(0x4E9FF1, SetEmptyRadioNameAlignment);

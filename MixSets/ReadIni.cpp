@@ -727,7 +727,7 @@ void MixSets::ReadIni()
 					smoke = true;
 				}
 
-				Gunflashes::AddOrUpdateWeaponData(i, particleName, (bool)rotate, (bool)smoke);
+				Gunflashes::UpdateWeaponData(i, particleName, (bool)rotate, (bool)smoke);
 			}
 		}
 
@@ -749,7 +749,7 @@ void MixSets::ReadIni()
 				smoke = true;
 			}
 
-			Gunflashes::AddOrUpdateWeaponData(MinigunID, particleName, rotate, smoke);;
+			Gunflashes::UpdateWeaponData(MinigunID, particleName, rotate, smoke);;
 		}
 	}
 

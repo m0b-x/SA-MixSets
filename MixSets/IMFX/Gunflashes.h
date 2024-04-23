@@ -48,7 +48,7 @@ public:
     static void CreateGunflashEffectsForPed(CPed* ped);
 
     static void AddDefaultWeaponData();
-    static void AddOrUpdateWeaponData(unsigned int weaponID, const std::string particle, bool rotate = true, bool smoke = true);
+    static void UpdateWeaponData(unsigned int weaponID, const std::string particle, bool rotate = true, bool smoke = true);
 
     static void SetBikePassengerOffsetFactor(const RwReal newValue);
     static void SetBikeDriverOffsetFactor(const RwReal newValue);

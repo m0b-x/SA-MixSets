@@ -384,6 +384,22 @@ void MixSets::ReadIni_BeforeFirstFrame()
 		});
 	}
 
+	if (ReadIniBool(ini, &lg, "Interface", "BigAmmo")) {
+
+		patch::SetChar(0x58946C, 0xFF, 0);
+		patch::SetChar(0x58946D, 0xFF, 0);
+
+		patch::SetChar(0x589473, 0xFF, 0);
+		patch::SetChar(0x589474, 0xFF, 0);
+
+		patch::SetChar(0x58954F, 0x84, 0);
+		patch::SetChar(0x589550, 0x01, 0);
+		patch::SetChar(0x589551, 0x87, 0);
+
+		patch::SetChar(0x589562, 0x84, 0);
+		patch::SetChar(0x589563, 0x01, 0);
+		patch::SetChar(0x589564, 0x87, 0);
+	}
 
 	// -- World
 	if (ReadIniInt(ini, &lg, "World", "HowManyMinsInDay", &i)) {
@@ -590,9 +606,8 @@ void MixSets::ReadIni()
 		}
 		else {
 			G_Fix2DGunflash = true;
-			bool experimental = ReadIniBool(ini, &lg, "Graphics", "ExperimentalGunFlash"); // fixes by m0b
 
-			Gunflashes::Setup(experimental);
+			Gunflashes::Setup();
 
 			Events::pedRenderEvent.before += Gunflashes::CreateGunflashEffectsForPed;
 
@@ -673,6 +688,12 @@ void MixSets::ReadIni()
 		if (ReadIniFloat(ini, &lg, "Graphics", "OnFootOffset", &f))
 			Gunflashes::SetOnFootOffsetFactor(f);
 
+		if (ReadIniFloat(ini, &lg, "Graphics", "OnFootReverse", &f))
+			Gunflashes::SetOnFootReverseFactor(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "SurfingOffset", &f))
+			Gunflashes::SetSurfingOffsetFactor(f);
+
 		if (ReadIniFloat(ini, &lg, "Graphics", "CarDriverOffset", &f))
 			Gunflashes::SetCarDriverOffsetFactor(f);
 
@@ -686,6 +707,12 @@ void MixSets::ReadIni()
 			Gunflashes::SetBikePassengerOffsetFactor(f);
 
 		//Read Time Multipliers
+		if (ReadIniFloat(ini, &lg, "Graphics", "JetpackTimeMult", &f))
+			Gunflashes::SetJetpackTimeMult(f);
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "SurfingTimeMult", &f))
+			Gunflashes::SetSurfingTimeMult(f);
+
 		if (ReadIniFloat(ini, &lg, "Graphics", "InVehicleTimeMult", &f))
 			Gunflashes::SetInVehicleTimeMult(f);
 
@@ -1118,6 +1145,16 @@ void MixSets::ReadIni()
 
 	if ((!inSAMP || (inSAMP && rpSAMP)) && ReadIniBool(ini, &lg, "Gameplay", "ScrollReloadFix")) {
 		MakeNOP(0x60B4FA, 6, true);
+	}
+
+	if ((ReadIniBool(ini, &lg, "Gameplay", "ClimbOntoVehicles"))) {
+		patch::SetRaw(0x67DF6E, "\xEB", 1);
+		patch::SetRaw(0x67E027, "\x90\x90", 2);
+	}
+	else
+	{
+		patch::SetRaw(0x67DF6E, "\x75", 1);
+		patch::SetRaw(0x67E027, "\x75\x1F", 2);
 	}
 
 	if ((!inSAMP || (inSAMP && rpSAMP)) && ReadIniBool(ini, &lg, "Gameplay", "VehBurnEngineBroke")) {

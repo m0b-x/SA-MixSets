@@ -39,7 +39,7 @@ public:
     static bool bLeftHand;
     static bool bVehicleGunflash;
 
-    static void Setup(bool experimental);
+    static void Setup();
     //static void ReadSettings();
     static void __fastcall MyTriggerGunflash(Fx_c* fx, int, CEntity* owner, CVector& origin, CVector& target, bool doGunflash);
     static void __fastcall DoDriveByGunflash(CPed* driver, int, int, bool leftHand);
@@ -55,8 +55,12 @@ public:
     static void SetCarDriverOffsetFactor(const RwReal newValue);
     static void SetCarPassengerOffsetFactor(const RwReal newValue);
     static void SetOnFootOffsetFactor(const RwReal newValue);
+    static void SetSurfingOffsetFactor(const RwReal newValue);
+    static void SetOnFootReverseFactor(const RwReal newValue);
 
     static void SetGunflashLowerLight(const bool newValue);
+    static void SetSurfingTimeMult(const float value);
+    static void SetJetpackTimeMult(const float value);
     static void SetInVehicleTimeMult(const float value);
     static void SetDualWeildingTimeMult(const float value);
     static void SetSingleWeaponWeildingTimeMult(const float value);

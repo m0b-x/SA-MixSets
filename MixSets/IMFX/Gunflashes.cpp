@@ -28,7 +28,7 @@ If you consider fixing something here, you should also consider fixing there: ht
 
 using namespace plugin;
 
-const bool leftHand[2] = { true, false };
+const bool isLeftHand[2] = { true, false };
 
 const int GUNFLASH_LIGHT_R = 70;
 const int GUNFLASH_LIGHT_G = 55;
@@ -51,15 +51,19 @@ bool Gunflashes::bLeftHand = false;
 bool Gunflashes::bVehicleGunflash = false;
 
 RwReal onfootOffsetFactor = 2.0f;
+RwReal onfootReverseFactor = 1.5f;
+RwReal surfingOfsetFactor = 1.5f;
 RwReal carDriverOffsetFactor = 2.0f;
 RwReal carPassengerOffsetFactor = 1.15f;
 RwReal bikePassengerOffsetFactor = 1.15f;
 RwReal bikeDriverOffsetFactor = 2.0f;
 
 bool gunflashLowerLight = true;
-float inVehicleTimeMult = 1.0f; //was 1.35f
-float dualWeildingTimeMult = 1.0f;//was 1.25f
-float singleWeaponWeildingTimeMult = 1.0f;//was 1.15f
+float inVehicleTimeMult = 1.0f; 
+float surfingTimeMult = 1.0f;
+float dualWeildingTimeMult = 1.0f;
+float singleWeaponWeildingTimeMult = 1.0f;
+float jetpackTimeMult = 1.0f;
 float surfingSpeed = 0.1f;
 
 RwReal mopedFixOffset = 2.5f;
@@ -135,8 +139,25 @@ void Gunflashes::SetOnFootOffsetFactor(const RwReal newValue) {
 	onfootOffsetFactor = newValue;
 }
 
+void Gunflashes::SetSurfingOffsetFactor(const RwReal newValue) {
+	surfingOfsetFactor = newValue;
+}
+
+
+void Gunflashes::SetOnFootReverseFactor(const RwReal newValue) {
+	onfootReverseFactor = newValue;
+}
+
 void Gunflashes::SetGunflashLowerLight(const bool newValue) {
 	gunflashLowerLight = newValue;
+}
+
+void Gunflashes::SetJetpackTimeMult(const float newValue) {
+	jetpackTimeMult = newValue;
+}
+
+void Gunflashes::SetSurfingTimeMult(const float newValue) {
+	surfingTimeMult = newValue;
 }
 
 void Gunflashes::SetInVehicleTimeMult(const float newValue) {
@@ -227,37 +248,19 @@ Gunflashes::PedExtension::~PedExtension() {
 	if (pMats[1] != nullptr) delete pMats[1];
 }
 
-void Gunflashes::Setup(bool experimental)
+void Gunflashes::Setup()
 {
-	if (experimental)
-	{
-		patch::Nop(0x73306D, 9); // Remove default gunflashes
-		patch::Nop(0x7330FF, 9); // Remove default gunflashes
-		patch::SetUShort(0x5DF425, 0xE990); // Remove default gunflashes
-		patch::SetUChar(0x741353, 0); // Add gunflash for cuntgun
+	patch::Nop(0x73306D, 9); // Remove default gunflashes
+	patch::Nop(0x7330FF, 9); // Remove default gunflashes
+	patch::SetUShort(0x5DF425, 0xE990); // Remove default gunflashes
+	patch::SetUChar(0x741353, 0); // Add gunflash for cuntgun
 
-		patch::RedirectCall(0x742299, DoDriveByGunflash);
-		patch::RedirectJump(0x4A0DE0, MyTriggerGunflash);
-		patch::SetPointer(0x86D744, MyProcessUseGunTask);
+	patch::RedirectCall(0x742299, DoDriveByGunflash);
+	patch::RedirectJump(0x4A0DE0, MyTriggerGunflash);
+	patch::SetPointer(0x86D744, MyProcessUseGunTask);
 
-		AddDefaultWeaponData();
-		//ReadSettings();
-	}
-	else
-	{
-		/*changed by m0b : deactivating mixsets' system
-		patch::Nop(0x73306D, 9); // Remove default gunflashes
-		patch::Nop(0x7330FF, 9); // Remove default gunflashes
-		patch::SetUShort(0x5DF425, 0xE990); // Remove default gunflashes
-		*/
-		patch::SetUChar(0x741353, 0); // Add gunflash for cuntgun
-
-		patch::RedirectCall(0x742299, DoDriveByGunflash);
-		//patch::RedirectJump(0x4A0DE0, MyTriggerGunflash);
-		patch::SetPointer(0x86D744, MyProcessUseGunTask);
-		AddDefaultWeaponData();
-		//ReadSettings();
-	}
+	AddDefaultWeaponData();
+	//ReadSettings();
 }
 
 void Gunflashes::ProcessPerFrame() {
@@ -365,32 +368,6 @@ static void GetBikePassengerDrivebyAnimations(unsigned short id, unsigned int& f
 	left = 1918643658;
 	right = 1692705712;
 	back = 910920601;
-}
-
-static bool IsPedDrivebyingInVehicle(CPed* ped, bool& driverDriveby)
-{
-	if (!ped->m_pVehicle || !ped->m_pIntelligence)
-	{
-		return false;
-	}
-
-	CTask* activeTask = ped->m_pIntelligence->m_TaskMgr.GetSimplestActiveTask();
-
-	if (activeTask)
-	{
-		eTaskType taskType = activeTask->GetId();
-		if (taskType == TASK_SIMPLE_CAR_DRIVE)
-		{
-			driverDriveby = true;
-			return true;
-		}
-		else if (taskType == TASK_SIMPLE_GANG_DRIVEBY)
-		{
-			return true;
-		}
-		return false;
-	}
-	return false;
 }
 
 static bool IsPedInBike(CPed* ped)
@@ -718,33 +695,23 @@ static void ChangeOffsetForCarPassengerDriveBy(CPed* ped, RwV3d& offset, RwReal&
 	}
 }
 
-static bool IsPedWalkingBackWhileShooting(CPed* ped)
-{
-	if (ped->m_pRwClump)
-	{
-		unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-		if (totalAnims > 0)
-		{
-			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-			while (association)
-			{
-				if (association->m_pHierarchy->m_hashKey == ANIM_HASH_GUNMOVE_BACKWARD)
-					return true;
-				association = RpAnimBlendGetNextAssociation(association);
-			}
-		}
-	}
-	return false;
-}
 
-static void ChangeOnFootOffsetForTwoHandedWeapons(CPed* ped, RwMatrix* mat)
+static void ChangeOnFootOffsetForCustomMatWeapons(CPed* ped, RwMatrix* mat)
 {
-	const RwReal reverseFactor = IsPedWalkingBackWhileShooting(ped) ? -1.0f : 1.0f;
+	//ped moving backwards
+	const RwReal reverseFactor = (ped->m_vecAnimMovingShiftLocal.y < 0.0f) ? onfootReverseFactor : 1.0f;
 	const RwReal onFootOffset = onfootOffsetFactor * reverseFactor;
 
 	mat->pos.x += ped->m_vecMoveSpeed.x * onFootOffset;
 	mat->pos.y += ped->m_vecMoveSpeed.y * onFootOffset;
 	mat->pos.z += ped->m_vecMoveSpeed.z * onFootOffset;
+}
+
+static void ChangeOnFootOffsetWhenSurfing(CPed* ped, RwMatrix* mat)
+{
+	mat->pos.x += ped->m_vecMoveSpeed.x * surfingOfsetFactor;
+	mat->pos.y += ped->m_vecMoveSpeed.y * surfingOfsetFactor;
+	mat->pos.z += ped->m_vecMoveSpeed.z * surfingOfsetFactor;
 }
 
 static bool CanWeaponBeDualWeilded(const eWeaponType weaponType)
@@ -786,24 +753,25 @@ static void DrawGunflashLowerLight(CPed* ped)
 	Command<Commands::DRAW_SHADOW>(GUNFLASH_SHADOW_ID, x, y, z, GUNFLASH_SHADOW_ANGLE, GUNFLASH_SHADOW_RADIUS, GUNFLASH_SHADOW_INTENSITY, GUNFLASH_LIGHT_R, GUNFLASH_LIGHT_G, GUNFLASH_LIGHT_B);
 }
 
+static eTaskType GetPedActiveTask(CPed* ped)
+{
+	CTask* activeTask = ped->m_pIntelligence->m_TaskMgr.GetSimplestActiveTask();
+	if (activeTask)
+	{
+		return activeTask->GetId();
+	}
+	else
+	{
+		return TASK_NONE;
+	}
+}
+
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
+
 	bool handThisFrame[2];
+
 	handThisFrame[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
 	handThisFrame[1] = pedExt.Get(ped).bRightHandGunflashThisFrame;
-
-	bool driverDriveby = false;
-	const bool isInVehicle = IsPedDrivebyingInVehicle(ped, driverDriveby);
-
-	//Is ped surfing on a vehicle? => Don't make the gun effect
-	if (!isInVehicle && ped->m_fMovingSpeed > surfingSpeed)
-		return;
-
-	const bool needsCustomMat = CanWeaponBeDualWeilded(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
-	const bool isInBike = isInVehicle ? IsPedInBike(ped) : false;
-	const bool isInMoped = isInBike ? IsPedInMoped(ped) : false;
-	const bool weapSkill = ped->m_nWeaponSkill > (char)2;
-	const bool dualWeildedWeapon = needsCustomMat && weapSkill;
-	const unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
 
 	for (int i = 0; i < 2; i++) {
 		if (handThisFrame[i])
@@ -812,7 +780,30 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 			RwMatrix* mat = pedExt.Get(ped).pMats[i];
 			if (!mat) break;
 
+			eTaskType task = GetPedActiveTask(ped);
+
+			const bool driverDriveby = (task == TASK_SIMPLE_CAR_DRIVE);
+			const bool isInVehicle = (driverDriveby || (task == TASK_SIMPLE_GANG_DRIVEBY)) && (IsVehiclePointerValid(ped->m_pVehicle));
+			
+			const bool isUsingJetpack = (task == TASK_SIMPLE_JETPACK);
+
+			const bool surfing = (!isInVehicle && ped->m_fMovingSpeed > surfingSpeed && !isUsingJetpack);
+
+			bool needsCustomMat = CanWeaponBeDualWeilded(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
+			
+			const bool isInBike = isInVehicle ? IsPedInBike(ped) : false;
+			const bool isInMoped = isInBike ? IsPedInMoped(ped) : false;
+
+			const bool weapSkill = ped->m_nWeaponSkill > (char)2;
+			const bool dualWeildedWeapon = needsCustomMat && weapSkill;
+
+			const unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
+
 			if (ped->m_pRwObject && ped->m_pRwObject->type == rpCLUMP) {
+
+				//initial particle time multiplier
+				float particleTimeMult = 1.0f;
+
 				bool rotate = true;
 				bool smoke = true;
 				char* fxName = "gunflash";
@@ -829,7 +820,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, dualWeildingSKill);
 				RwV3d offset = weapInfo->m_vecFireOffset.ToRwV3d();
 
-				if (leftHand[i])
+				if (isLeftHand[i])
 				{
 					offset.z *= -1.0f;
 				}
@@ -838,26 +829,47 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				static RwV3d axis_z = { 0.0f, 0.0f, 1.0f };
 
 				RpHAnimHierarchy* hierarchy = GetAnimHierarchyFromSkinClump(ped->m_pRwClump);
-				RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, 24 + (10 * leftHand[i]))];
+				RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, 24 + (10 * isLeftHand[i]))];
 				memcpy(mat, boneMat, sizeof(RwMatrix));
 				RwMatrixUpdate(mat);
 
 				if (!isInVehicle)
 				{
-					if (gunflashLowerLight)
-						DrawGunflashLowerLight(ped);
-
-					//Fix offset while moving for certain weapons
-					if (ped->m_fMovingSpeed > 0.0f && needsCustomMat)
+					if (ped->m_fMovingSpeed > 0.0f && needsCustomMat && !surfing)
 					{
-						ChangeOnFootOffsetForTwoHandedWeapons(ped, mat);
+						ChangeOnFootOffsetForCustomMatWeapons(ped, mat);
+
+						if (dualWeildingSKill)
+						{
+							particleTimeMult = dualWeildingTimeMult;
+						}
+						else
+						{
+							particleTimeMult = singleWeaponWeildingTimeMult;
+						}
+
+						if (isUsingJetpack)
+						{
+							particleTimeMult = jetpackTimeMult;
+						}
 					}
+
+					if (surfing)
+					{
+						ChangeOnFootOffsetWhenSurfing(ped, mat);
+						needsCustomMat = true;
+						particleTimeMult = surfingTimeMult;
+					}
+
 				}
 				else
 				{
 					if (ped->m_pVehicle->m_fMovingSpeed > 0.0f)
 					{
+						particleTimeMult = inVehicleTimeMult;
+						
 						RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
+
 						if (!isInBike)
 						{
 							if (driverDriveby)
@@ -887,29 +899,17 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				}
 
 				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(fxName, &offset, mat, true);
+
 				//if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
+				
 				if (gunflashFx)
 				{
-					if (isInVehicle)
-					{
-						gunflashFx->m_pParentMatrix = boneMat;
-						gunflashFx->SetTimeMult(inVehicleTimeMult);
-					}
-					else if (needsCustomMat)
-					{
-						if (dualWeildingSKill)
-						{
-							gunflashFx->SetTimeMult(dualWeildingTimeMult);
-						}
-						else
-						{
-							gunflashFx->SetTimeMult(singleWeaponWeildingTimeMult);
-						}
-					}
-					else if (!needsCustomMat || (!leftHand[i] && dualWeildedWeapon))
+					if (isInVehicle || !needsCustomMat)
 					{
 						gunflashFx->m_pParentMatrix = boneMat;
 					}
+					//Set the final multipliers
+					gunflashFx->SetTimeMult(particleTimeMult);
 
 					RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 					if (rotate)
@@ -917,6 +917,11 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 						RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_y, CGeneral::GetRandomNumberInRange(0.0f, 360.0f), rwCOMBINEPRECONCAT);
 					}
 					gunflashFx->PlayAndKill();
+
+					if (gunflashLowerLight)
+					{
+						DrawGunflashLowerLight(ped);
+					}
 				}
 				if (smoke)
 				{

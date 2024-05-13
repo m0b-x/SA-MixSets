@@ -50,21 +50,23 @@ PedExtendedData<Gunflashes::PedExtension> Gunflashes::pedExt;
 bool Gunflashes::bLeftHand = false;
 bool Gunflashes::bVehicleGunflash = false;
 
-RwReal onfootOffsetFactor = 2.0f;
-RwReal onfootReverseFactor = 1.5f;
-RwReal surfingOfsetFactor = 1.5f;
-RwReal carDriverOffsetFactor = 2.0f;
-RwReal carPassengerOffsetFactor = 1.15f;
-RwReal bikePassengerOffsetFactor = 1.15f;
-RwReal bikeDriverOffsetFactor = 2.0f;
+RwReal onfootOffsetFactor = 0.0f;
+RwReal onfootReverseFactor = 0.0f;
+RwReal surfingOfsetFactor = 0.0f;
+RwReal carDriverOffsetFactor = 0.0f;
+RwReal carPassengerOffsetFactor = 0.0f;
+RwReal bikePassengerOffsetFactor = 0.0f;
+RwReal bikeDriverOffsetFactor = 0.0f;
 
-bool gunflashLowerLight = true;
+bool gunflashLowerLight = false;
+
 float inVehicleTimeMult = 1.0f; 
 float surfingTimeMult = 1.0f;
 float dualWeildingTimeMult = 1.0f;
 float singleWeaponWeildingTimeMult = 1.0f;
 float jetpackTimeMult = 1.0f;
-float surfingSpeed = 0.1f;
+
+float surfingSpeed = 0.2f;
 
 RwReal mopedFixOffset = 2.5f;
 RwReal carXFixOffset = 3.0f;
@@ -918,7 +920,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 					}
 					gunflashFx->PlayAndKill();
 
-					if (gunflashLowerLight)
+					if (gunflashLowerLight && !isInVehicle)
 					{
 						DrawGunflashLowerLight(ped);
 					}

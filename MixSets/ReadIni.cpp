@@ -676,7 +676,7 @@ void MixSets::ReadIni()
 		G_Fix2DGunflash = false;
 	} 
 
-	if (ReadIniBool(ini, &lg, "Graphics", "Fix2DGunflash") && ReadIniBool(ini, &lg, "Graphics", "ExperimentalGunFlash"))
+	if (ReadIniBool(ini, &lg, "Graphics", "Fix2DGunflash"))
 	{
 		//Read Additional Options
 		if (ReadIniBool(ini, &lg, "Graphics", "GunflashLowerLight"))

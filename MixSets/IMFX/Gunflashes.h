@@ -39,11 +39,12 @@ public:
     static bool bLeftHand;
     static bool bVehicleGunflash;
 
-    static void Setup();
+    static void Setup(bool sampFix);
     //static void ReadSettings();
     static void __fastcall MyTriggerGunflash(Fx_c* fx, int, CEntity* owner, CVector& origin, CVector& target, bool doGunflash);
     static void __fastcall DoDriveByGunflash(CPed* driver, int, int, bool leftHand);
     static bool __fastcall MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CPed* ped);
+    static bool __fastcall MyProcessUseGunTaskSAMP(CTaskSimpleUseGun* task, int, CPed* ped);
     static void ProcessPerFrame();
     static void CreateGunflashEffectsForPed(CPed* ped);
 
@@ -57,6 +58,7 @@ public:
     static void SetOnFootOffsetFactor(const RwReal newValue);
     static void SetSurfingOffsetFactor(const RwReal newValue);
     static void SetOnFootReverseFactor(const RwReal newValue);
+    static void SetStaticBikeOffset(const RwReal newValue);
 
     static void SetGunflashLowerLight(const bool newValue);
     static void SetSurfingTimeMult(const float value);

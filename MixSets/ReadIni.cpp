@@ -607,7 +607,7 @@ void MixSets::ReadIni()
 		else {
 			G_Fix2DGunflash = true;
 
-			Gunflashes::Setup();
+			Gunflashes::Setup( ReadIniBool(ini, &lg, "Graphics", "GunflashFixSAMP") );
 
 			Events::pedRenderEvent.before += Gunflashes::CreateGunflashEffectsForPed;
 
@@ -683,6 +683,11 @@ void MixSets::ReadIni()
 			Gunflashes::SetGunflashLowerLight(true);
 		else
 			Gunflashes::SetGunflashLowerLight(false);
+
+		//Read Non-Moving Weapon Offsets
+
+		if (ReadIniFloat(ini, &lg, "Graphics", "StaticBikeOffset", &f))
+			Gunflashes::SetStaticBikeOffset(f);
 
 		//Read Moving Weapon Offsets
 		if (ReadIniFloat(ini, &lg, "Graphics", "OnFootOffset", &f))
@@ -805,6 +810,12 @@ void MixSets::ReadIni()
 
 	if (ReadIniBool(ini, &lg, "Graphics", "NoRainSteam")) {
 		MakeNOP(0x72ADF0, 37, true);
+	}
+
+	if (ReadIniBool(ini, &lg, "Graphics", "NoPedRain")) {
+
+		//write_memory 6189621 size 4 value 8752180 virtual_protect 1
+		WriteMemory<uint32_t>(0x5E7235, 0x858C34, true);
 	}
 
 	if (ReadIniBool(ini, &lg, "Graphics", "NoSandstormSteam")) {

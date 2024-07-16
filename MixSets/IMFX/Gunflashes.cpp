@@ -50,6 +50,7 @@ PedExtendedData<Gunflashes::PedExtension> Gunflashes::pedExt;
 bool Gunflashes::bLeftHand = false;
 bool Gunflashes::bVehicleGunflash = false;
 
+RwReal staticBikeOffset = 0.0f;
 RwReal onfootOffsetFactor = 0.0f;
 RwReal onfootReverseFactor = 0.0f;
 RwReal surfingOfsetFactor = 0.0f;
@@ -135,6 +136,10 @@ void Gunflashes::SetCarDriverOffsetFactor(const RwReal newValue) {
 
 void Gunflashes::SetCarPassengerOffsetFactor(const RwReal newValue) {
 	carPassengerOffsetFactor = newValue;
+}
+
+void Gunflashes::SetStaticBikeOffset(const RwReal newValue) {
+	staticBikeOffset = newValue;
 }
 
 void Gunflashes::SetOnFootOffsetFactor(const RwReal newValue) {
@@ -250,7 +255,7 @@ Gunflashes::PedExtension::~PedExtension() {
 	if (pMats[1] != nullptr) delete pMats[1];
 }
 
-void Gunflashes::Setup()
+void Gunflashes::Setup(bool sampFix)
 {
 	patch::Nop(0x73306D, 9); // Remove default gunflashes
 	patch::Nop(0x7330FF, 9); // Remove default gunflashes
@@ -259,7 +264,8 @@ void Gunflashes::Setup()
 
 	patch::RedirectCall(0x742299, DoDriveByGunflash);
 	patch::RedirectJump(0x4A0DE0, MyTriggerGunflash);
-	patch::SetPointer(0x86D744, MyProcessUseGunTask);
+
+	patch::SetPointer(0x86D744, (sampFix) ? MyProcessUseGunTaskSAMP : MyProcessUseGunTask);
 
 	AddDefaultWeaponData();
 	//ReadSettings();
@@ -274,8 +280,31 @@ void Gunflashes::ProcessPerFrame() {
 	}
 }
 
-bool __fastcall Gunflashes::MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CPed* ped) {
-	if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, ped->GetWeaponSkill())) {
+bool __fastcall Gunflashes::MyProcessUseGunTaskSAMP(CTaskSimpleUseGun* task, int, CPed* ped) 
+{
+	//disabled for sa-mp
+	//if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, ped->GetWeaponSkill()))
+	{
+		if (task->bRightHand) {
+			bLeftHand = false;
+			CallMethod<0x61EB10>(task, ped, false);
+		}
+		if (task->bLefttHand) {
+			bLeftHand = true;
+			CallMethod<0x61EB10>(task, ped, true);
+			bLeftHand = false;
+		}
+		//*reinterpret_cast<unsigned char *>(&task->m_nFlags) = 0;
+		task->bRightHand = false;
+		task->bLefttHand = false;
+	}
+	return 0;
+}
+
+bool __fastcall Gunflashes::MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CPed* ped) 
+{
+	if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, ped->GetWeaponSkill())) 
+	{
 		if (task->bRightHand) {
 			bLeftHand = false;
 			CallMethod<0x61EB10>(task, ped, false);
@@ -482,6 +511,7 @@ static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& offset, RwReal re
 				}
 				else if (association->m_pHierarchy->m_hashKey == dLeftAnim)
 				{
+					offset.y += staticBikeOffset;
 					offset.z -= posDeltaDriver;
 					return;
 				}

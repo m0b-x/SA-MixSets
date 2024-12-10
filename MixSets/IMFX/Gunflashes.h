@@ -4,7 +4,7 @@ If you consider fixing something here, you should also consider fixing there: ht
 */
 
 #pragma once
-
+#include "plugin.h"
 #include "game_sa\Fx_c.h"
 #include "game_sa\CPed.h"
 #include "game_sa\CTaskSimpleUseGun.h"
@@ -46,6 +46,7 @@ public:
 	// Settings configuration
 	static void SetPistolFixOffset(const float newValue);
 	static void SetFpxFixGunflashesName(const std::string& particle);
+	static void SetSurfFixGunflashesName(const std::string& particle);
 	static void SetUnderFlashLightRComponent(const int newValue);
 	static void SetUnderFlashLightGComponent(const int newValue);
 	static void SetUnderFlashLightBComponent(const int newValue);
@@ -60,15 +61,11 @@ public:
 	static void SetBikeDriverOffsetFactor(const RwReal newValue);
 	static void SetCarDriverOffsetFactor(const RwReal newValue);
 	static void SetStaticBikeOffset(const RwReal newValue);
-	static void SetOnFootOffsetFactor(const RwReal newValue);
 	static void SetSurfingOffsetFactor(const RwReal newValue);
-	static void SetOnFootReverseFactor(const RwReal newValue);
 	static void SetGunflashLowerLight(const bool newValue);
-	static void SetJetpackTimeMult(const float value);
 	static void SetSurfingTimeMult(const float value);
-	static void SetInVehicleTimeMult(const float value);
-	static void SetDualWeildingTimeMult(const float value);
-	static void SetSingleWeaponWeildingTimeMult(const float value);
+	static void SetFpsFixTimeMult(const float newValue);
+	static void SetFpsFixComputing(const bool newValue);
 	static void SetSurfingSpeed(const float value);
 	static void SetMopedFixOffset(const RwReal newValue);
 

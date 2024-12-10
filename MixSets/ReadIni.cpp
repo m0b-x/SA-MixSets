@@ -2168,25 +2168,6 @@ void MixSets::ReadIni()
 
 		std::string particleString;
 
-		//Read Passenger Gunflash Fix
-		if (ReadIniString(ini, &lg, "New_Gunflash_System", "FpsFixGunflash", &particleString)) {
-
-			std::istringstream iss(particleString);
-			std::string particleName;
-			bool rotate, smoke;
-
-			if (!(iss >> particleName)) {
-				particleName = "gunflash";
-			}
-
-			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
-				rotate = true;
-				smoke = true;
-			}
-
-			Gunflashes::SetFpxFixGunflashesName(particleName);
-		}
-
 		//Read Additional Options
 		if (ReadIniBool(ini, &lg, "New_Gunflash_System", "GunflashLowerLight"))
 			Gunflashes::SetGunflashLowerLight(true);
@@ -2232,37 +2213,28 @@ void MixSets::ReadIni()
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "StaticBikeOffset", &f))
 			Gunflashes::SetStaticBikeOffset(f);
 
-		//Read Moving Weapon Offsets
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "OnFootOffset", &f))
-			Gunflashes::SetOnFootOffsetFactor(f);
-
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "OnFootReverse", &f))
-			Gunflashes::SetOnFootReverseFactor(f);
-
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingOffset", &f))
-			Gunflashes::SetSurfingOffsetFactor(f);
-
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "CarDriverOffset", &f))
 			Gunflashes::SetCarDriverOffsetFactor(f);
 
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "BikeDriverOffset", &f))
 			Gunflashes::SetBikeDriverOffsetFactor(f);
 
-		//Read Time Multipliers
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "JetpackTimeMult", &f))
-			Gunflashes::SetJetpackTimeMult(f);
+		//Read Surfing Settings
+		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingOffset", &f))
+			Gunflashes::SetSurfingOffsetFactor(f);
+
+		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "FpsFixTimeMult", &f))
+		{
+			Gunflashes::SetFpsFixTimeMult(f);
+			Gunflashes::SetFpsFixComputing(false);
+		}
+		else
+		{
+			Gunflashes::SetFpsFixComputing(true);
+		}
 
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingTimeMult", &f))
 			Gunflashes::SetSurfingTimeMult(f);
-
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "InVehicleTimeMult", &f))
-			Gunflashes::SetInVehicleTimeMult(f);
-
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "DualWeildingTimeMult", &f))
-			Gunflashes::SetDualWeildingTimeMult(f);
-
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SingleWeaponTimeMult", &f))
-			Gunflashes::SetSingleWeaponWeildingTimeMult(f);
 
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingSpeed", &f))
 			Gunflashes::SetSurfingSpeed(f);
@@ -2275,12 +2247,14 @@ void MixSets::ReadIni()
 
 		// Populate the list with weapon IDs
 
-		for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID) {
+		for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID)
+		{
 			weaponIDs.push_back(weaponID);
 		}
 		weaponIDs.push_back(WEAPON_MINIGUN);
 
-		for (int weaponID : weaponIDs) {
+		for (int weaponID : weaponIDs)
+		{
 
 			std::ostringstream weaponStringStream;
 			weaponStringStream << weaponID;
@@ -2305,6 +2279,45 @@ void MixSets::ReadIni()
 				Gunflashes::UpdateWeaponData(weaponID, particleName, (bool)rotate, (bool)smoke);
 			}
 		}
+
+		//Read Fps Fix Gunflash
+		if (ReadIniString(ini, &lg, "New_Gunflash_System", "FpsFixGunflash", &particleString)) {
+
+			std::istringstream iss(particleString);
+			std::string particleName;
+			bool rotate, smoke;
+
+			if (!(iss >> particleName)) {
+				particleName = "gunflash";
+			}
+
+			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
+				rotate = true;
+				smoke = true;
+			}
+
+			Gunflashes::SetFpxFixGunflashesName(particleName);
+		}
+
+		//Read Surf Fix Gunflash
+		if (ReadIniString(ini, &lg, "New_Gunflash_System", "SurfFixGunflash", &particleString)) {
+
+			std::istringstream iss(particleString);
+			std::string particleName;
+			bool rotate, smoke;
+
+			if (!(iss >> particleName)) {
+				particleName = "gunflash";
+			}
+
+			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
+				rotate = true;
+				smoke = true;
+			}
+
+			Gunflashes::SetSurfFixGunflashesName(particleName);
+		}
+
 	}
 	else
 	{

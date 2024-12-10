@@ -37,7 +37,7 @@ MixSets::MixSets()
 	lg.open("MixSets.log", fstream::out | fstream::trunc);
 	lg << "v4.3.7" << "\n";
 	lg.flush();
-	 
+
 
 	// -- Default values
 	bEnabled = false;
@@ -83,473 +83,473 @@ MixSets::MixSets()
 	}
 
 	Events::initRwEvent += []
-	{
-		if (!GetModuleHandleA("CLEO.asi")) {
-			lg << "ERROR: CLEO isn't installed. It's required for some MixSets features." << "\n\n";
-			bNoCLEO = true;
-		}
-		else bNoCLEO = false;
+		{
+			if (!GetModuleHandleA("CLEO.asi")) {
+				lg << "ERROR: CLEO isn't installed. It's required for some MixSets features." << "\n\n";
+				bNoCLEO = true;
+			}
+			else bNoCLEO = false;
 
-		if (GetModuleHandleA("SAMP.dll")) {
-			lg << "SAMP = true" << "\n";
-			inSAMP = true;
-		}
-		else inSAMP = false;
+			if (GetModuleHandleA("SAMP.dll")) {
+				lg << "SAMP = true" << "\n";
+				inSAMP = true;
+			}
+			else inSAMP = false;
 
-		if (GetModuleHandleA("IMFX.asi")) {
-			lg << "IMFX = true" << "\n";
-			bIMFX = true;
-		}
-		else bIMFX = false;
+			if (GetModuleHandleA("IMFX.asi")) {
+				lg << "IMFX = true" << "\n";
+				bIMFX = true;
+			}
+			else bIMFX = false;
 
-		if (GetModuleHandleA("GunFuncs.asi")) {
-			lg << "GunFuncs = true" << "\n";
-			bGunFuncs = true;
-		}
-		else bGunFuncs = false;
+			if (GetModuleHandleA("GunFuncs.asi")) {
+				lg << "GunFuncs = true" << "\n";
+				bGunFuncs = true;
+			}
+			else bGunFuncs = false;
 
-		if (GetModuleHandleA("III.VC.SA.LimitAdjuster.asi")) {
-			lg << "Open Limit Adjuster = true" << "\n";
-			bOLA = true;
-		}
-		else bOLA = false;
+			if (GetModuleHandleA("III.VC.SA.LimitAdjuster.asi")) {
+				lg << "Open Limit Adjuster = true" << "\n";
+				bOLA = true;
+			}
+			else bOLA = false;
 
-		hVehFuncs = GetModuleHandleA("VehFuncs.asi");
-		if (hVehFuncs) {
-			lg << "VehFuncs = true" << "\n";
-			bVehFuncs = true;
-			pVehFuncs_Ext_GetDoubleWheelOffset = (VehFuncs_Ext_GetDoubleWheelOffset)GetProcAddress(hVehFuncs, "Ext_GetDoubleWheelOffset");
-		}
-		else {
-			bVehFuncs = false;
-			pVehFuncs_Ext_GetDoubleWheelOffset = NULL;
-		}
-		lg << "\n";
+			hVehFuncs = GetModuleHandleA("VehFuncs.asi");
+			if (hVehFuncs) {
+				lg << "VehFuncs = true" << "\n";
+				bVehFuncs = true;
+				pVehFuncs_Ext_GetDoubleWheelOffset = (VehFuncs_Ext_GetDoubleWheelOffset)GetProcAddress(hVehFuncs, "Ext_GetDoubleWheelOffset");
+			}
+			else {
+				bVehFuncs = false;
+				pVehFuncs_Ext_GetDoubleWheelOffset = NULL;
+			}
+			lg << "\n";
 
-		ReadIni_BeforeFirstFrame();
+			ReadIni_BeforeFirstFrame();
 
-		if (bEnabled) {
-			if (lang == languages::PT)
-				lg << "\n" << "Terminado de ler o ini na inicialização do jogo" << "\n\n";
-			else
-				lg << "\n" << "Done read ini on game init" << "\n\n";
-		}
+			if (bEnabled) {
+				if (lang == languages::PT)
+					lg << "\n" << "Terminado de ler o ini na inicialização do jogo" << "\n\n";
+				else
+					lg << "\n" << "Done read ini on game init" << "\n\n";
+			}
 
-		lg.flush();
+			lg.flush();
 
-		Read = true;
-	};
+			Read = true;
+		};
 
 	Events::initScriptsEvent += []
-	{
-		bProcessOnceOnScripts = true;
-		bProcessOnceAfterIntro = true;
-	};
+		{
+			bProcessOnceOnScripts = true;
+			bProcessOnceAfterIntro = true;
+		};
 
 	Events::processScriptsEvent.before += [] // Note: gameProcessEvent doesn't work on SAMP
-	{
-		if (bEnabled)
 		{
-			if (Read)
+			if (bEnabled)
 			{
-				ReadIni();
-				//added by m0b - reload stuff in sa-mp
-				if (inSAMP)
+				if (Read)
 				{
-					MixSets::ReadIni();
-				}
-
-				if (lang == languages::PT)
-					lg << "\n" << "Terminado de ler o ini no primeiro frame." << "\n\n";
-				else
-					lg << "\n" << "Done read ini on first frame" << "\n\n";
-				lg.flush();
-
-				Read = false;
-			}
-
-			//////////////////////////////////////////////
-
-			CPed* playerPed = FindPlayerPed(-1); // focused
-
-			if (G_BrakeReverseFix) {
-				int controlsMode = 1;
-				Command<COMMAND_GET_CONTROLLER_MODE>(&controlsMode);
-				if (controlsMode == 1) {
-					BrakeReverseFix_Pad1Brake = 0x00B73492; // iv controls
-				}
-				else {
-					BrakeReverseFix_Pad1Brake = 0x00B734A4; // vanilla
-				}
-			}
-
-			if (G_HideWeaponsOnVehicle)
-			{
-				int playerId = 0;
-				while (playerId <= 1)
-				{
-					CPed* player = FindPlayerPed(playerId);
-
-					if (player)
+					ReadIni();
+					//added by m0b - reload stuff in sa-mp
+					if (inSAMP)
 					{
-						if (player->m_nPedFlags.bInVehicle)
+						MixSets::ReadIni();
+					}
+
+					if (lang == languages::PT)
+						lg << "\n" << "Terminado de ler o ini no primeiro frame." << "\n\n";
+					else
+						lg << "\n" << "Done read ini on first frame" << "\n\n";
+					lg.flush();
+
+					Read = false;
+				}
+
+				//////////////////////////////////////////////
+
+				CPed* playerPed = FindPlayerPed(-1); // focused
+
+				if (G_BrakeReverseFix) {
+					int controlsMode = 1;
+					Command<COMMAND_GET_CONTROLLER_MODE>(&controlsMode);
+					if (controlsMode == 1) {
+						BrakeReverseFix_Pad1Brake = 0x00B73492; // iv controls
+					}
+					else {
+						BrakeReverseFix_Pad1Brake = 0x00B734A4; // vanilla
+					}
+				}
+
+				if (G_HideWeaponsOnVehicle)
+				{
+					int playerId = 0;
+					while (playerId <= 1)
+					{
+						CPed* player = FindPlayerPed(playerId);
+
+						if (player)
 						{
-							bPlayerRenderWeaponInVehicleLastFrame = true;
-							int camMode = TheCamera.m_aCams[0].m_nMode;
-							CPad* pad = CPad::GetPad(playerId);
-							if (pad->GetLookLeft() || pad->GetLookRight() ||
-								(player->m_pVehicle->GetVehicleAppearance() == eVehicleApperance::VEHICLE_APPEARANCE_BIKE && pad->GetCarGunFired()) ||
-								camMode == eCamMode::MODE_AIMWEAPON_FROMCAR || camMode == eCamMode::MODE_TWOPLAYER_IN_CAR_AND_SHOOTING)
+							if (player->m_nPedFlags.bInVehicle)
 							{
-								player->m_pPlayerData->m_bRenderWeapon = true;
+								bPlayerRenderWeaponInVehicleLastFrame = true;
+								int camMode = TheCamera.m_aCams[0].m_nMode;
+								CPad* pad = CPad::GetPad(playerId);
+								if (pad->GetLookLeft() || pad->GetLookRight() ||
+									(player->m_pVehicle->GetVehicleAppearance() == eVehicleApperance::VEHICLE_APPEARANCE_BIKE && pad->GetCarGunFired()) ||
+									camMode == eCamMode::MODE_AIMWEAPON_FROMCAR || camMode == eCamMode::MODE_TWOPLAYER_IN_CAR_AND_SHOOTING)
+								{
+									player->m_pPlayerData->m_bRenderWeapon = true;
+								}
+								else
+								{
+									player->m_pPlayerData->m_bRenderWeapon = false;
+								}
 							}
 							else
 							{
-								player->m_pPlayerData->m_bRenderWeapon = false;
+								if (bPlayerRenderWeaponInVehicleLastFrame)
+								{
+									player->m_pPlayerData->m_bRenderWeapon = true;
+									bPlayerRenderWeaponInVehicleLastFrame = false;
+								}
+							}
+						}
+						playerId++;
+					}
+				}
+
+				if (G_SmoothAimIK)
+				{
+					// the movement is weird when starting to aim while running
+					// not the best solution, but anyway
+					if (playerPed->m_nMoveState <= 4)
+					{
+						injector::WriteMemory<float>(0x8D2E70, 0.17f, false);
+					}
+					else
+					{
+						injector::WriteMemory<float>(0x8D2E70, 0.3f, false);
+					}
+				}
+
+				if (G_Fix2DGunflash) Gunflashes::ProcessPerFrame();
+
+				if (G_FreezeWeather >= 0 && !inSAMP)
+					CWeather::ForceWeatherNow(G_FreezeWeather);
+
+				if (G_ProcessPriority > 0)
+					ProcessPriority();
+
+				curQuality = g_fx.GetFxQuality();
+
+				if (curQuality != lastQuality || forceUpdateQualityFuncs)
+				{
+					forceUpdateQualityFuncs = false;
+
+					if (G_NoStencilShadows)
+						ProcessNoStencilShadows();
+
+					if (G_UseHighPedShadows > -1)
+						ProcessUseHighPedShadows();
+				}
+
+				lastQuality = curQuality;
+
+				//////////////////////////////////////////////
+
+
+				if (G_OpenedHouses && !inSAMP)
+				{
+					if (!CEntryExitManager::ms_bBurglaryHousesEnabled)
+					{
+						CEntryExitManager::EnableBurglaryHouses(true);
+					}
+				}
+
+				if (G_StreamMemory > 0)
+				{
+					WriteMemory<uint32_t>(0x8A5A80, G_StreamMemory, false);
+				}
+
+				if (G_HowManyMinsInDay > 0 && !inSAMP)
+				{
+					WriteMemory<uint32_t>(0xB7015C, G_HowManyMinsInDay, false);
+				}
+
+				if (G_NoWavesIfCamHeight > 0)
+				{
+					if (CGame::currArea == 0 && G_NoWavesIfCamHeight >= 0.0f)
+					{
+						if (TheCamera.GetPosition().z > G_NoWavesIfCamHeight)
+						{
+							if (*(int*)(0x8D37D0) != 0)
+							{
+								G_Backup_WavesRadius = *(int*)(0x8D37D0);
+								*(int*)(0x8D37D0) = 0;
 							}
 						}
 						else
 						{
-							if (bPlayerRenderWeaponInVehicleLastFrame)
+							if (*(int*)(0x8D37D0) == 0)
 							{
-								player->m_pPlayerData->m_bRenderWeapon = true;
-								bPlayerRenderWeaponInVehicleLastFrame = false;
+								*(int*)(0x8D37D0) = G_Backup_WavesRadius;
 							}
 						}
 					}
-					playerId++;
 				}
-			}
 
-			if (G_SmoothAimIK)
-			{
-				// the movement is weird when starting to aim while running
-				// not the best solution, but anyway
-				if (playerPed->m_nMoveState <= 4)
+				if (G_BoatFoamLightingFix >= 0.0)
 				{
-					injector::WriteMemory<float>(0x8D2E70, 0.17f, false);
+					float balance = (CTimeCycle::m_CurrentColours.m_fWaterBlue + CTimeCycle::m_CurrentColours.m_fWaterGreen + CTimeCycle::m_CurrentColours.m_fWaterRed + CTimeCycle::m_CurrentColours.m_fWaterAlpha) / 255.0f / 4.0f;
+					balance = powf(balance, 2) + 0.1f;
+					balance *= G_BoatFoamLightingFix;
+					if (balance > 1.0f) balance = 1.0f;
+
+					// center
+					*(float*)0x8D390C = 0.4f * balance;
+					*(float*)0x8D391C = 0.4f * balance;
+
+					// sides
+					*(float*)0x8D3910 = 1.0f * balance;
+					*(float*)0x8D3918 = 1.0f * balance;
 				}
-				else
+
+				if (G_NoMinimapOnInteriors)
 				{
-					injector::WriteMemory<float>(0x8D2E70, 0.3f, false);
-				}
-			}
-
-			if (G_Fix2DGunflash) Gunflashes::ProcessPerFrame();
-
-			if (G_FreezeWeather >= 0 && !inSAMP)
-				CWeather::ForceWeatherNow(G_FreezeWeather);
-
-			if (G_ProcessPriority > 0)
-				ProcessPriority();
-
-			curQuality = g_fx.GetFxQuality();
-
-			if (curQuality != lastQuality || forceUpdateQualityFuncs)
-			{
-				forceUpdateQualityFuncs = false;
-
-				if (G_NoStencilShadows)
-					ProcessNoStencilShadows();
-
-				if (G_UseHighPedShadows > -1)
-					ProcessUseHighPedShadows();
-			}
-
-			lastQuality = curQuality;
-
-			//////////////////////////////////////////////
-
-
-			if (G_OpenedHouses && !inSAMP)
-			{
-				if (!CEntryExitManager::ms_bBurglaryHousesEnabled)
-				{
-					CEntryExitManager::EnableBurglaryHouses(true);
-				}
-			}
-
-			if (G_StreamMemory > 0)
-			{
-				WriteMemory<uint32_t>(0x8A5A80, G_StreamMemory, false);
-			}
-
-			if (G_HowManyMinsInDay > 0 && !inSAMP)
-			{
-				WriteMemory<uint32_t>(0xB7015C, G_HowManyMinsInDay, false);
-			}
-
-			if (G_NoWavesIfCamHeight > 0)
-			{
-				if (CGame::currArea == 0 && G_NoWavesIfCamHeight >= 0.0f)
-				{
-					if (TheCamera.GetPosition().z > G_NoWavesIfCamHeight)
+					if (!bDrawRadarHooked)
 					{
-						if (*(int*)(0x8D37D0) != 0)
+						if (ReadMemory<uint8_t>(0x58FC53, true) == 0xE8) // is call
 						{
-							G_Backup_WavesRadius = *(int*)(0x8D37D0);
-							*(int*)(0x8D37D0) = 0;
-						}
-					}
-					else
-					{
-						if (*(int*)(0x8D37D0) == 0)
-						{
-							*(int*)(0x8D37D0) = G_Backup_WavesRadius;
-						}
-					}
-				}
-			}
-
-			if (G_BoatFoamLightingFix >= 0.0)
-			{
-				float balance = (CTimeCycle::m_CurrentColours.m_fWaterBlue + CTimeCycle::m_CurrentColours.m_fWaterGreen + CTimeCycle::m_CurrentColours.m_fWaterRed + CTimeCycle::m_CurrentColours.m_fWaterAlpha) / 255.0f / 4.0f;
-				balance = powf(balance, 2) + 0.1f;
-				balance *= G_BoatFoamLightingFix;
-				if (balance > 1.0f) balance = 1.0f;
-
-				// center
-				*(float*)0x8D390C = 0.4f * balance;
-				*(float*)0x8D391C = 0.4f * balance;
-
-				// sides
-				*(float*)0x8D3910 = 1.0f * balance;
-				*(float*)0x8D3918 = 1.0f * balance;
-			}
-
-			if (G_NoMinimapOnInteriors)
-			{
-				if (!bDrawRadarHooked)
-				{
-					if (ReadMemory<uint8_t>(0x58FC53, true) == 0xE8) // is call
-					{
-						ORIGINAL_DrawRadar = ReadMemory<uintptr_t>(0x58FC53 + 1, true);
-						ORIGINAL_DrawRadar += (GetGlobalAddress(0x58FC53) + 5);
-						injector::MakeInline<0x58FC53, 0x58FC53 + 5>([](injector::reg_pack& regs)
-						{
-							if (FindPlayerPed(-1)->m_nAreaCode == 0 || CTheScripts::IsPlayerOnAMission()) {
-								((void(__cdecl*)())MixSets::ORIGINAL_DrawRadar)();
-							}
-						});
-						bDrawRadarHooked = true;
-					}
-				}
-			}
-
-			if (!inSAMP && !bNoCLEO)
-			{
-				if (G_ParaLandingFix)
-				{
-					unsigned int script;
-					Command<GET_SCRIPT_STRUCT_NAMED>("PLCHUTE", &script);
-					if (script)
-					{
-						unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
-						offset += 4948;
-
-						uint32_t test = ReadMemory<uint32_t>(offset + 6);
-						if (test == 0x4C4C4146) // default value: not yet fixed; valid script
-						{
-							/*
-								0812: AS_actor - 1 perform_animation "PARA_LAND" IFP "PARACHUTE" framedelta 10.0 loopA 0 lockX 1 lockY 1 lockF 0 time - 2
-								12 08 04 FF 0E 09 50 41 52 41 5F 4C 41 4E 44 0E 09 50 41 52 41 43 48 55 54 45 06 00 00 20 41 04 00 04 01 04 01 04 00 04 FE
-							*/
-							const uint8_t playanim[] = { 0x12, 0x08, 0x04, 0xFF, 0x0E, 0x09, 0x50, 0x41, 0x52, 0x41, 0x5F, 0x4C, 0x41, 0x4E, 0x44, 0x0E, 0x09, 0x50, 0x41, 0x52, 0x41, 0x43, 0x48, 0x55, 0x54, 0x45, 0x06, 0x00, 0x00, 0x20, 0x41, 0x04, 0x00, 0x04, 0x01, 0x04, 0x01, 0x04, 0x00, 0x04, 0xFE };
-							memcpy(offset, &playanim, sizeof(playanim));
-							offset += sizeof(playanim);
-
-							const uint8_t jump[] = { 0x02, 0x00, 0x01, 0x62, 0xEC, 0xFF, 0xFF }; // 0002: goto -5022
-							memcpy(offset, &jump, sizeof(jump));
+							ORIGINAL_DrawRadar = ReadMemory<uintptr_t>(0x58FC53 + 1, true);
+							ORIGINAL_DrawRadar += (GetGlobalAddress(0x58FC53) + 5);
+							injector::MakeInline<0x58FC53, 0x58FC53 + 5>([](injector::reg_pack& regs)
+								{
+									if (FindPlayerPed(-1)->m_nAreaCode == 0 || CTheScripts::IsPlayerOnAMission()) {
+										((void(__cdecl*)())MixSets::ORIGINAL_DrawRadar)();
+									}
+								});
+							bDrawRadarHooked = true;
 						}
 					}
 				}
 
-				if (G_LureRancher)
+				if (!inSAMP && !bNoCLEO)
 				{
-					unsigned int script;
-					Command<GET_SCRIPT_STRUCT_NAMED>("DRIV6", &script);
-					if (script)
+					if (G_ParaLandingFix)
 					{
-						unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
-						offset += 4445;
-
-						uint32_t test = ReadMemory<uint16_t>(offset);
-						uint32_t test2 = ReadMemory<uint16_t>(offset + 9);
-						if (test == 489 && test2 == 489) // default value: not yet fixed; valid script
+						unsigned int script;
+						Command<GET_SCRIPT_STRUCT_NAMED>("PLCHUTE", &script);
+						if (script)
 						{
-							WriteMemory<uint16_t>(offset, 505, false);
-							offset += 9;
-							WriteMemory<uint16_t>(offset, 505, false);
-							offset += 47;
-							WriteMemory<uint16_t>(offset, 505, false);
-							offset += 8385;
-							WriteMemory<uint16_t>(offset, 505, false);
-						}
-					}
-				}
+							unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
+							offset += 4948;
 
-				if (G_NoGarageRadioChange)
-				{
-					unsigned int script;
-					Command<GET_SCRIPT_STRUCT_NAMED>("CARMOD", &script);
-					if (script)
-					{
-						unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
-						offset += 1839;
-
-						uint16_t test = ReadMemory<uint16_t>(offset);
-						if (test == 0x0A26) // default value: not yet fixed; valid script
-						{
-							WriteMemory<uint16_t>(offset, 0x0000, false);
-							offset += 905;
-							WriteMemory<uint16_t>(offset, 0x0000, false);
-							offset += 688;
-							WriteMemory<uint16_t>(offset, 0x0000, false);
-						}
-					}
-				}
-
-				if (G_NoEmergencyMisWanted)
-				{
-					unsigned int script[3];
-					Command<GET_SCRIPT_STRUCT_NAMED>("COPCAR", &script[0]);
-					Command<GET_SCRIPT_STRUCT_NAMED>("AMBULAN", &script[1]);
-					Command<GET_SCRIPT_STRUCT_NAMED>("FIRETRU", &script[2]);
-					if (script[0] || script[1] || script[2])
-					{
-						if (FindPlayerPed()->GetWantedLevel() == 0)
-						{
-							if (G_NoEmergencyMisWanted_MaxWantedLevel == -1)
+							uint32_t test = ReadMemory<uint32_t>(offset + 6);
+							if (test == 0x4C4C4146) // default value: not yet fixed; valid script
 							{
-								G_NoEmergencyMisWanted_MaxWantedLevel = CWanted::MaximumWantedLevel;
+								/*
+									0812: AS_actor - 1 perform_animation "PARA_LAND" IFP "PARACHUTE" framedelta 10.0 loopA 0 lockX 1 lockY 1 lockF 0 time - 2
+									12 08 04 FF 0E 09 50 41 52 41 5F 4C 41 4E 44 0E 09 50 41 52 41 43 48 55 54 45 06 00 00 20 41 04 00 04 01 04 01 04 00 04 FE
+								*/
+								const uint8_t playanim[] = { 0x12, 0x08, 0x04, 0xFF, 0x0E, 0x09, 0x50, 0x41, 0x52, 0x41, 0x5F, 0x4C, 0x41, 0x4E, 0x44, 0x0E, 0x09, 0x50, 0x41, 0x52, 0x41, 0x43, 0x48, 0x55, 0x54, 0x45, 0x06, 0x00, 0x00, 0x20, 0x41, 0x04, 0x00, 0x04, 0x01, 0x04, 0x01, 0x04, 0x00, 0x04, 0xFE };
+								memcpy(offset, &playanim, sizeof(playanim));
+								offset += sizeof(playanim);
+
+								const uint8_t jump[] = { 0x02, 0x00, 0x01, 0x62, 0xEC, 0xFF, 0xFF }; // 0002: goto -5022
+								memcpy(offset, &jump, sizeof(jump));
 							}
-							CWanted::SetMaximumWantedLevel(0);
+						}
+					}
+
+					if (G_LureRancher)
+					{
+						unsigned int script;
+						Command<GET_SCRIPT_STRUCT_NAMED>("DRIV6", &script);
+						if (script)
+						{
+							unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
+							offset += 4445;
+
+							uint32_t test = ReadMemory<uint16_t>(offset);
+							uint32_t test2 = ReadMemory<uint16_t>(offset + 9);
+							if (test == 489 && test2 == 489) // default value: not yet fixed; valid script
+							{
+								WriteMemory<uint16_t>(offset, 505, false);
+								offset += 9;
+								WriteMemory<uint16_t>(offset, 505, false);
+								offset += 47;
+								WriteMemory<uint16_t>(offset, 505, false);
+								offset += 8385;
+								WriteMemory<uint16_t>(offset, 505, false);
+							}
+						}
+					}
+
+					if (G_NoGarageRadioChange)
+					{
+						unsigned int script;
+						Command<GET_SCRIPT_STRUCT_NAMED>("CARMOD", &script);
+						if (script)
+						{
+							unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
+							offset += 1839;
+
+							uint16_t test = ReadMemory<uint16_t>(offset);
+							if (test == 0x0A26) // default value: not yet fixed; valid script
+							{
+								WriteMemory<uint16_t>(offset, 0x0000, false);
+								offset += 905;
+								WriteMemory<uint16_t>(offset, 0x0000, false);
+								offset += 688;
+								WriteMemory<uint16_t>(offset, 0x0000, false);
+							}
+						}
+					}
+
+					if (G_NoEmergencyMisWanted)
+					{
+						unsigned int script[3];
+						Command<GET_SCRIPT_STRUCT_NAMED>("COPCAR", &script[0]);
+						Command<GET_SCRIPT_STRUCT_NAMED>("AMBULAN", &script[1]);
+						Command<GET_SCRIPT_STRUCT_NAMED>("FIRETRU", &script[2]);
+						if (script[0] || script[1] || script[2])
+						{
+							if (FindPlayerPed()->GetWantedLevel() == 0)
+							{
+								if (G_NoEmergencyMisWanted_MaxWantedLevel == -1)
+								{
+									G_NoEmergencyMisWanted_MaxWantedLevel = CWanted::MaximumWantedLevel;
+								}
+								CWanted::SetMaximumWantedLevel(0);
+							}
+							else
+							{
+								if (bOnEmergencyMissionLastFrame) FindPlayerPed()->SetWantedLevel(0);
+							}
+							if (!bOnEmergencyMissionLastFrame)
+							{
+								WriteMemory<uint8_t>(0x5A07D0, 0xC3, true);
+							}
+							bOnEmergencyMissionLastFrame = true;
 						}
 						else
 						{
-							if (bOnEmergencyMissionLastFrame) FindPlayerPed()->SetWantedLevel(0);
+							if (bOnEmergencyMissionLastFrame && !G_NoSamSite)
+							{
+								WriteMemory<uint8_t>(0x5A07D0, 0x83, true);
+							}
+							bOnEmergencyMissionLastFrame = false;
+							if (G_NoEmergencyMisWanted_MaxWantedLevel != -1)
+							{
+								CWanted::SetMaximumWantedLevel(G_NoEmergencyMisWanted_MaxWantedLevel);
+								G_NoEmergencyMisWanted_MaxWantedLevel = -1;
+							}
 						}
-						if (!bOnEmergencyMissionLastFrame)
+					}
+
+					if (G_SCMfixes)
+					{
+						unsigned int script;
+						Command<GET_SCRIPT_STRUCT_NAMED>("DRUGS4", &script);
+						if (script)
 						{
-							WriteMemory<uint8_t>(0x5A07D0, 0xC3, true);
+							unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
+							offset += 66597;
+
+							// Reenable some subtitles
+							uint32_t test = ReadMemory<uint32_t>(offset);
+							if (test == 1174995925) // default value: not yet fixed; valid script
+							{
+								const uint8_t NOP5bytes[] = { 0x52, 0x07, 0x03, 0x00, 0x00 };
+								memcpy(offset, &NOP5bytes, sizeof(NOP5bytes));
+								offset += sizeof(NOP5bytes);
+
+								memset(offset, 0, 72);
+							}
 						}
-						bOnEmergencyMissionLastFrame = true;
+					}
+
+					if (G_TuningChoose2colors)
+					{
+						unsigned int script;
+						Command<GET_SCRIPT_STRUCT_NAMED>("CARMOD", &script);
+						if (script)
+						{
+							*(CTheScripts::ScriptSpace + (10443 * 4)) = 2;
+						}
+					}
+				}
+
+				if (bProcessOnceOnScripts)
+				{
+					bProcessOnceOnScripts = false;
+					ShowModMessages();
+					if (G_FPSlimit > 0)
+					{
+						WriteMemory<uint8_t>(0xC1704C, G_FPSlimit, false);
+					}
+					if (G_EnableCensorship)
+					{
+						WriteMemory<uint8_t>(0xB9B7EC, false, true);
+						WriteMemory<uint8_t>(0x56D188, false, true);
+						WriteMemory<uint8_t>(0x56D231, false, true);
+						WriteMemory<uint8_t>(0x56D271, false, true);
+					}
+				}
+			}
+
+			if (bProcessOnceAfterIntro && *(CTheScripts::ScriptSpace + (24 * 4)) == 1 /* intro passed */)
+			{
+				bProcessOnceAfterIntro = false;
+				ShowModMessages(); // second time, just to make sure
+				if (bEnabled)
+				{
+					if (G_NoTutorials)
+					{
+						Command<Commands::TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME>("HELP");
+						Command<Commands::REMOVE_PICKUP>((CTheScripts::ScriptSpace + (669 * 4))); //Pickup_Info_Hospital
+						Command<Commands::REMOVE_PICKUP>((CTheScripts::ScriptSpace + (670 * 4))); //Pickup_Info_Hospital_2
+						Command<Commands::REMOVE_PICKUP>((CTheScripts::ScriptSpace + (671 * 4))); //Pickup_Info_Police
+						*(int*)(CTheScripts::ScriptSpace + (119 * 4)) = true; //Help_Wasted_Shown
+						*(int*)(CTheScripts::ScriptSpace + (126 * 4)) = true; //Help_Busted_Shown
+					}
+					if (G_NoStuntReward)
+					{
+						Command<Commands::TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME>("HJ");
+					}
+				}
+			}
+
+			if (G_ReloadCommand.length() > 0)
+			{
+				if (TestCheat(&G_ReloadCommand[0]))
+				{
+					if (lang == languages::PT)
+					{
+						lg << "Recarregando..." << "\n\n";
+						CMessages::AddMessageJumpQ("'MixSets.ini' recarregando.", 1000, false, false);
 					}
 					else
 					{
-						if (bOnEmergencyMissionLastFrame && !G_NoSamSite)
-						{
-							WriteMemory<uint8_t>(0x5A07D0, 0x83, true);
-						}
-						bOnEmergencyMissionLastFrame = false;
-						if (G_NoEmergencyMisWanted_MaxWantedLevel != -1)
-						{
-							CWanted::SetMaximumWantedLevel(G_NoEmergencyMisWanted_MaxWantedLevel);
-							G_NoEmergencyMisWanted_MaxWantedLevel = -1;
-						}
+						lg << "Reloading..." << "\n\n";
+						CMessages::AddMessageJumpQ("'MixSets.ini' reloading.", 1000, false, false);
 					}
-				}
+					lg.flush();
 
-				if (G_SCMfixes)
-				{
-					unsigned int script;
-					Command<GET_SCRIPT_STRUCT_NAMED>("DRUGS4", &script);
-					if (script)
-					{
-						unsigned char* offset = reinterpret_cast<CRunningScript*>(script)->m_pBaseIP;
-						offset += 66597;
+					bReloading = true;
 
-						// Reenable some subtitles
-						uint32_t test = ReadMemory<uint32_t>(offset);
-						if (test == 1174995925) // default value: not yet fixed; valid script
-						{
-							const uint8_t NOP5bytes[] = { 0x52, 0x07, 0x03, 0x00, 0x00 };
-							memcpy(offset, &NOP5bytes, sizeof(NOP5bytes));
-							offset += sizeof(NOP5bytes);
+					MixSets::ReadIni_BeforeFirstFrame();
+					MixSets::ReadIni();
+					bProcessOnceAfterIntro = true;
+					bProcessOnceOnScripts = true;
 
-							memset(offset, 0, 72);
-						}
-					}
-				}
-
-				if (G_TuningChoose2colors)
-				{
-					unsigned int script;
-					Command<GET_SCRIPT_STRUCT_NAMED>("CARMOD", &script);
-					if (script)
-					{
-						*(CTheScripts::ScriptSpace + (10443 * 4)) = 2;
-					}
+					bReloading = false;
 				}
 			}
-
-			if (bProcessOnceOnScripts)
-			{
-				bProcessOnceOnScripts = false;
-				ShowModMessages();
-				if (G_FPSlimit > 0)
-				{
-					WriteMemory<uint8_t>(0xC1704C, G_FPSlimit, false);
-				}
-				if (G_EnableCensorship)
-				{
-					WriteMemory<uint8_t>(0xB9B7EC, false, true);
-					WriteMemory<uint8_t>(0x56D188, false, true);
-					WriteMemory<uint8_t>(0x56D231, false, true);
-					WriteMemory<uint8_t>(0x56D271, false, true);
-				}
-			}
-		}
-		 
-		if (bProcessOnceAfterIntro && *(CTheScripts::ScriptSpace + (24 * 4)) == 1 /* intro passed */)
-		{
-			bProcessOnceAfterIntro = false;
-			ShowModMessages(); // second time, just to make sure
-			if (bEnabled)
-			{
-				if (G_NoTutorials)
-				{
-					Command<Commands::TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME>("HELP");
-					Command<Commands::REMOVE_PICKUP>((CTheScripts::ScriptSpace + (669 * 4))); //Pickup_Info_Hospital
-					Command<Commands::REMOVE_PICKUP>((CTheScripts::ScriptSpace + (670 * 4))); //Pickup_Info_Hospital_2
-					Command<Commands::REMOVE_PICKUP>((CTheScripts::ScriptSpace + (671 * 4))); //Pickup_Info_Police
-					*(int*)(CTheScripts::ScriptSpace + (119 * 4)) = true; //Help_Wasted_Shown
-					*(int*)(CTheScripts::ScriptSpace + (126 * 4)) = true; //Help_Busted_Shown
-				}
-				if (G_NoStuntReward)
-				{
-					Command<Commands::TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME>("HJ");
-				}
-			}
-		}
-
-		if (G_ReloadCommand.length() > 0)
-		{
-			if (TestCheat(&G_ReloadCommand[0]))
-			{
-				if (lang == languages::PT)
-				{
-					lg << "Recarregando..." << "\n\n";
-					CMessages::AddMessageJumpQ("'MixSets.ini' recarregando.", 1000, false, false);
-				}
-				else
-				{
-					lg << "Reloading..." << "\n\n";
-					CMessages::AddMessageJumpQ("'MixSets.ini' reloading.", 1000, false, false);
-				}
-				lg.flush();
-
-				bReloading = true;
-
-				MixSets::ReadIni_BeforeFirstFrame();
-				MixSets::ReadIni();
-				bProcessOnceAfterIntro = true;
-				bProcessOnceOnScripts = true;
-
-				bReloading = false;
-			}
-		}
-	};
+		};
 
 
 	Events::vehicleRenderEvent += [](CVehicle* vehicle) {
@@ -574,20 +574,20 @@ MixSets::MixSets()
 			}
 		}
 
-	};
+		};
 
 	Events::onPauseAllSounds += []
-	{
-		lg.flush();
-		if (G_ProcessPriority > 0)
-			SetIdlePriority();
-	};
+		{
+			lg.flush();
+			if (G_ProcessPriority > 0)
+				SetIdlePriority();
+		};
 
 	Events::onResumeAllSounds += []
-	{
-		if (G_ProcessPriority > 0)
-			ProcessPriority();
-	};
+		{
+			if (G_ProcessPriority > 0)
+				ProcessPriority();
+		};
 
 }
 
@@ -844,7 +844,7 @@ bool MixSets::ReadIniBool(CIniReader ini, fstream* lg, string section, string ke
 bool MixSets::ReadIniString(CIniReader ini, fstream* lg, string section, string key, string* value)
 {
 	if (MixSets::bReadOldINI) ReadOldINI(ini, lg, section, key);
-	*value = ini.ReadString(section, key, "");  
+	*value = ini.ReadString(section, key, "");
 	if (!value->empty())
 	{
 		*lg << section << ": " << key << " = " << *value << "\n";
@@ -935,7 +935,7 @@ void MixSets::InstallEmptyRadioPatches() {
 }
 
 void MixSets::SetEmptyRadioNameScale(float x, float y) {
-	
+
 }
 
 void MixSets::DrawEmptyRadioName(float x, float y, char* name) {
@@ -948,7 +948,7 @@ void MixSets::SetEmptyRadioNameAlignment(eFontAlignment alignment) {
 
 
 
-void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int a, int wheelState, int a3, float a4, float a5, CColPoint* colPoint, CVector* from, int id, signed int wheelId, int skidMarkType, bool *_bloodState, char flags)
+void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int a, int wheelState, int a3, float a4, float a5, CColPoint* colPoint, CVector* from, int id, signed int wheelId, int skidMarkType, bool* _bloodState, char flags)
 {
 	_this->AddSingleWheelParticles(wheelState, a3, a4, a5, colPoint, from, id, wheelId, skidMarkType, _bloodState, flags);
 
@@ -959,7 +959,7 @@ void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int
 	if (_this->m_pHandlingData->m_nModelFlags && (wheelId == 1 || wheelId == 3 || wheelId == 5 || wheelId == 6))
 	{
 		//_this->m_pHandlingData->m_nModelFlags.m_bDoubleRwheels
-		CColPoint *colPoint2 = new CColPoint(*colPoint);
+		CColPoint* colPoint2 = new CColPoint(*colPoint);
 		float distance = 0.45f;
 
 		bool left = (wheelId == 3 || wheelId == 6);
@@ -1049,13 +1049,13 @@ void __declspec(naked) BrakeReverseFix_ASM()
 
 		do_stuff :
 		mov    dword ptr[esi + 0x4A0], 0
-		pop    eax
-		mov    dword ptr[esi + 0x49C], eax
-		ret
+			pop    eax
+			mov    dword ptr[esi + 0x49C], eax
+			ret
 
-		dont_do_stuff :
+			dont_do_stuff :
 		pop    eax
-		ret
+			ret
 	}
 }
 

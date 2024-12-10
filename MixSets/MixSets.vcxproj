@@ -114,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IMFX\Gunflashes.h" />
-    <ClInclude Include="IMFX\imfx.h" />
     <ClInclude Include="IniReader\IniReader.h" />
     <ClInclude Include="IniReader\ini_parser.hpp" />
     <ClInclude Include="MixSets.h" />

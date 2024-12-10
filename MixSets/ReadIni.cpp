@@ -137,20 +137,20 @@ void MixSets::ReadIni_BeforeFirstFrame()
 	if (ReadIniBool(ini, &lg, "Gameplay", "FixMouseStuck"))
 	{
 		injector::MakeInline<0x745423, 0x745423 + 8>([](injector::reg_pack& regs)
-		{
-			//mov     eax, [esp+8]
-			//mov     ecx, [esp+4]
-			regs.eax = *(DWORD*)(regs.esp + 0x8);
-			regs.ecx = *(DWORD*)(regs.esp + 0x4);
-			if (GetForegroundWindow() == *(HWND*)0xC97C1C)
 			{
-				*(uintptr_t*)(regs.esp - 0x4) = 0x74542B;
-			}
-			else
-			{
-				*(uintptr_t*)(regs.esp - 0x4) = 0x745433;
-			}
-		});
+				//mov     eax, [esp+8]
+				//mov     ecx, [esp+4]
+				regs.eax = *(DWORD*)(regs.esp + 0x8);
+				regs.ecx = *(DWORD*)(regs.esp + 0x4);
+				if (GetForegroundWindow() == *(HWND*)0xC97C1C)
+				{
+					*(uintptr_t*)(regs.esp - 0x4) = 0x74542B;
+				}
+				else
+				{
+					*(uintptr_t*)(regs.esp - 0x4) = 0x745433;
+				}
+			});
 	}
 
 
@@ -225,20 +225,20 @@ void MixSets::ReadIni_BeforeFirstFrame()
 			G_NoStencilShadows = true;
 			WriteMemory<uint8_t>(0x7113C0, 0xEB, true);
 			injector::MakeInline<0x706BB4, 0x706BB4 + 6>([](injector::reg_pack& regs)
-			{
-				//mov     eax, [esi+598h]
-				regs.eax = *(uint32_t*)(regs.esi + 0x598);
-
-				CPed* ped = (CPed*)regs.esi;
-				if (ped->m_pIntelligence->m_TaskMgr.FindActiveTaskByType(TASK_COMPLEX_ENTER_CAR_AS_DRIVER) || (ped->m_nPedFlags.bInVehicle && ped->m_pVehicle))
 				{
-					if (ped->m_pShadowData)
+					//mov     eax, [esi+598h]
+					regs.eax = *(uint32_t*)(regs.esi + 0x598);
+
+					CPed* ped = (CPed*)regs.esi;
+					if (ped->m_pIntelligence->m_TaskMgr.FindActiveTaskByType(TASK_COMPLEX_ENTER_CAR_AS_DRIVER) || (ped->m_nPedFlags.bInVehicle && ped->m_pVehicle))
 					{
-						ped->m_pShadowData->m_bCreated = false;
+						if (ped->m_pShadowData)
+						{
+							ped->m_pShadowData->m_bCreated = false;
+						}
+						*(uintptr_t*)(regs.esp - 0x4) = 0x706BFD;
 					}
-					*(uintptr_t*)(regs.esp - 0x4) = 0x706BFD;
-				}
-			});
+				});
 		}
 		else G_NoStencilShadows = false;
 	}
@@ -251,53 +251,53 @@ void MixSets::ReadIni_BeforeFirstFrame()
 	if (G_NoStencilShadows || G_StaticPedShadOnBike)
 	{
 		injector::MakeInline<0x5E68B7, 0x5E68B7 + 19>([](injector::reg_pack& regs)
-		{
-			/*
-			.text:005E68B7 080 8B 85 6C 04 00 00                       mov     eax, [ebp+46Ch]
-			.text:005E68BD 080 F6 C4 01                                test    ah, 1
-			.text:005E68C0 080 74 08                                   jz      short loc_5E68CA
-			.text:005E68C2 080 8A 44 24 12                             mov     al, [esp+80h+bShadowNeeded]
-			.text:005E68C6 080 84 C0                                   test    al, al
-			.text:005E68C8 080 74 3E                                   jz      short loc_5E6908
-			*/
-			uint8_t bShadowNeeded = *(uint8_t*)(regs.esp + 0x80 - 0x6E);
-			CPed* ped = (CPed*)regs.ebp;
-
-			bool showShadow = bShadowNeeded || !ped->m_nPedFlags.bInVehicle;
-
-			if (G_NoStencilShadows && ((g_fx.GetFxQuality() >= 2 && ped->IsPlayer()) || (g_fx.GetFxQuality() >= 3))) {
-				showShadow = false;
-			}
-
-			if (ped->m_nPedFlags.bInVehicle && ped->m_pVehicle)
 			{
-				if (G_StaticPedShadOnBike)
+				/*
+				.text:005E68B7 080 8B 85 6C 04 00 00                       mov     eax, [ebp+46Ch]
+				.text:005E68BD 080 F6 C4 01                                test    ah, 1
+				.text:005E68C0 080 74 08                                   jz      short loc_5E68CA
+				.text:005E68C2 080 8A 44 24 12                             mov     al, [esp+80h+bShadowNeeded]
+				.text:005E68C6 080 84 C0                                   test    al, al
+				.text:005E68C8 080 74 3E                                   jz      short loc_5E6908
+				*/
+				uint8_t bShadowNeeded = *(uint8_t*)(regs.esp + 0x80 - 0x6E);
+				CPed* ped = (CPed*)regs.ebp;
+
+				bool showShadow = bShadowNeeded || !ped->m_nPedFlags.bInVehicle;
+
+				if (G_NoStencilShadows && ((g_fx.GetFxQuality() >= 2 && ped->IsPlayer()) || (g_fx.GetFxQuality() >= 3))) {
+					showShadow = false;
+				}
+
+				if (ped->m_nPedFlags.bInVehicle && ped->m_pVehicle)
 				{
-					if (ped->m_pVehicle->m_nVehicleSubClass == 9 || ped->m_pVehicle->m_nVehicleSubClass == 10)
+					if (G_StaticPedShadOnBike)
+					{
+						if (ped->m_pVehicle->m_nVehicleSubClass == 9 || ped->m_pVehicle->m_nVehicleSubClass == 10)
+						{
+							showShadow = true;
+						}
+					}
+					if (ped->m_pShadowData)
+					{
+						ped->m_pShadowData->m_bCreated = false;
+					}
+				}
+				else {
+					if (G_UseHighPedShadows == 0)
 					{
 						showShadow = true;
 					}
 				}
-				if (ped->m_pShadowData)
+				if (showShadow)
 				{
-					ped->m_pShadowData->m_bCreated = false;
+					*(uintptr_t*)(regs.esp - 0x4) = 0x5E68CA;
 				}
-			}
-			else {
-				if (G_UseHighPedShadows == 0)
+				else
 				{
-					showShadow = true;
+					*(uintptr_t*)(regs.esp - 0x4) = 0x5E6908;
 				}
-			}
-			if (showShadow)
-			{
-				*(uintptr_t*)(regs.esp - 0x4) = 0x5E68CA;
-			}
-			else
-			{
-				*(uintptr_t*)(regs.esp - 0x4) = 0x5E6908;
-			}
-		});
+			});
 	}
 
 
@@ -352,18 +352,18 @@ void MixSets::ReadIni_BeforeFirstFrame()
 		if (!inSAMP && ReadIniFloat(ini, &lg, "Densities", "PedPopulationMult", &f)) {
 			G_PedPopulationMult = f;
 			injector::MakeInline<0x5BC1E9, 0x5BC1E9 + 7>([](injector::reg_pack& regs)
-			{
-				regs.eax = *(uint8_t*)(regs.esp + 0x0BC) * G_PedPopulationMult; //mov al, [esp+0BCh]
-			});
+				{
+					regs.eax = *(uint8_t*)(regs.esp + 0x0BC) * G_PedPopulationMult; //mov al, [esp+0BCh]
+				});
 		}
 		else G_PedPopulationMult = 1.0f;
 
 		if (!inSAMP && ReadIniFloat(ini, &lg, "Densities", "VehPopulationMult", &f)) {
 			G_VehPopulationMult = f;
 			injector::MakeInline<0x5BC1F0, 0x5BC1F0 + 7>([](injector::reg_pack& regs)
-			{
-				regs.ecx = *(uint8_t*)(regs.esp + 0x0F8) * G_VehPopulationMult; //mov cl, [esp+0F8h]
-			});
+				{
+					regs.ecx = *(uint8_t*)(regs.esp + 0x0F8) * G_VehPopulationMult; //mov cl, [esp+0F8h]
+				});
 		}
 		else G_VehPopulationMult = 1.0f;
 	}
@@ -377,11 +377,11 @@ void MixSets::ReadIni_BeforeFirstFrame()
 	if (ReadIniFloat(ini, &lg, "Interface", "VehColorGridSize", &f)) {
 		G_VehColorGridSize = f;
 		injector::MakeInline<0x582356, 0x582356 + 6>([](injector::reg_pack& regs)
-		{
-			//mov     [eax+3FCh], ecx
-			float *width = reinterpret_cast<float*>(&regs.ecx); 
-			*(float*)(regs.eax + 0x3FC) = *width * G_VehColorGridSize;
-		});
+			{
+				//mov     [eax+3FCh], ecx
+				float* width = reinterpret_cast<float*>(&regs.ecx);
+				*(float*)(regs.eax + 0x3FC) = *width * G_VehColorGridSize;
+			});
 	}
 
 	if (ReadIniBool(ini, &lg, "Interface", "BigAmmo")) {
@@ -485,23 +485,24 @@ void MixSets::ReadIni()
 		//MakeJMP(0x8246F3, 0x824701, true);
 		//MakeJMP(0x824733, 0x824741, true);
 
+
 		MakeNOP(0x748E6B, 5, true); // CGame::Shutdown
 		MakeNOP(0x748E82, 5, true); // RsEventHandler rsRWTERMINATE
 		MakeNOP(0x748E75, 5, true); // CAudioEngine::Shutdown
 
 		injector::MakeInline<0x748EDF, 0x748EDF + 7>([](injector::reg_pack& regs)
-		{
-			SetErrorMode(0);
-			_Exit(0); // exits faster https://www.geeksforgeeks.org/exit-vs-_exit-c-cpp/
-
-			DWORD exitCode;
-			HANDLE hProcess = GetCurrentProcess();
-
-			if (GetExitCodeProcess(hProcess, &exitCode) && exitCode == STILL_ACTIVE) {
+			{
 				SetErrorMode(0);
-				ExitProcess(0);
-			}
-		});
+				_Exit(0); // exits faster https://www.geeksforgeeks.org/exit-vs-_exit-c-cpp/
+
+				DWORD exitCode;
+				HANDLE hProcess = GetCurrentProcess();
+
+				if (GetExitCodeProcess(hProcess, &exitCode) && exitCode == STILL_ACTIVE) {
+					SetErrorMode(0);
+					ExitProcess(0);
+				}
+			});
 
 		//MakeNOP(0x748E9C, 5, true);
 		//MakeNOP(0x748EA6, 5, true);
@@ -794,10 +795,10 @@ void MixSets::ReadIni()
 	if (ReadIniInt(ini, &lg, "Graphics", "CameraPhotoQuality", &i)) {
 		G_CameraPhotoQuality = i;
 		injector::MakeInline<0x5D04E1, 0x5D04E1 + 7>([](injector::reg_pack& regs)
-		{
-			*(uint32_t*)(regs.esp + 0x0E8) = regs.edi;
-			((void(__cdecl*)(int, signed int, char))0x5C6FA0)(regs.ecx, G_CameraPhotoQuality, true);
-		});
+			{
+				*(uint32_t*)(regs.esp + 0x0E8) = regs.edi;
+				((void(__cdecl*)(int, signed int, char))0x5C6FA0)(regs.ecx, G_CameraPhotoQuality, true);
+			});
 	}
 
 	if (ReadIniBool(ini, &lg, "Graphics", "NoMirrors")) {
@@ -928,7 +929,7 @@ void MixSets::ReadIni()
 				if (*(float*)(regs.esi + 0x0) < -0.2f) *(float*)(regs.esi + 0x0) = -0.2f;
 				if (*(float*)(regs.esi + 0x4) < -0.2f) *(float*)(regs.esi + 0x4) = -0.2f;
 			}
-		});
+			});
 	}
 
 	if (ReadIniFloat(ini, &lg, "Graphics", "BoatFoamLightingFix", &f)) {
@@ -967,13 +968,13 @@ void MixSets::ReadIni()
 			auto vehicle = (CVehicle*)regs.esi;
 			vehicle->m_nVehicleFlags.bEngineOn = false;
 			regs.eax = *(DWORD*)(regs.esi + 0x57C); //original code
-		});
+			});
 
 		injector::MakeInline<0x006A75F9, 0x006A75FF>([](injector::reg_pack& regs) {
 			auto vehicle = (CVehicle*)regs.esi;
 			if (vehicle->m_fHealth > 0.0f) vehicle->m_nVehicleFlags.bEngineOn = true;
 			*(DWORD*)(regs.esi + 0x57C) = regs.edi; //original code
-		});
+			});
 	}
 
 	G_ParaLandingFix = false;
@@ -1021,24 +1022,24 @@ void MixSets::ReadIni()
 			G_BikePedImpact = f;
 			Default_BikePedImpact = ReadMemory<float>(0x8D22AC, false);
 			injector::MakeInline<0x5F1200, 0x5F1200 + 6>([](injector::reg_pack& regs)
-			{
-				if (G_BikePedImpact != -1.0)
-					asm_fmul(G_BikePedImpact);
-				else
-					asm_fmul(Default_BikePedImpact);
-			});
+				{
+					if (G_BikePedImpact != -1.0)
+						asm_fmul(G_BikePedImpact);
+					else
+						asm_fmul(Default_BikePedImpact);
+				});
 		}
 
 		if (ReadIniFloat(ini, &lg, "Gameplay", "CarPedImpact", &f)) {
 			G_CarPedImpact = f;
 			Default_CarPedImpact = ReadMemory<float>(0x8D22A8, false);
 			injector::MakeInline<0x5F1208, 0x5F1208 + 6>([](injector::reg_pack& regs)
-			{
-				if (G_CarPedImpact != -1.0)
-					asm_fmul(G_CarPedImpact);
-				else
-					asm_fmul(Default_CarPedImpact);
-			});
+				{
+					if (G_CarPedImpact != -1.0)
+						asm_fmul(G_CarPedImpact);
+					else
+						asm_fmul(Default_CarPedImpact);
+				});
 		}
 
 		if (ReadIniFloat(ini, &lg, "Gameplay", "VehPedImpactUpForce", &f)) {
@@ -1050,30 +1051,30 @@ void MixSets::ReadIni()
 
 		if (G_VehBulletDamage != 1.0 || G_VehExploDamage != 1.0 || G_VehBulletDamage != -1.0 || G_VehExploDamage != -1.0) {
 			injector::MakeInline<0x6D7FDA, 0x6D7FDA + 6>([](injector::reg_pack& regs)
-			{
-				regs.eax = *(uint32_t*)(regs.esi + 0x594); // mov     eax, [esi+594h]
+				{
+					regs.eax = *(uint32_t*)(regs.esi + 0x594); // mov     eax, [esi+594h]
 
-				CVehicle* vehicle = (CVehicle*)regs.esi;
-				if (!vehicle->m_nVehicleFlags.bIsRCVehicle && !(vehicle->m_pDriver && vehicle->m_pDriver->m_nCreatedBy == 2 && vehicle->m_nCreatedBy == eVehicleCreatedBy::MISSION_VEHICLE)) {
-					if (regs.ebx == 51 || regs.ebx == 37) { // explosion or fire
-						if (G_VehExploDamage != -1.0) { // check it because the var may be updated by ini reloading
-							if (regs.ebx == 51) {
-								*(float*)(regs.esp + 0x90) *= G_VehExploDamage;
+					CVehicle* vehicle = (CVehicle*)regs.esi;
+					if (!vehicle->m_nVehicleFlags.bIsRCVehicle && !(vehicle->m_pDriver && vehicle->m_pDriver->m_nCreatedBy == 2 && vehicle->m_nCreatedBy == eVehicleCreatedBy::MISSION_VEHICLE)) {
+						if (regs.ebx == 51 || regs.ebx == 37) { // explosion or fire
+							if (G_VehExploDamage != -1.0) { // check it because the var may be updated by ini reloading
+								if (regs.ebx == 51) {
+									*(float*)(regs.esp + 0x90) *= G_VehExploDamage;
+								}
+							}
+						}
+						else {
+							if (G_VehBulletDamage != -1.0) {
+								float thisDamage = *(float*)(regs.esp + 0x90);
+
+								// For petrol cap (not 100% but this way we don't need to do another hook).
+								if (thisDamage != vehicle->m_fHealth && thisDamage != 1000.0f) {
+									*(float*)(regs.esp + 0x90) *= G_VehBulletDamage;
+								}
 							}
 						}
 					}
-					else {
-						if (G_VehBulletDamage != -1.0) {
-							float thisDamage = *(float*)(regs.esp + 0x90);
-
-							// For petrol cap (not 100% but this way we don't need to do another hook).
-							if (thisDamage != vehicle->m_fHealth && thisDamage != 1000.0f) {
-								*(float*)(regs.esp + 0x90) *= G_VehBulletDamage;
-							}
-						}
-					}
-				}
-			});
+				});
 		}
 
 		if (ReadIniFloat(ini, &lg, "Gameplay", "VehFireDamage", &f)) {
@@ -1098,14 +1099,14 @@ void MixSets::ReadIni()
 				G_BrakeMin = -1.0f;
 			}
 			injector::MakeInline<0x6B269F, 0x6B269F + 6>([](injector::reg_pack& regs)
-			{
-				//fmul[eax + tHandlingData.fBrakeDeceleration]
-				float brakeDeceleration = *(float*)(regs.eax + 0x94);
-				brakeDeceleration *= G_BrakePower;
-				if (G_BrakeMin > 0.0 && brakeDeceleration < G_BrakeMin) brakeDeceleration = G_BrakeMin;
-				G_f = brakeDeceleration;
-				asm_fmul(brakeDeceleration);
-			});
+				{
+					//fmul[eax + tHandlingData.fBrakeDeceleration]
+					float brakeDeceleration = *(float*)(regs.eax + 0x94);
+					brakeDeceleration *= G_BrakePower;
+					if (G_BrakeMin > 0.0 && brakeDeceleration < G_BrakeMin) brakeDeceleration = G_BrakeMin;
+					G_f = brakeDeceleration;
+					asm_fmul(brakeDeceleration);
+				});
 		}
 	}
 
@@ -1287,33 +1288,33 @@ void MixSets::ReadIni()
 	if (ReadIniBool(ini, &lg, "Gameplay", "RandWheelDettach")) {
 
 		injector::MakeInline<0x6B38C4, 0x6B38C4 + 17>([](injector::reg_pack& regs)
-		{
-			CAutomobile* automobile = (CAutomobile*)regs.esi;
-			int nodeId = 5;
-			switch (CGeneral::GetRandomNumberInRange(0, 5))
 			{
-			case 1:
-				nodeId = 2;
-				break;
-			case 2:
-				nodeId = 5;
-				break;
-			case 3:
-				nodeId = 4;
-				break;
-			case 4:
-				nodeId = 7;
-				break;
-			}
-			RwFrame* frame = automobile->m_aCarNodes[nodeId];
-			if (frame && frame->object.parent) {
-				automobile->SpawnFlyingComponent(nodeId, 1);
-				regs.eax = (uintptr_t)frame;
-			}
-			else {
-				*(uintptr_t*)(regs.esp - 4) = 0x6B38F7;
-			}
-		});
+				CAutomobile* automobile = (CAutomobile*)regs.esi;
+				int nodeId = 5;
+				switch (CGeneral::GetRandomNumberInRange(0, 5))
+				{
+				case 1:
+					nodeId = 2;
+					break;
+				case 2:
+					nodeId = 5;
+					break;
+				case 3:
+					nodeId = 4;
+					break;
+				case 4:
+					nodeId = 7;
+					break;
+				}
+				RwFrame* frame = automobile->m_aCarNodes[nodeId];
+				if (frame && frame->object.parent) {
+					automobile->SpawnFlyingComponent(nodeId, 1);
+					regs.eax = (uintptr_t)frame;
+				}
+				else {
+					*(uintptr_t*)(regs.esp - 4) = 0x6B38F7;
+				}
+			});
 	}
 
 	if (!inSAMP && ReadIniBool(ini, &lg, "Gameplay", "HostileGangs")) {
@@ -1328,47 +1329,47 @@ void MixSets::ReadIni()
 
 	if (ReadIniBool(ini, &lg, "Gameplay", "Fix247Randomness")) {
 		injector::MakeInline<0x59A797, 0x59A797 + 6>([](injector::reg_pack& regs)
-		{
-			*(uint16_t*)(regs.esi + 0x790) = (uint16_t)regs.eax; //mov     [esi+790h], al
+			{
+				*(uint16_t*)(regs.esi + 0x790) = (uint16_t)regs.eax; //mov     [esi+790h], al
 
-			float x = 0.0f;
-			float y = 0.0f;
-			float z = 0.0f;
+				float x = 0.0f;
+				float y = 0.0f;
+				float z = 0.0f;
 
-			CPlayerPed *playa = FindPlayerPed(-1);
-			if (playa && playa->m_pEnex) {
-				CEntryExit *enex = (CEntryExit * )playa->m_pEnex;
-				x = enex->m_recEntrance.left;
-				y = enex->m_recEntrance.top;
-				z = enex->m_fEntranceZ;
-			}
-			else {
-				x = *(float*)(regs.esi + 0x400);
-				y = *(float*)(regs.esi + 0x404);
-				z = *(float*)(regs.esi + 0x408);
-			}
-			int seed = (int)(x + y * (z + 123.5f));
-			Call<0x821B11, int>(seed); //srand
-		});
+				CPlayerPed* playa = FindPlayerPed(-1);
+				if (playa && playa->m_pEnex) {
+					CEntryExit* enex = (CEntryExit*)playa->m_pEnex;
+					x = enex->m_recEntrance.left;
+					y = enex->m_recEntrance.top;
+					z = enex->m_fEntranceZ;
+				}
+				else {
+					x = *(float*)(regs.esi + 0x400);
+					y = *(float*)(regs.esi + 0x404);
+					z = *(float*)(regs.esi + 0x408);
+				}
+				int seed = (int)(x + y * (z + 123.5f));
+				Call<0x821B11, int>(seed); //srand
+			});
 	}
 
 
 	if (ReadIniBool(ini, &lg, "Gameplay", "NoRadioText")) {
 		InstallEmptyRadioPatches();
 	}
-	 
+
 	if (ReadIniBool(ini, &lg, "Gameplay", "FixBoatRadioAnim")) {
 		injector::MakeInline<0x6DF4E7, 0x6DF4E7 + 5>([](injector::reg_pack& regs)
-		{
-			CPed* driver = (CPed*)regs.esi;
-			if (RpAnimBlendClumpGetAssociation(driver->m_pRwClump, ANIM_DEFAULT_DRIVE_BOAT)) {
-				regs.eax = 0;
-			}
-			else {
-				regs.eax = (uint32_t)CAnimManager::BlendAnimation(driver->m_pRwClump, 0, ANIM_DEFAULT_CAR_TUNE_RADIO, 4.0);
-			}
-			*(uintptr_t*)(regs.esp - 0x4) = 0x6DF4FC;
-		});
+			{
+				CPed* driver = (CPed*)regs.esi;
+				if (RpAnimBlendClumpGetAssociation(driver->m_pRwClump, ANIM_DEFAULT_DRIVE_BOAT)) {
+					regs.eax = 0;
+				}
+				else {
+					regs.eax = (uint32_t)CAnimManager::BlendAnimation(driver->m_pRwClump, 0, ANIM_DEFAULT_CAR_TUNE_RADIO, 4.0);
+				}
+				*(uintptr_t*)(regs.esp - 0x4) = 0x6DF4FC;
+			});
 	}
 
 	if (!inSAMP && ReadIniBool(ini, &lg, "Gameplay", "NoStuntReward")) {
@@ -1378,34 +1379,34 @@ void MixSets::ReadIni()
 
 	if (ReadIniBool(ini, &lg, "Gameplay", "FixTwoPlayerVehSound")) {
 		injector::MakeInline<0x4F570A, 0x4F570A + 6>([](injector::reg_pack& regs)
-		{
-			*(uint32_t*)(regs.esi + 0xA7) = 0; //mov     [esi+0A7h], bl
-			CVehicle* veh = (CVehicle*)regs.eax;
-			if (veh->m_pDriver == CWorld::Players[1].m_pPed) {
-				secPlayerVehicle = veh;
-			}
-			else {
-				secPlayerVehicle = nullptr;
-			}
-		});
+			{
+				*(uint32_t*)(regs.esi + 0xA7) = 0; //mov     [esi+0A7h], bl
+				CVehicle* veh = (CVehicle*)regs.eax;
+				if (veh->m_pDriver == CWorld::Players[1].m_pPed) {
+					secPlayerVehicle = veh;
+				}
+				else {
+					secPlayerVehicle = nullptr;
+				}
+			});
 
 		injector::MakeInline<0x5022A1, 0x5022A1 + 6>([](injector::reg_pack& regs)
-		{
-			CAEVehicleAudioEntity* audioEntity = (CAEVehicleAudioEntity*)regs.ecx;
-			CVehicle* veh = (CVehicle*)regs.edi;
+			{
+				CAEVehicleAudioEntity* audioEntity = (CAEVehicleAudioEntity*)regs.ecx;
+				CVehicle* veh = (CVehicle*)regs.edi;
 
-			if (CWorld::Players[1].m_pPed && veh->m_pDriver == CWorld::Players[1].m_pPed) {
-				CAEVehicleAudioEntity::s_pPlayerDriver = CWorld::Players[1].m_pPed;
-				audioEntity->m_bInhibitAccForLowSpeed = false;
-			}
-			else {
-				if (CWorld::Players[0].m_pPed && veh->m_pDriver == CWorld::Players[0].m_pPed) {
-					CAEVehicleAudioEntity::s_pPlayerDriver = CWorld::Players[0].m_pPed;
+				if (CWorld::Players[1].m_pPed && veh->m_pDriver == CWorld::Players[1].m_pPed) {
+					CAEVehicleAudioEntity::s_pPlayerDriver = CWorld::Players[1].m_pPed;
+					audioEntity->m_bInhibitAccForLowSpeed = false;
 				}
-			}
+				else {
+					if (CWorld::Players[0].m_pPed && veh->m_pDriver == CWorld::Players[0].m_pPed) {
+						CAEVehicleAudioEntity::s_pPlayerDriver = CWorld::Players[0].m_pPed;
+					}
+				}
 
-			regs.ecx = (uint32_t)CAEVehicleAudioEntity::s_pPlayerDriver;
-		});
+				regs.ecx = (uint32_t)CAEVehicleAudioEntity::s_pPlayerDriver;
+			});
 
 	}
 
@@ -1479,23 +1480,23 @@ void MixSets::ReadIni()
 	if (ReadIniFloat(ini, &lg, "Gameplay", "VehCamHeightOffset", &f)) {
 		G_VehCamHeightOffset = f;
 		injector::MakeInline<0x524776, 0x524776 + 6>([](injector::reg_pack& regs)
-		{
-			regs.ecx = *(uint32_t*)(regs.edi + 0x4C8); //original code mov ecx, [edi+4C8h]
-			*(float*)(regs.esp + 0x78 - 0x60) += G_VehCamHeightOffset;
-		});
+			{
+				regs.ecx = *(uint32_t*)(regs.edi + 0x4C8); //original code mov ecx, [edi+4C8h]
+				*(float*)(regs.esp + 0x78 - 0x60) += G_VehCamHeightOffset;
+			});
 	}
 
 	if (!inSAMP && ReadIniBool(ini, &lg, "Gameplay", "DuckAnyWeapon")) {
 		injector::MakeInline<0x692653>([](injector::reg_pack& regs)
-		{
-			CWeaponInfo* weaponInfo = (CWeaponInfo*)regs.eax;
-			if (weaponInfo->m_nAnimToPlay != 29 && weaponInfo->m_nAnimToPlay != 30) {
-				*(uintptr_t*)(regs.esp - 0x4) = 0x69267B;
-			}
-			else {
-				*(uintptr_t*)(regs.esp - 0x4) = 0x692677;
-			}
-		});
+			{
+				CWeaponInfo* weaponInfo = (CWeaponInfo*)regs.eax;
+				if (weaponInfo->m_nAnimToPlay != 29 && weaponInfo->m_nAnimToPlay != 30) {
+					*(uintptr_t*)(regs.esp - 0x4) = 0x69267B;
+				}
+				else {
+					*(uintptr_t*)(regs.esp - 0x4) = 0x692677;
+				}
+			});
 	}
 
 	/*if (!inSAMP && ReadIniFloat(ini, &lg, "Gameplay", "WeaponRangeMult", &f)) {
@@ -1604,27 +1605,27 @@ void MixSets::ReadIni()
 
 			if (G_PedDensityExt >= 0.0f || G_PedDensityInt >= 0.0f) {
 				injector::MakeInline<0x614937, 0x614937 + 6>([](injector::reg_pack& regs)
-				{
-					if (CGame::currArea != 0) {
-						float dens;
-						if (G_PedDensityInt >= 0.0f)
-						{
-							dens = *(float*)0x008D2530 * G_PedDensityInt;
+					{
+						if (CGame::currArea != 0) {
+							float dens;
+							if (G_PedDensityInt >= 0.0f)
+							{
+								dens = *(float*)0x008D2530 * G_PedDensityInt;
+							}
+							else {
+								dens = *(float*)0x008D2530;
+							}
+							if (dens > 1.0) dens = 1.0;
+							asm_fmul(dens);
 						}
 						else {
-							dens = *(float*)0x008D2530;
+							if (G_PedDensityExt >= 0.0f)
+							{
+								asm_fmul(*(float*)0x008D2530 * G_PedDensityExt);
+							}
+							else asm_fmul(*(float*)0x008D2530);
 						}
-						if (dens > 1.0) dens = 1.0;
-						asm_fmul(dens);
-					}
-					else {
-						if (G_PedDensityExt >= 0.0f)
-						{
-							asm_fmul(*(float*)0x008D2530 * G_PedDensityExt);
-						}
-						else asm_fmul(*(float*)0x008D2530);
-					}
-				});
+					});
 			}
 
 
@@ -1632,13 +1633,13 @@ void MixSets::ReadIni()
 			{
 				G_VehDensity = f;
 				injector::MakeInline<0x4300E9>([](injector::reg_pack& regs)
-				{
-					if (G_VehDensity != -1.0f)
 					{
-						*(float*)&regs.eax = *(float*)0x008A5B20 * G_VehDensity;
-					}
-					else *(float*)&regs.eax = *(float*)0x008A5B20;
-				});
+						if (G_VehDensity != -1.0f)
+						{
+							*(float*)&regs.eax = *(float*)0x008A5B20 * G_VehDensity;
+						}
+						else *(float*)&regs.eax = *(float*)0x008A5B20;
+					});
 			}
 			else G_VehDensity = -1.0f;
 
@@ -2158,10 +2159,32 @@ void MixSets::ReadIni()
 		if (!bReloading)
 		{
 			Gunflashes::Setup(
-				ReadIniBool(ini, &lg, "New_Gunflash_System", "GunflashFixSAMP")
+				inSAMP ? ReadIniBool(ini, &lg, "New_Gunflash_System", "GunflashFixSAMP") : false
 			);
 
 			Events::pedRenderEvent.before += Gunflashes::CreateGunflashEffectsForPed;
+		}
+		//Read Weapon data 
+
+		std::string particleString;
+
+		//Read Passenger Gunflash Fix
+		if (ReadIniString(ini, &lg, "New_Gunflash_System", "FpsFixGunflash", &particleString)) {
+
+			std::istringstream iss(particleString);
+			std::string particleName;
+			bool rotate, smoke;
+
+			if (!(iss >> particleName)) {
+				particleName = "gunflash";
+			}
+
+			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
+				rotate = true;
+				smoke = true;
+			}
+
+			Gunflashes::SetFpxFixGunflashesName(particleName);
 		}
 
 		//Read Additional Options
@@ -2248,28 +2271,6 @@ void MixSets::ReadIni()
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "MopedDriverOffsetFix", &f))
 			Gunflashes::SetMopedFixOffset(f);
 
-		//Read Weapon data 
-
-		std::string particleString;
-
-		//Read Passenger Gunflash Fix
-		if (ReadIniString(ini, &lg, "New_Gunflash_System", "CustomVehicleGunflash", &particleString)) {
-
-			std::istringstream iss(particleString);
-			std::string particleName;
-			bool rotate, smoke;
-
-			if (!(iss >> particleName)) {
-				particleName = "gunflash";
-			}
-
-			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
-				rotate = true;
-				smoke = true;
-			}
-
-			Gunflashes::SetVehicleGunflashFxName(particleName);
-		}
 		std::vector<int> weaponIDs;
 
 		// Populate the list with weapon IDs

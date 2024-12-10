@@ -19,9 +19,6 @@
     <ClInclude Include="IMFX\Gunflashes.h">
       <Filter>IMFX</Filter>
     </ClInclude>
-    <ClInclude Include="IMFX\imfx.h">
-      <Filter>IMFX</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IniReader">

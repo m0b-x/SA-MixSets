@@ -12,6 +12,8 @@ using namespace std;
 class MixSets
 {
 public:
+	static inline int testInt1 = 0, testInt2 = 0, testInt3 = 0;
+	static inline float testFloat1 = 0.0f, testFloat2 = 0.0f, testFloat3 = 0.0f;
 
 	static inline bool Read;
 	static inline std::fstream lg;

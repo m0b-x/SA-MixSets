@@ -2135,6 +2135,28 @@ void MixSets::ReadIni()
 			bErrorRename = true;
 		}
 	}
+	// -- Testing Variables (For Developers)
+
+
+	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt1", &i)) {
+		testInt1 = f;
+	}
+	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt2", &i)) {
+		testInt2 = f;
+	}
+	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt3", &i)) {
+		testInt3 = f;
+	}
+
+	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat1", &f)) {
+		testFloat1 = f;
+	}
+	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat2", &f)) {
+		testFloat2 = f;
+	}
+	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat3", &f)) {
+		testFloat3 = f;
+	}
 
 	// -- New Gunflash System
 
@@ -2173,6 +2195,11 @@ void MixSets::ReadIni()
 			Gunflashes::SetGunflashLowerLight(true);
 		else
 			Gunflashes::SetGunflashLowerLight(false);
+
+		if (ReadIniBool(ini, &lg, "New_Gunflash_System", "LocalParticleFix"))
+			Gunflashes::SetLocalParticleFix(true);
+		else
+			Gunflashes::SetLocalParticleFix(false);
 
 		if (ReadIniInt(ini, &lg, "New_Gunflash_System", "UnderflashR", &i))
 			Gunflashes::SetUnderFlashLightRComponent(i);
@@ -2235,13 +2262,6 @@ void MixSets::ReadIni()
 
 		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingTimeMult", &f))
 			Gunflashes::SetSurfingTimeMult(f);
-
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingSpeed", &f))
-			Gunflashes::SetSurfingSpeed(f);
-
-		//Read "Fix" Values
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "MopedDriverOffsetFix", &f))
-			Gunflashes::SetMopedFixOffset(f);
 
 		std::vector<int> weaponIDs;
 

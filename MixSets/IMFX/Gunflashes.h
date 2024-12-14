@@ -43,6 +43,10 @@ public:
 	static void __fastcall DoDriveByGunflash(CPed* driver, int, int, bool leftHand);
 	static void __fastcall MyTriggerGunflash(Fx_c* fx, int, CEntity* owner, CVector& origin, CVector& target, bool doGunflash);
 
+	//Underflash Handling
+	static void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset);
+	static void Gunflashes::DrawUnderflash(CPed* ped);
+
 	// Settings configuration
 	static void SetPistolFixOffset(const float newValue);
 	static void SetFpxFixGunflashesName(const std::string& particle);
@@ -62,12 +66,11 @@ public:
 	static void SetCarDriverOffsetFactor(const RwReal newValue);
 	static void SetStaticBikeOffset(const RwReal newValue);
 	static void SetSurfingOffsetFactor(const RwReal newValue);
+	static void SetLocalParticleFix(const bool newValue);
 	static void SetGunflashLowerLight(const bool newValue);
 	static void SetSurfingTimeMult(const float value);
 	static void SetFpsFixTimeMult(const float newValue);
 	static void SetFpsFixComputing(const bool newValue);
-	static void SetSurfingSpeed(const float value);
-	static void SetMopedFixOffset(const RwReal newValue);
 
 	//Utility
 	static eTaskType GetPedActiveTask(CPed* ped);

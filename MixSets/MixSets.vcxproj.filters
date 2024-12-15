@@ -8,7 +8,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MixSets.h" />
     <ClInclude Include="ReadIni.h" />
     <ClInclude Include="IniReader\ini_parser.hpp">
       <Filter>IniReader</Filter>
@@ -19,6 +18,7 @@
     <ClInclude Include="IMFX\Gunflashes.h">
       <Filter>IMFX</Filter>
     </ClInclude>
+    <ClInclude Include="MixSets.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IniReader">

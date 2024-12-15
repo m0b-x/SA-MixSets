@@ -63,12 +63,9 @@ float fpsFixTimeMult = 1.0f;
 bool computeFpsFix = true;
 
 // Offsets and factors
-RwReal staticBikeOffset = 0.0f;
 RwReal surfingOffsetFactor = 0.0f;
-RwReal carDriverOffsetFactor = 0.0f;
-RwReal bikeDriverOffsetFactor = 0.0f;
 
-float pistolFixOffset = 0.2f;
+float pistolFixOffset = 0.005f;
 
 bool gunflashLowerLight = false;
 bool localParticleFix = false;
@@ -76,11 +73,14 @@ bool localParticleFix = false;
 // Time multipliers
 float surfingTimeMult = 1.0f;
 
+std::string defaultGunflashName = "gunflash";
+std::string defaultGunSmokeName = "gunsmoke";
 // Weapon data structure
 struct WeaponData {
-	char* particleName = "gunflash";
-	char* fpxFixParticleName = "gunflash";
-	char* surfFixParticleName = "gunflash";
+	std::string particleName;
+	std::string fpxFixParticleName;
+	std::string surfFixParticleName;
+
 	bool rotate = true;
 	bool smoke = true;
 };
@@ -222,18 +222,6 @@ void Gunflashes::SetUnderflashOffsetZ(const float newValue) {
 	UnderflashPlayerOffsetZ = newValue;
 }
 
-void Gunflashes::SetBikeDriverOffsetFactor(const RwReal newValue) {
-	bikeDriverOffsetFactor = newValue;
-}
-
-void Gunflashes::SetCarDriverOffsetFactor(const RwReal newValue) {
-	carDriverOffsetFactor = newValue;
-}
-
-void Gunflashes::SetStaticBikeOffset(const RwReal newValue) {
-	staticBikeOffset = newValue;
-}
-
 void Gunflashes::SetSurfingOffsetFactor(const RwReal newValue) {
 	surfingOffsetFactor = newValue;
 }
@@ -317,7 +305,10 @@ void Gunflashes::Setup(bool sampFix)
 
 void Gunflashes::ProcessPerFrame() {
 	if (computeFpsFix)
+	{
 		fpsFixTimeMult = CTimer::game_FPS / 30.0f;
+		surfingOffsetFactor = -CTimer::game_FPS / 60.0f + 2;
+	}
 
 	for (int i = 0; i < CPools::ms_pPedPool->m_nSize; i++) {
 		CPed* ped = CPools::ms_pPedPool->GetAt(i);
@@ -371,7 +362,9 @@ bool __fastcall Gunflashes::MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CP
 void __fastcall Gunflashes::DoDriveByGunflash(CPed* driver, int, int, bool leftHand) {
 	bLeftHand = leftHand;
 	bVehicleGunflash = true;
-	MyTriggerGunflash(&g_fx, 0, driver, CVector(0.0f, 0.0f, 0.0f), CVector(0.0f, 0.0f, 0.0f), true);
+	CVector origin(0.0f, 0.0f, 0.0f);
+	CVector target(0.0f, 0.0f, 0.0f);
+	MyTriggerGunflash(&g_fx, 0, driver, origin, target, true);
 }
 
 void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CVector& origin, CVector& target, bool doGunflash) {
@@ -386,13 +379,13 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
 			RwMatrix fxMat;
 			fx->CreateMatFromVec(&fxMat, &origin, &target);
 			RwV3d offset = { 0.0f, 0.0f, 0.0f };
-			FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem("gunflash", &offset, &fxMat, false);
+			FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(defaultGunflashName.data(), &offset, &fxMat, false);
 			if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 			if (gunflashFx) {
 				gunflashFx->CopyParentMatrix();
 				gunflashFx->PlayAndKill();
 			}
-			FxSystem_c* smokeFx = g_fxMan.CreateFxSystem("gunsmoke", &offset, &fxMat, false);
+			FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(defaultGunSmokeName.data(), &offset, &fxMat, false);
 			if (smokeFx) {
 				smokeFx->CopyParentMatrix();
 				smokeFx->PlayAndKill();
@@ -465,7 +458,7 @@ static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& gunflashOffset, R
 				dLeftAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeAnimGroup][DRIVEBY_LEFT],
 				dRightAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeAnimGroup][DRIVEBY_RIGHT];
 
-			RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * bikeDriverOffsetFactor * reversingFactor;
+			RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * reversingFactor;
 			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
 
 			while (association)
@@ -505,7 +498,7 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& gunflashOffset, Rw
 		unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
 		if (totalAnims > 0)
 		{
-			const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * carDriverOffsetFactor * reversingFactor;
+			const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * reversingFactor;
 
 			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
 			while (association)
@@ -628,9 +621,9 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 				bool rotate = true;
 				bool smoke = true;
-				char* fxName = "gunflash";
-				char* fxFixName = "gunflash";
-				char* surFixName = "gunflash";
+				std::string fxName = "gunflash";
+				std::string fxFixName = "gunflash";
+				std::string surFixName = "gunflash";
 
 				// Check if the player's weapons matches the array
 				if (arrayIndex < weaponArraySize)
@@ -643,6 +636,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				}
 
 				bool attachedToBone = true;
+				bool localParticles = false;
 
 				const auto pedWeaponSkill = ped->GetWeaponSkill(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
 				CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, pedWeaponSkill);
@@ -666,7 +660,27 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 				int boneIDToAttachTo = pedHands[i];
 
-				if (!isInVehicle)
+
+				if (localParticleFix)
+				{
+					attachedToBone = true;
+					particleTimeMult = 1.0f;
+					if (isInVehicle)
+					{
+						RwReal reversingfactor = 0.0f;
+						RwV3d emptyOffset;
+
+						if (isInBike)
+						{
+							ChangeOffsetForDriverBikeDriveBy(ped, emptyOffset, underflashOffset, reversingfactor);
+						}
+						else
+						{
+							ChangeOffsetForCarDriverDriveBy(ped, emptyOffset, underflashOffset, reversingfactor);
+						}
+					}
+				}
+				else if (!isInVehicle)
 				{
 					if (surfing)
 					{
@@ -680,30 +694,29 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 								additionalOffsetY += ped->m_vecMoveSpeed.y * surfingOffsetFactor;
 								additionalOffsetZ += ped->m_vecMoveSpeed.z * surfingOffsetFactor;
 
-								// TEMPORARY
-								fxName = surFixName;
+								//TEMPORARY
+								//fxName = surFixName;
 								particleTimeMult = surfingTimeMult;
 							}
 							else
 							{
 								attachedToBone = true;
-								// TEMPORARY
-								fxName = fxFixName;
+								//TEMPORARY
+								//fxName = fxFixName;
 								particleTimeMult = fpsFixTimeMult;
 							}
 						}
 						else
 						{
 							attachedToBone = false;
-							// TEMPORARY
-							fxName = fxFixName;
+							//TEMPORARY
+							//fxName = fxFixName;
 							particleTimeMult = fpsFixTimeMult;
 						}
 
 					}
 					else if (ped->m_pedIK.bUseArm)
 					{
-						//TODO: CHECK FOR HILL CLIMBING parameters
 						if (playerData)
 						{
 							if (!playerData->m_bFreeAiming)
@@ -720,19 +733,26 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 									{
 										gunflashOffset.z += pistolFixOffset;
 									}
-
 									// TODO: FIX aiming right hand next to a wall
 								}
 								else // Singular Weapon Weilding
 								{
 									attachedToBone = false;
 									// TEMPORARY
-									fxName = fxFixName;
+									//fxName = fxFixName;
 									particleTimeMult = fpsFixTimeMult;
+
+									//added recently
+									gunflashOffset.x += ped->m_vecAnimMovingShiftLocal.y ;
+									gunflashOffset.y -= ped->m_vecAnimMovingShiftLocal.x ;
 								}
 							}
 							else
 							{
+								//added recently
+								gunflashOffset.x += ped->m_vecAnimMovingShiftLocal.y * surfingOffsetFactor;
+								gunflashOffset.y -= ped->m_vecAnimMovingShiftLocal.x * surfingOffsetFactor;
+
 								attachedToBone = true;
 							}
 						}
@@ -741,13 +761,19 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 							attachedToBone = false;
 						}
 					}
+					else
+					{
+						//added recently
+						gunflashOffset.x += ped->m_vecAnimMovingShiftLocal.y;
+						gunflashOffset.y -= ped->m_vecAnimMovingShiftLocal.x;
+					}
 
 				}
 				else
 				{
 
 					particleTimeMult = fpsFixTimeMult;
-					fxName = fxFixName;
+					//fxName = fxFixName;
 					RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
 
 					if (driverDriveby)
@@ -758,8 +784,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 							{
 								attachedToBone = false;
 								// TEMPORARY
-								fxName = fxFixName;
-								particleTimeMult = fpsFixTimeMult;
+								//fxName = fxFixName;
+								particleTimeMult = surfingTimeMult;
 
 								additionalOffsetX = ped->m_pVehicle->m_vecMoveSpeed.x * surfingOffsetFactor;
 								additionalOffsetY = ped->m_pVehicle->m_vecMoveSpeed.y * surfingOffsetFactor;
@@ -777,16 +803,16 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 					}
 				}
 
+				mat->pos.x += additionalOffsetX;
+				mat->pos.y += additionalOffsetY;
+				mat->pos.z += additionalOffsetZ;
+
 				RpHAnimHierarchy* hierarchy = GetAnimHierarchyFromSkinClump(ped->m_pRwClump);
 				RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, boneIDToAttachTo)];
 				memcpy(mat, boneMat, sizeof(RwMatrix));
 				RwMatrixUpdate(mat);
 
-				mat->pos.x += additionalOffsetX;
-				mat->pos.y += additionalOffsetY;
-				mat->pos.z += additionalOffsetZ;
-
-				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(fxName, &gunflashOffset, mat, true);
+				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(fxName.data(), &gunflashOffset, mat, true);
 
 				if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 
@@ -796,22 +822,16 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 					if (attachedToBone)
 					{
-						//gunflashFx->m_pParentMatrix = boneMat;
+						gunflashFx->m_pParentMatrix = boneMat;
 					}
-
-					if (localParticleFix)
-					{
-						gunflashFx->AttachToBone(ped, boneIDToAttachTo);
-						gunflashFx->SetLocalParticles(true);
-						gunflashFx->SetTimeMult(1.0f);
-					}
-
 
 					RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 					if (rotate)
 					{
 						RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_y, CGeneral::GetRandomNumberInRange(0.0f, 360.0f), rwCOMBINEPRECONCAT);
 					}
+
+					if (localParticleFix) gunflashFx->SetLocalParticles(true);
 					gunflashFx->PlayAndKill();
 
 					if (gunflashLowerLight)
@@ -830,7 +850,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				{
 					if (!ped->m_pVehicle || ped->m_pVehicle->m_vecMoveSpeed.Magnitude() < 0.15f)
 					{
-						FxSystem_c* smokeFx = g_fxMan.CreateFxSystem("gunsmoke", &gunflashOffset, mat, true);
+
+						FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(defaultGunSmokeName.data(), &gunflashOffset, mat, true);
 						if (smokeFx) {
 							RwMatrixRotate(&smokeFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 							smokeFx->PlayAndKill();

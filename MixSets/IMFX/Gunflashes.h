@@ -44,8 +44,8 @@ public:
 	static void __fastcall MyTriggerGunflash(Fx_c* fx, int, CEntity* owner, CVector& origin, CVector& target, bool doGunflash);
 
 	//Underflash Handling
-	static void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset);
-	static void Gunflashes::DrawUnderflash(CPed* ped);
+	static void DrawUnderflash(CPed* ped, RwV3d& newOffset);
+	static void DrawUnderflash(CPed* ped);
 
 	// Settings configuration
 	static void SetPistolFixOffset(const float newValue);
@@ -62,9 +62,6 @@ public:
 	static void SetUnderflashOffsetX(const float newValue);
 	static void SetUnderflashOffsetY(const float newValue);
 	static void SetUnderflashOffsetZ(const float newValue);
-	static void SetBikeDriverOffsetFactor(const RwReal newValue);
-	static void SetCarDriverOffsetFactor(const RwReal newValue);
-	static void SetStaticBikeOffset(const RwReal newValue);
 	static void SetSurfingOffsetFactor(const RwReal newValue);
 	static void SetLocalParticleFix(const bool newValue);
 	static void SetGunflashLowerLight(const bool newValue);

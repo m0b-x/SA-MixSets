@@ -12,6 +12,7 @@
 #include "eAnimations.h"
 #include "CEntryExit.h"
 #include "CAnimManager.h"
+#include "ReadIni.h"
 
 using namespace plugin;
 using namespace injector;
@@ -953,15 +954,21 @@ void MixSets::ReadIni()
 		MakeNOP(0x60B4FA, 6, true);
 	}
 
-	if ((ReadIniBool(ini, &lg, "Gameplay", "ClimbOntoVehicles"))) {
-		patch::SetRaw(0x67DF6E, "\xEB", 1);
-		patch::SetRaw(0x67E027, "\x90\x90", 2);
+	if (ReadIniBool(ini, &lg, "Gameplay", "ClimbOntoVehicles")) {
+		char patchData1[] = { '\xEB' };
+		char patchData2[] = { '\x90', '\x90' };
+
+		patch::SetRaw(0x67DF6E, (void*)patchData1, sizeof(patchData1));
+		patch::SetRaw(0x67E027, (void*)patchData2, sizeof(patchData2));
 	}
-	else
-	{
-		patch::SetRaw(0x67DF6E, "\x75", 1);
-		patch::SetRaw(0x67E027, "\x75\x1F", 2);
+	else {
+		char patchData1[] = { '\x75' };
+		char patchData2[] = { '\x75', '\x1F' };
+
+		patch::SetRaw(0x67DF6E, (void*)patchData1, sizeof(patchData1));
+		patch::SetRaw(0x67E027, (void*)patchData2, sizeof(patchData2));
 	}
+
 
 	if ((!inSAMP || (inSAMP && rpSAMP)) && ReadIniBool(ini, &lg, "Gameplay", "VehBurnEngineBroke")) {
 		injector::MakeInline<0x006A70ED, 0x006A70F3>([](injector::reg_pack& regs) {
@@ -1952,13 +1959,15 @@ void MixSets::ReadIni()
 		MakeNOP(0x58FBBF, 5);
 	}
 
-	if ((ReadIniBool(ini, &lg, "Interface", "CrosshairSameSize"))) {
-		patch::SetRaw(0x609D80, "\x90\x90", 2);
+	if (ReadIniBool(ini, &lg, "Interface", "CrosshairSameSize")) {
+		char patchData[] = { '\x90', '\x90' }; 
+		patch::SetRaw(0x609D80, (void*)patchData, sizeof(patchData));
 	}
-	else
-	{
-		patch::SetRaw(0x609D80, "\x7A\x08", 2);
+	else {
+		char patchData[] = { '\x7A', '\x08' }; 
+		patch::SetRaw(0x609D80, (void*)patchData, sizeof(patchData));
 	}
+
 
 	if (ReadIniFloat(ini, &lg, "Interface", "CrosshairSize", &f)) {
 		if (f != 0.0)
@@ -2119,7 +2128,9 @@ void MixSets::ReadIni()
 		bErrorRename = false;
 
 		try {
-			filesystem::rename(PLUGIN_PATH("MixSets old.ini"), PLUGIN_PATH("MixSets backup.ini"));
+			char oldIni[] = "MixSets old.ini";
+			char backupIni[] = "MixSets backup.ini";
+			filesystem::rename(PLUGIN_PATH(oldIni), PLUGIN_PATH(backupIni));
 		}
 		catch (std::filesystem::filesystem_error& e) {
 			if (lang == languages::PT)
@@ -2139,13 +2150,13 @@ void MixSets::ReadIni()
 
 
 	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt1", &i)) {
-		testInt1 = f;
+		testInt1 = i;
 	}
 	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt2", &i)) {
-		testInt2 = f;
+		testInt2 = i;
 	}
 	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt3", &i)) {
-		testInt3 = f;
+		testInt3 = i;
 	}
 
 	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat1", &f)) {
@@ -2188,79 +2199,78 @@ void MixSets::ReadIni()
 		}
 		//Read Weapon data 
 
-		std::string particleString;
-
-		//Read Additional Options
-		if (ReadIniBool(ini, &lg, "New_Gunflash_System", "GunflashLowerLight"))
-			Gunflashes::SetGunflashLowerLight(true);
-		else
-			Gunflashes::SetGunflashLowerLight(false);
-
 		if (ReadIniBool(ini, &lg, "New_Gunflash_System", "LocalParticleFix"))
 			Gunflashes::SetLocalParticleFix(true);
 		else
 			Gunflashes::SetLocalParticleFix(false);
 
-		if (ReadIniInt(ini, &lg, "New_Gunflash_System", "UnderflashR", &i))
+		std::string particleString;
+
+		//Read Underflash Options
+
+		if (ReadIniBool(ini, &lg, "UnderFlash", "EnableUnderflash"))
+			Gunflashes::SetGunflashLowerLight(true);
+		else
+			Gunflashes::SetGunflashLowerLight(false);
+
+		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashR", &i))
 			Gunflashes::SetUnderFlashLightRComponent(i);
 
-		if (ReadIniInt(ini, &lg, "New_Gunflash_System", "UnderflashG", &i))
+		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashG", &i))
 			Gunflashes::SetUnderFlashLightGComponent(i);
 
-		if (ReadIniInt(ini, &lg, "New_Gunflash_System", "UnderflashB", &i))
+		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashB", &i))
 			Gunflashes::SetUnderFlashLightBComponent(i);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "UnderflashRange", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashRange", &f))
 			Gunflashes::SetUnderflashLightRange(f);
 
-		if (ReadIniInt(ini, &lg, "New_Gunflash_System", "UnderflashShadowID", &i))
+		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashShadowID", &i))
 			Gunflashes::SetUnderflashShadowID(i);
 
-		if (ReadIniInt(ini, &lg, "New_Gunflash_System", "UnderflashShadowIntensity", &i))
+		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashShadowIntensity", &i))
 			Gunflashes::SetUnderflashShadowIntensity(i);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "UnderflashShadowRadius", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashShadowRadius", &f))
 			Gunflashes::SetUnderflashShadowRadius(f);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "UnderflashShadowAngle", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashShadowAngle", &f))
 			Gunflashes::SetUnderFlashShadowAngle(f);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "UnderflashOffsetX", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashOffsetX", &f))
 			Gunflashes::SetUnderflashOffsetX(f);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "UnderflashOffsetY", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashOffsetY", &f))
 			Gunflashes::SetUnderflashOffsetY(f);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "UnderflashOffsetZ", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashOffsetZ", &f))
 			Gunflashes::SetUnderflashOffsetZ(f);
 
 
 		//Read Non-Moving Weapon Offsets
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "StaticBikeOffset", &f))
-			Gunflashes::SetStaticBikeOffset(f);
+		//Read Offsets&Multipliers Settings
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "CarDriverOffset", &f))
-			Gunflashes::SetCarDriverOffsetFactor(f);
+		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "PistolFixOffset", &f))
+			Gunflashes::SetPistolFixOffset(f);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "BikeDriverOffset", &f))
-			Gunflashes::SetBikeDriverOffsetFactor(f);
-
-		//Read Surfing Settings
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingOffset", &f))
+		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "SurfingOffset", &f))
 			Gunflashes::SetSurfingOffsetFactor(f);
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "FpsFixTimeMult", &f))
+		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "FpsFixTimeMult", &f))
 		{
 			Gunflashes::SetFpsFixTimeMult(f);
-			Gunflashes::SetFpsFixComputing(false);
+		}
+		if (ReadIniBool(ini, &lg, "Multipliers_and_Offsets", "FpsOffsetFix"))
+		{
+			Gunflashes::SetFpsFixTimeMult(true);
 		}
 		else
 		{
-			Gunflashes::SetFpsFixComputing(true);
+			Gunflashes::SetFpsFixTimeMult(true);
 		}
 
-		if (ReadIniFloat(ini, &lg, "New_Gunflash_System", "SurfingTimeMult", &f))
+		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "SurfingTimeMult", &f))
 			Gunflashes::SetSurfingTimeMult(f);
 
 		std::vector<int> weaponIDs;
@@ -2301,7 +2311,7 @@ void MixSets::ReadIni()
 		}
 
 		//Read Fps Fix Gunflash
-		if (ReadIniString(ini, &lg, "New_Gunflash_System", "FpsFixGunflash", &particleString)) {
+		if (ReadIniString(ini, &lg, "Gunflash_overrides", "FpsFixGunflash", &particleString)) {
 
 			std::istringstream iss(particleString);
 			std::string particleName;
@@ -2320,7 +2330,7 @@ void MixSets::ReadIni()
 		}
 
 		//Read Surf Fix Gunflash
-		if (ReadIniString(ini, &lg, "New_Gunflash_System", "SurfFixGunflash", &particleString)) {
+		if (ReadIniString(ini, &lg, "Gunflash_overrides", "SurfFixGunflash", &particleString)) {
 
 			std::istringstream iss(particleString);
 			std::string particleName;

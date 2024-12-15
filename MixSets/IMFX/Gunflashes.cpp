@@ -796,12 +796,12 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 					if (attachedToBone)
 					{
-						gunflashFx->m_pParentMatrix = boneMat;
+						//gunflashFx->m_pParentMatrix = boneMat;
 					}
 
 					if (localParticleFix)
 					{
-						gunflashFx->m_pParentMatrix = boneMat;
+						gunflashFx->AttachToBone(ped, boneIDToAttachTo);
 						gunflashFx->SetLocalParticles(true);
 						gunflashFx->SetTimeMult(1.0f);
 					}
@@ -810,8 +810,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 					RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 					if (rotate)
 					{
-						RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_x, CGeneral::GetRandomNumberInRange(0.0f, 360.0f), rwCOMBINEPRECONCAT);
-
+						RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_y, CGeneral::GetRandomNumberInRange(0.0f, 360.0f), rwCOMBINEPRECONCAT);
 					}
 					gunflashFx->PlayAndKill();
 

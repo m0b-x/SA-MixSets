@@ -54,7 +54,7 @@ public:
 	static void SetUnderFlashLightRComponent(const int newValue);
 	static void SetUnderFlashLightGComponent(const int newValue);
 	static void SetUnderFlashLightBComponent(const int newValue);
-	static void SetUnderflashLightRange(const int newValue);
+	static void SetUnderflashLightRange(const float newValue);
 	static void SetUnderflashShadowID(const int newValue);
 	static void SetUnderflashShadowIntensity(const int newValue);
 	static void SetUnderflashShadowRadius(const float newValue);

@@ -387,19 +387,20 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	if (ReadIniBool(ini, &lg, "Interface", "BigAmmo")) {
 
-		patch::SetChar(0x58946C, 0xFF, 0);
-		patch::SetChar(0x58946D, 0xFF, 0);
+		patch::SetChar(0x58946C, static_cast<char>(0xFF), 0);
+		patch::SetChar(0x58946D, static_cast<char>(0xFF), 0);
 
-		patch::SetChar(0x589473, 0xFF, 0);
-		patch::SetChar(0x589474, 0xFF, 0);
+		patch::SetChar(0x589473, static_cast<char>(0xFF), 0);
+		patch::SetChar(0x589474, static_cast<char>(0xFF), 0);
 
-		patch::SetChar(0x58954F, 0x84, 0);
-		patch::SetChar(0x589550, 0x01, 0);
-		patch::SetChar(0x589551, 0x87, 0);
+		patch::SetChar(0x58954F, static_cast<char>(0x84), 0);
+		patch::SetChar(0x589550, static_cast<char>(0x01), 0);
+		patch::SetChar(0x589551, static_cast<char>(0x87), 0);
 
-		patch::SetChar(0x589562, 0x84, 0);
-		patch::SetChar(0x589563, 0x01, 0);
-		patch::SetChar(0x589564, 0x87, 0);
+		patch::SetChar(0x589562, static_cast<char>(0x84), 0);
+		patch::SetChar(0x589563, static_cast<char>(0x01), 0);
+		patch::SetChar(0x589564, static_cast<char>(0x87), 0);
+
 	}
 
 	// -- World

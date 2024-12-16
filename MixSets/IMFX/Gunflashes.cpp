@@ -8,11 +8,9 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "game_sa\common.h"
 #include "game_sa\CWeaponInfo.h"
 #include "game_sa\CGeneral.h"
-#include "game_sa\CCamera.h"
 #include "game_sa\CTimer.h"
 
 #include "../MixSets.h"
-#include <fstream>
 #include <string>
 
 /*
@@ -20,14 +18,14 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include <shlobj.h>
 */
 
+/*
 #include <CAnimManager.h>
 #include <CAnimBlendAssociation.h>
 #include <CAnimBlendHierarchy.h>
 #include <CAnimBlock.h>
 #include <CAnimBlendAssocGroup.h>
-
+*/
 #include "extensions\ScriptCommands.h"
-
 #include "ePedBones.h"
 
 using namespace plugin;
@@ -75,6 +73,7 @@ float surfingTimeMult = 1.0f;
 
 std::string defaultGunflashName = "gunflash";
 std::string defaultGunSmokeName = "gunsmoke";
+
 // Weapon data structure
 struct WeaponData {
 	std::string particleName;
@@ -157,7 +156,7 @@ void Gunflashes::SetSurfFixGunflashesName(const std::string& newValue) {
 
 	for (int weaponID : weaponIDs)
 	{
-		weaponArray[weaponID].surfFixParticleName = _strdup(newValue.c_str());
+		weaponArray[weaponID].surfFixParticleName = newValue;
 	}
 }
 
@@ -170,7 +169,7 @@ void Gunflashes::SetFpxFixGunflashesName(const std::string& newValue) {
 
 	for (int weaponID : weaponIDs)
 	{
-		weaponArray[weaponID].fpxFixParticleName = _strdup(newValue.c_str());
+		weaponArray[weaponID].fpxFixParticleName = newValue;
 	}
 }
 
@@ -190,7 +189,7 @@ void Gunflashes::SetUnderFlashLightBComponent(const int newValue) {
 	UnderflashBComponent = newValue;
 }
 
-void Gunflashes::SetUnderflashLightRange(const int newValue) {
+void Gunflashes::SetUnderflashLightRange(const float newValue) {
 	UnderflashLightRange = newValue;
 }
 
@@ -273,13 +272,9 @@ void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string parti
 	{
 		WeaponData weapon;
 
-		char* particleCharPointer = _strdup(particle.c_str());
-		char* fpsFixCharPointer = _strdup(particle.c_str());
-		char* surfFixCharPointer = _strdup(particle.c_str());
-
-		weapon.particleName = particleCharPointer;
-		weapon.fpxFixParticleName = fpsFixCharPointer;
-		weapon.fpxFixParticleName = surfFixCharPointer;
+		weapon.particleName = particle;
+		weapon.fpxFixParticleName = particle;
+		weapon.fpxFixParticleName = particle;
 		weapon.smoke = smoke;
 		weapon.rotate = rotate;
 
@@ -432,15 +427,18 @@ static void DebugPedAnim(CPed* ped)
 	}
 }
 */
-
 static bool IsPedInBike(CPed* ped)
 {
-	return (ped->m_pVehicle->GetVehicleAppearance() == BikeAppereance || ped->m_pVehicle->m_nModelIndex == QUAD) ? true : false;
+	return IsVehiclePointerValid(ped->m_pVehicle) &&
+		(ped->m_pVehicle->GetVehicleAppearance() == BikeAppereance ||
+			ped->m_pVehicle->m_nModelIndex == QUAD);
 }
 
 static bool IsPedInMoped(CPed* ped)
 {
-	return (ped->m_pVehicle->m_nModelIndex == FAGGIO || ped->m_pVehicle->m_nModelIndex == PIZZABOY);
+	return IsVehiclePointerValid(ped->m_pVehicle) &&
+		(ped->m_pVehicle->m_nModelIndex == FAGGIO ||
+			ped->m_pVehicle->m_nModelIndex == PIZZABOY);
 }
 
 static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOFfset, RwReal reversingFactor)
@@ -576,10 +574,8 @@ eTaskType Gunflashes::GetPedActiveTask(CPed* ped)
 }
 
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
-	bool handThisFrame[2];
+	bool handThisFrame[2] = { pedExt.Get(ped).bLeftHandGunflashThisFrame , pedExt.Get(ped).bRightHandGunflashThisFrame };
 
-	handThisFrame[0] = pedExt.Get(ped).bLeftHandGunflashThisFrame;
-	handThisFrame[1] = pedExt.Get(ped).bRightHandGunflashThisFrame;
 
 	for (int i = 0; i < 2; i++) {
 		if (handThisFrame[i])
@@ -590,30 +586,24 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 			if (ped->m_pRwObject && ped->m_pRwObject->type == rpCLUMP) {
 
-				eTaskType task = GetPedActiveTask(ped);
+				const eTaskType task = GetPedActiveTask(ped);
 
-				unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
+				const unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
 
-				bool driverDriveby = (task == TASK_SIMPLE_CAR_DRIVE);
-				bool isUsingJetpack = (task == TASK_SIMPLE_JETPACK);
+				const bool driverDriveby = (task == TASK_SIMPLE_CAR_DRIVE);
+				const bool isUsingJetpack = (task == TASK_SIMPLE_JETPACK);
 
-				bool isInVehicle = (driverDriveby || (task == TASK_SIMPLE_GANG_DRIVEBY)) && IsVehiclePointerValid(ped->m_pVehicle);
+				const bool isInVehicle = IsVehiclePointerValid(ped->m_pVehicle) && (driverDriveby || (task == TASK_SIMPLE_GANG_DRIVEBY));
+				const bool isInBike = IsPedInBike(ped);
+				const bool isInMoped = IsPedInMoped(ped);
 
-				auto msMagnitude = ped->m_vecMoveSpeed.Magnitude();
-				auto animMsMagnitude = ped->m_vecAnimMovingShift.Magnitude();
+				const auto msMagnitude = ped->m_vecMoveSpeed.Magnitude();
+				const auto animMsMagnitude = ped->m_vecAnimMovingShift.Magnitude();
 
-				bool surfing = !isInVehicle && (msMagnitude > animMsMagnitude) && !isUsingJetpack;
+				const bool surfing = !isInVehicle && (msMagnitude > animMsMagnitude) && !isUsingJetpack;
 
-				bool isInBike = false;
-				bool isInMoped = false;
-
-				if (isInVehicle) {
-					isInBike = IsPedInBike(ped);
-					isInMoped = IsPedInMoped(ped);
-				}
-
-				auto* playerData = ped->m_pPlayerData;
-				bool noRightClickAiming = playerData && !playerData->m_bFreeAiming;
+				const auto* playerData = ped->m_pPlayerData;
+				const bool noRightClickAiming = playerData && !playerData->m_bFreeAiming;
 
 
 				// Initial particle time multiplier
@@ -743,8 +733,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 									particleTimeMult = fpsFixTimeMult;
 
 									//added recently
-									gunflashOffset.x += ped->m_vecAnimMovingShiftLocal.y ;
-									gunflashOffset.y -= ped->m_vecAnimMovingShiftLocal.x ;
+									gunflashOffset.x += ped->m_vecAnimMovingShiftLocal.y;
+									gunflashOffset.y -= ped->m_vecAnimMovingShiftLocal.x;
 								}
 							}
 							else
@@ -832,18 +822,19 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 					}
 
 					if (localParticleFix) gunflashFx->SetLocalParticles(true);
+
 					gunflashFx->PlayAndKill();
 
-					if (gunflashLowerLight)
+				}
+				if (gunflashLowerLight)
+				{
+					if (isInVehicle)
 					{
-						if (isInVehicle)
-						{
-							DrawUnderflash(ped, underflashOffset);
-						}
-						else
-						{
-							DrawUnderflash(ped);
-						}
+						DrawUnderflash(ped, underflashOffset);
+					}
+					else
+					{
+						DrawUnderflash(ped);
 					}
 				}
 				if (smoke)

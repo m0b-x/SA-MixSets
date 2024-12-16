@@ -1,22 +1,6 @@
-﻿  Gunflashes.cpp
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IMFX\Gunflashes.cpp(194,25): warning C4244: '=': conversion from 'const int' to 'float', possible loss of data
-  MixSets.cpp
+﻿  MixSets.cpp
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\MixSets.cpp(991,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\MixSets.cpp(1038,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  ReadIni.cpp
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(357,47): warning C4244: '=': conversion from 'float' to 'uintptr_t', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(366,47): warning C4244: '=': conversion from 'float' to 'uintptr_t', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(390,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(391,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(393,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(394,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(396,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(398,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(400,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(402,28): warning C4309: 'argument': truncation of constant value
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(407,8): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(774,8): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(2226,40): warning C4244: 'argument': conversion from 'float' to 'const int', possible loss of data
   Generating code
   Finished generating code
   MixSets.vcxproj -> D:\Alex\Games\San Andreas\GTA San Andreas\modloader\_Essentials Pack\_MixSets\MixSets.asi

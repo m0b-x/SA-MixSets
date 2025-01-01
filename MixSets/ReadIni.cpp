@@ -435,6 +435,47 @@ void MixSets::ReadIni_BeforeFirstFrame()
 		WriteMemory<uint32_t>(0xC402CF, 1, true);
 	}
 
+
+	// -- New_Additions
+
+	if (ReadIniBool(ini, &lg, "New_Additions", "NoVehicleNameText")) {
+		MakeNOP(0x58FBE9, 5, true); // DrawVehicleName
+	}
+
+	if (ReadIniBool(ini, &lg, "New_Additions", "NoRadioText")) {
+		InstallEmptyRadioPatches();
+	}
+
+	if (ReadIniBool(ini, &lg, "New_Additions", "NoPedRain")) {
+
+		//write_memory 6189621 size 4 value 8752180 virtual_protect 1
+		WriteMemory<uint32_t>(0x5E7235, 0x858C34, true);
+	}
+
+	if (ReadIniBool(ini, &lg, "New_Additions", "ClimbOntoVehicles")) {
+		char patchData1[] = { '\xEB' };
+		char patchData2[] = { '\x90', '\x90' };
+
+		patch::SetRaw(0x67DF6E, (void*)patchData1, sizeof(patchData1));
+		patch::SetRaw(0x67E027, (void*)patchData2, sizeof(patchData2));
+	}
+	else {
+		char patchData1[] = { '\x75' };
+		char patchData2[] = { '\x75', '\x1F' };
+
+		patch::SetRaw(0x67DF6E, (void*)patchData1, sizeof(patchData1));
+		patch::SetRaw(0x67E027, (void*)patchData2, sizeof(patchData2));
+	}
+
+	if (ReadIniBool(ini, &lg, "New_Additions", "ReceiveInstantMoney")) {
+
+		Events::processScriptsEvent.before += []
+			{
+				auto var = ReadMemory<uint32_t>(0xB7CE50, true);
+				WriteMemory<uint32_t>(0xB7CE54, var, true);
+			};
+	}
+
 	lg.flush();
 }
 
@@ -607,12 +648,6 @@ void MixSets::ReadIni()
 
 	if (ReadIniBool(ini, &lg, "Graphics", "NoRainSteam")) {
 		MakeNOP(0x72ADF0, 37, true);
-	}
-
-	if (ReadIniBool(ini, &lg, "Graphics", "NoPedRain")) {
-
-		//write_memory 6189621 size 4 value 8752180 virtual_protect 1
-		WriteMemory<uint32_t>(0x5E7235, 0x858C34, true);
 	}
 
 	if (ReadIniBool(ini, &lg, "Graphics", "NoSandstormSteam")) {
@@ -953,21 +988,6 @@ void MixSets::ReadIni()
 
 	if ((!inSAMP || (inSAMP && rpSAMP)) && ReadIniBool(ini, &lg, "Gameplay", "ScrollReloadFix")) {
 		MakeNOP(0x60B4FA, 6, true);
-	}
-
-	if (ReadIniBool(ini, &lg, "Gameplay", "ClimbOntoVehicles")) {
-		char patchData1[] = { '\xEB' };
-		char patchData2[] = { '\x90', '\x90' };
-
-		patch::SetRaw(0x67DF6E, (void*)patchData1, sizeof(patchData1));
-		patch::SetRaw(0x67E027, (void*)patchData2, sizeof(patchData2));
-	}
-	else {
-		char patchData1[] = { '\x75' };
-		char patchData2[] = { '\x75', '\x1F' };
-
-		patch::SetRaw(0x67DF6E, (void*)patchData1, sizeof(patchData1));
-		patch::SetRaw(0x67E027, (void*)patchData2, sizeof(patchData2));
 	}
 
 
@@ -1359,11 +1379,6 @@ void MixSets::ReadIni()
 				int seed = (int)(x + y * (z + 123.5f));
 				Call<0x821B11, int>(seed); //srand
 			});
-	}
-
-
-	if (ReadIniBool(ini, &lg, "Gameplay", "NoRadioText")) {
-		InstallEmptyRadioPatches();
 	}
 
 	if (ReadIniBool(ini, &lg, "Gameplay", "FixBoatRadioAnim")) {

@@ -31,7 +31,7 @@ public:
 	// Setup and configuration
 	static void Setup(bool sampFix);
 	static void AddDefaultWeaponData();
-	static void UpdateWeaponData(unsigned int weaponID, const std::string particle, bool rotate = true, bool smoke = true);
+	static void UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke);
 
 	// Frame and effects processing
 	static void ProcessPerFrame();
@@ -71,4 +71,28 @@ public:
 
 	//Utility
 	static eTaskType GetPedActiveTask(CPed* ped);
+
+	//Temporary, will be deleted
+	static void ProcessGunflashLogicWithoutLocalParticles(
+		CPed* ped,
+		bool isInVehicle,
+		bool isUsingJetpack,
+		bool driverDriveby,
+		bool isInBike,
+		bool isInMoped,
+		bool isDualWeilding,
+		float& particleTimeMult,
+		RwV3d& gunflashOffset,
+		RwV3d& underflashOffset,
+		int& boneIDToAttachTo,
+		bool& attachedToBone,
+		float& additionalOffsetX,
+		float& additionalOffsetY,
+		float& additionalOffsetZ,
+		int handIndex,
+		bool isLeftHand,
+		float surfingOffsetFactor,
+		float surfingTimeMult,
+		float fpsFixTimeMult,
+		float pistolFixOffset);
 };

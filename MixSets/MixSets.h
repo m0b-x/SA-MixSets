@@ -106,11 +106,7 @@ public:
 
 	static void VehFlipDamage_Process(CVehicle* veh);
 
-
 	static void InstallEmptyRadioPatches();
-	static void SetEmptyRadioNameScale(float x, float y);
-	static void DrawEmptyRadioName(float x, float y, char* name);
-	static void SetEmptyRadioNameAlignment(eFontAlignment alignment);
 };
 
 void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int a, int wheelState, int a3, float a4, float a5, CColPoint* colPoint, CVector* from, int id, signed int wheelId, int skidMarkType, bool *_bloodState, char a12);

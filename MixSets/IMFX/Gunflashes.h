@@ -49,8 +49,6 @@ public:
 
 	// Settings configuration
 	static void SetPistolFixOffset(const float newValue);
-	static void SetFpxFixGunflashesName(const std::string& particle);
-	static void SetSurfFixGunflashesName(const std::string& particle);
 	static void SetUnderFlashLightRComponent(const int newValue);
 	static void SetUnderFlashLightGComponent(const int newValue);
 	static void SetUnderFlashLightBComponent(const int newValue);

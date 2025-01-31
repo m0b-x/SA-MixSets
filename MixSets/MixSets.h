@@ -20,6 +20,8 @@ public:
 
 	static inline float G_VehFlipDamage;
 
+	static inline bool showAnimNameViewer = false;
+
 	static inline DWORD RETURN_FixMouseStuck;
 	static inline DWORD altRETURN_FixMouseStuck;
 	static inline DWORD ORIGINAL_DrawRadar;

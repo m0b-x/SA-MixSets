@@ -6,6 +6,9 @@
     <ClCompile Include="IMFX\Gunflashes.cpp">
       <Filter>IMFX</Filter>
     </ClCompile>
+    <ClCompile Include="AnimViewer.cpp">
+      <Filter>AnimNameViewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ReadIni.h" />
@@ -26,6 +29,9 @@
     </Filter>
     <Filter Include="IMFX">
       <UniqueIdentifier>{b2c91cb5-70b2-4e69-a437-218e96d0c599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AnimNameViewer">
+      <UniqueIdentifier>{fe4e3682-867c-4bb6-8989-9fe9332d1833}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

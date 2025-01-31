@@ -77,19 +77,14 @@ std::string defaultGunSmokeName = "gunsmoke";
 // Weapon data structure
 struct WeaponData {
 	std::string particleName;
-	std::string fpxFixParticleName;
-	std::string surfFixParticleName;
 
 	bool rotate = true;
 	bool smoke = true;
 
 	WeaponData(
 		const std::string& pName = "gunflash",
-		const std::string& fpxFixName = "gunflash",
-		const std::string& surfFixName = "gunflash",
 		bool r = true, bool s = true
-	) : particleName(pName), fpxFixParticleName(fpxFixName),
-		surfFixParticleName(surfFixName), rotate(r), smoke(s) {
+	) : particleName(pName), rotate(r), smoke(s) {
 	}
 };
 WeaponData weaponArray[weaponArraySize];
@@ -156,31 +151,6 @@ enum DriveByAnimIndex {
 	DRIVEBY_RIGHT = 2
 };
 
-void Gunflashes::SetSurfFixGunflashesName(const std::string& newValue) {
-	std::vector<int> weaponIDs;
-	for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID) {
-		weaponIDs.push_back(weaponID);
-	}
-	weaponIDs.push_back(WEAPON_MINIGUN);
-
-	for (int weaponID : weaponIDs)
-	{
-		weaponArray[weaponID].surfFixParticleName = newValue;
-	}
-}
-
-void Gunflashes::SetFpxFixGunflashesName(const std::string& newValue) {
-	std::vector<int> weaponIDs;
-	for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID) {
-		weaponIDs.push_back(weaponID);
-	}
-	weaponIDs.push_back(WEAPON_MINIGUN);
-
-	for (int weaponID : weaponIDs)
-	{
-		weaponArray[weaponID].fpxFixParticleName = newValue;
-	}
-}
 
 void Gunflashes::SetPistolFixOffset(const float newValue) {
 	pistolFixOffset = newValue;
@@ -267,7 +237,7 @@ void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string& part
 {
 	if (weaponID < weaponArraySize)
 	{
-		weaponArray[weaponID] = WeaponData(particle, particle, particle, rotate, smoke);
+		weaponArray[weaponID] = WeaponData(particle, rotate, smoke);
 	}
 }
 
@@ -596,8 +566,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				WeaponData weapon = (arrayIndex < weaponArraySize) ? weaponArray[arrayIndex] : WeaponData();
 
 				std::string& fxName = weapon.particleName;
-				std::string& fxFixName = weapon.fpxFixParticleName;
-				std::string& surFixName = weapon.surfFixParticleName;
 				bool rotate = weapon.rotate;
 				bool smoke = weapon.smoke;
 

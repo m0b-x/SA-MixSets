@@ -108,6 +108,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimViewer.cpp" />
     <ClCompile Include="IMFX\Gunflashes.cpp" />
     <ClCompile Include="MixSets.cpp" />
     <ClCompile Include="ReadIni.cpp" />

@@ -437,6 +437,13 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 
 	// -- New_Additions
+	if (ReadIniBool(ini, &lg, "New_Additions", "AnimViewer")) {
+		MixSets::showAnimNameViewer = true;
+	}
+	else
+	{
+		MixSets::showAnimNameViewer = false;
+	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "NoVehicleNameText")) {
 		MakeNOP(0x58FBE9, 5, true); // DrawVehicleName
@@ -2324,44 +2331,6 @@ void MixSets::ReadIni()
 
 				Gunflashes::UpdateWeaponData(weaponID, particleName, (bool)rotate, (bool)smoke);
 			}
-		}
-
-		//Read Fps Fix Gunflash
-		if (ReadIniString(ini, &lg, "Gunflash_overrides", "FpsFixGunflash", &particleString)) {
-
-			std::istringstream iss(particleString);
-			std::string particleName;
-			bool rotate, smoke;
-
-			if (!(iss >> particleName)) {
-				particleName = "gunflash";
-			}
-
-			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
-				rotate = true;
-				smoke = true;
-			}
-
-			Gunflashes::SetFpxFixGunflashesName(particleName);
-		}
-
-		//Read Surf Fix Gunflash
-		if (ReadIniString(ini, &lg, "Gunflash_overrides", "SurfFixGunflash", &particleString)) {
-
-			std::istringstream iss(particleString);
-			std::string particleName;
-			bool rotate, smoke;
-
-			if (!(iss >> particleName)) {
-				particleName = "gunflash";
-			}
-
-			if (!(iss >> std::boolalpha >> rotate >> smoke)) {
-				rotate = true;
-				smoke = true;
-			}
-
-			Gunflashes::SetSurfFixGunflashesName(particleName);
 		}
 
 	}

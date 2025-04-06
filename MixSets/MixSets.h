@@ -15,12 +15,14 @@ public:
 	static inline int testInt1 = 0, testInt2 = 0, testInt3 = 0;
 	static inline float testFloat1 = 0.0f, testFloat2 = 0.0f, testFloat3 = 0.0f;
 
+	static inline const float FIXED_CAMERA_TIMER = 50.0f;
+
 	static inline bool Read;
 	static inline std::fstream lg;
 
 	static inline float G_VehFlipDamage;
 
-	static inline bool showAnimNameViewer = false;
+	static inline bool showAnimNameViewer = false, receiveInstantMoney = false, staticCarCamera = false;
 
 	static inline DWORD RETURN_FixMouseStuck;
 	static inline DWORD altRETURN_FixMouseStuck;

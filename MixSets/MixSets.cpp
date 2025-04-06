@@ -546,6 +546,18 @@ MixSets::MixSets()
 					bReloading = false;
 				}
 			}
+
+			if (receiveInstantMoney)
+			{
+				auto var = ReadMemory<uint32_t>(0xB7CE50, true);
+				WriteMemory<uint32_t>(0xB7CE54, var, true);
+			}
+
+			if (staticCarCamera)
+			{
+				const static float FIXED_CAMERA_TIMER = 50.0f;
+				WriteMemory<float>(0xB70118, FIXED_CAMERA_TIMER, true);
+			}
 		};
 
 

@@ -244,10 +244,11 @@ void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string& part
 
 void Gunflashes::Setup(bool sampFix)
 {
-	patch::Nop(0x73306D, 9); // Remove default gunflashes
-	patch::Nop(0x7330FF, 9); // Remove default gunflashes
-	patch::SetUShort(0x5DF425, 0xE990); // Remove default gunflashes
 	patch::SetUChar(0x741353, 0); // Add gunflash for cuntgun
+
+	patch::Nop(0x73306D, 9); // Remove default gunflashes (brightHand = 0)
+	patch::Nop(0x7330FF, 9); // Remove default gunflashes (bRightHand = 1)
+	patch::SetUShort(0x5DF425, 0xE990); // Remove default gunflashes 
 
 	patch::RedirectCall(0x742299, DoDriveByGunflash);
 	patch::RedirectJump(0x4A0DE0, MyTriggerGunflash);
@@ -508,19 +509,6 @@ void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset)
 	Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, UnderflashRComponent, UnderflashGComponent, UnderflashBComponent, UnderflashLightRange);
 	Command<Commands::DRAW_SHADOW>(UnderflashShadowID, x, y, z, UnderflashShadowAngle, UnderflashShadowRadius, UnderflashShadowIntensity, UnderflashRComponent, UnderflashGComponent, UnderflashBComponent);
 }
-void Gunflashes::DrawUnderflash(CPed* ped)
-{
-	/*Source: DK22Pac - GTA IV Lights
-	04C4: store_coords_to 10@ 11@ 12@ from_actor 3@ with_offset PED_OFFSET_X PED_OFFSET_Y PED_OFFSET_Z
-	09E5: create_flash_light_at 10@ 11@ 12@ SHOT_LIGHT_R SHOT_LIGHT_G SHOT_LIGHT_B SHOT_FLASH_LIGHT_RADIUS
-	016F: particle 3 rot 0.0 size SHOT_LIGHT_SIZE SHOT_LIGHT_INTENSITY SHOT_LIGHT_R SHOT_LIGHT_G SHOT_LIGHT_B at 10@ 11@ 12@
-	*/
-	float x = 0.0f, y = 0.0f, z = 0.0f;
-
-	Command<Commands::GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS>(ped, UnderflashPlayerOffsetX, UnderflashPlayerOffsetY, UnderflashPlayerOffsetZ, &x, &y, &z);
-	Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, UnderflashRComponent, UnderflashGComponent, UnderflashBComponent, UnderflashLightRange);
-	Command<Commands::DRAW_SHADOW>(UnderflashShadowID, x, y, z, UnderflashShadowAngle, UnderflashShadowRadius, UnderflashShadowIntensity, UnderflashRComponent, UnderflashGComponent, UnderflashBComponent);
-}
 
 eTaskType Gunflashes::GetPedActiveTask(CPed* ped)
 {
@@ -676,14 +664,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				}
 				if (gunflashLowerLight)
 				{
-					if (isInVehicle)
-					{
-						DrawUnderflash(ped, underflashOffset);
-					}
-					else
-					{
-						DrawUnderflash(ped);
-					}
+					DrawUnderflash(ped, underflashOffset);
 				}
 				if (smoke)
 				{

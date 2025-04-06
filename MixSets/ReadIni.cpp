@@ -387,19 +387,22 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	if (ReadIniBool(ini, &lg, "Interface", "BigAmmo")) {
 
-		patch::SetChar(0x58946C, static_cast<char>(0xFF), 0);
-		patch::SetChar(0x58946D, static_cast<char>(0xFF), 0);
+		std::vector<std::pair<uintptr_t, char>> patches = {
+			{0x58946C, static_cast<char>(0xFF)},
+			{0x58946D, static_cast<char>(0xFF)},
+			{0x589473, static_cast<char>(0xFF)},
+			{0x589474, static_cast<char>(0xFF)},
+			{0x58954F, static_cast<char>(0x84)},
+			{0x589550, static_cast<char>(0x01)},
+			{0x589551, static_cast<char>(0x87)},
+			{0x589562, static_cast<char>(0x84)},
+			{0x589563, static_cast<char>(0x01)},
+			{0x589564, static_cast<char>(0x87)},
+		};
 
-		patch::SetChar(0x589473, static_cast<char>(0xFF), 0);
-		patch::SetChar(0x589474, static_cast<char>(0xFF), 0);
-
-		patch::SetChar(0x58954F, static_cast<char>(0x84), 0);
-		patch::SetChar(0x589550, static_cast<char>(0x01), 0);
-		patch::SetChar(0x589551, static_cast<char>(0x87), 0);
-
-		patch::SetChar(0x589562, static_cast<char>(0x84), 0);
-		patch::SetChar(0x589563, static_cast<char>(0x01), 0);
-		patch::SetChar(0x589564, static_cast<char>(0x87), 0);
+		for (const auto& [addr, val] : patches) {
+			patch::SetChar(addr, val, 0);
+		}
 
 	}
 
@@ -476,12 +479,21 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "ReceiveInstantMoney")) {
 
-		Events::processScriptsEvent.before += []
-			{
-				auto var = ReadMemory<uint32_t>(0xB7CE50, true);
-				WriteMemory<uint32_t>(0xB7CE54, var, true);
-			};
+		receiveInstantMoney = true;
 	}
+	else
+	{
+		receiveInstantMoney = false;
+	}
+
+	if (ReadIniBool(ini, &lg, "New_Additions", "FixedCamera")) {
+		staticCarCamera = true;
+	}
+	else
+	{
+		staticCarCamera = false;
+	}
+
 
 	lg.flush();
 }
@@ -531,9 +543,9 @@ void MixSets::ReadIni()
 	}
 
 	if (ReadIniBool(ini, &lg, "System", "SkipShutdown")) {
-		//MakeJMP(0x748E70, 0x748EE6, true); // jump all shutdown
-		//MakeJMP(0x8246F3, 0x824701, true);
-		//MakeJMP(0x824733, 0x824741, true);
+		MakeJMP(0x748E70, 0x748EE6, true); // jump all shutdown
+		MakeJMP(0x8246F3, 0x824701, true);
+		MakeJMP(0x824733, 0x824741, true);
 
 
 		MakeNOP(0x748E6B, 5, true); // CGame::Shutdown
@@ -543,24 +555,22 @@ void MixSets::ReadIni()
 		injector::MakeInline<0x748EDF, 0x748EDF + 7>([](injector::reg_pack& regs)
 			{
 				SetErrorMode(0);
-				_Exit(0); // exits faster https://www.geeksforgeeks.org/exit-vs-_exit-c-cpp/
+				_exit(0); // exits faster https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/exit-exit-exit?view=msvc-170
 
 				DWORD exitCode;
 				HANDLE hProcess = GetCurrentProcess();
-
 				if (GetExitCodeProcess(hProcess, &exitCode) && exitCode == STILL_ACTIVE) {
-					SetErrorMode(0);
 					ExitProcess(0);
 				}
 			});
 
-		//MakeNOP(0x748E9C, 5, true);
-		//MakeNOP(0x748EA6, 5, true);
-		//WriteMemory<uint8_t>(0x810C60, 0xC3, true);
+		MakeNOP(0x748E9C, 5, true);
+		MakeNOP(0x748EA6, 5, true);
+		WriteMemory<uint8_t>(0x810C60, 0xC3, true);
 
-		//WriteMemory<uint8_t>(0x801D50, 0xC3, true);
+		WriteMemory<uint8_t>(0x801D50, 0xC3, true);
 
-		//MakeJMP(0x53C902, 0x53CAF1, true);
+		MakeJMP(0x53C902, 0x53CAF1, true);
 	}
 
 
@@ -1983,11 +1993,11 @@ void MixSets::ReadIni()
 	}
 
 	if (ReadIniBool(ini, &lg, "Interface", "CrosshairSameSize")) {
-		char patchData[] = { '\x90', '\x90' }; 
+		char patchData[] = { '\x90', '\x90' };
 		patch::SetRaw(0x609D80, (void*)patchData, sizeof(patchData));
 	}
 	else {
-		char patchData[] = { '\x7A', '\x08' }; 
+		char patchData[] = { '\x7A', '\x08' };
 		patch::SetRaw(0x609D80, (void*)patchData, sizeof(patchData));
 	}
 

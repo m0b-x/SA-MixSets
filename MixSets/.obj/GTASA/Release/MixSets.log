@@ -1,17 +1,4 @@
-﻿  AnimViewer.cpp
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(188,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimViewer.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(192,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimViewer.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(207,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimViewer.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(211,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimViewer.cpp')
-  
-  Gunflashes.cpp
+﻿  Gunflashes.cpp
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(188,39): warning C4101: 'e': unreferenced local variable
   (compiling source file 'IMFX/Gunflashes.cpp')
   
@@ -24,38 +11,6 @@ D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(207,39): w
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(211,35): warning C4101: 'e': unreferenced local variable
   (compiling source file 'IMFX/Gunflashes.cpp')
   
-  MixSets.cpp
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(188,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'MixSets.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(192,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'MixSets.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(207,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'MixSets.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(211,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'MixSets.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\MixSets.cpp(978,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\MixSets.cpp(1025,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  ReadIni.cpp
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(188,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'ReadIni.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(192,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'ReadIni.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(207,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'ReadIni.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(211,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'ReadIni.cpp')
-  
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(357,47): warning C4244: '=': conversion from 'float' to 'uintptr_t', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(366,47): warning C4244: '=': conversion from 'float' to 'uintptr_t', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(408,8): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(817,8): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
   Generating code
   Finished generating code
   MixSets.vcxproj -> D:\Alex\Games\San Andreas\GTA San Andreas\modloader\_Essentials Pack\_MixSets\MixSets.asi

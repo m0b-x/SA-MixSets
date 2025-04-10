@@ -109,8 +109,6 @@ public:
 	static void VehFlipDamage_Process_Damage(CPed* ped);
 
 	static void VehFlipDamage_Process(CVehicle* veh);
-
-	static void InstallEmptyRadioPatches();
 };
 
 void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int a, int wheelState, int a3, float a4, float a5, CColPoint* colPoint, CVector* from, int id, signed int wheelId, int skidMarkType, bool *_bloodState, char a12);

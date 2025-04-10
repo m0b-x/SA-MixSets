@@ -449,17 +449,37 @@ void MixSets::ReadIni_BeforeFirstFrame()
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "NoVehicleNameText")) {
-		MakeNOP(0x58FBE9, 5, true); // DrawVehicleName
+		MakeNOP(0x58FBE9, 5, true); // CHud::DrawVehicleName(void)
+	}
+	else
+	{
+		char originalData[] = { '\xE8', '\xB2', '\xB2', '\xFF', '\xFF' };
+		patch::SetRaw(0x58FBE9, (void*)originalData, sizeof(originalData));
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "NoRadioText")) {
-		InstallEmptyRadioPatches();
+
+		//patch::Nop(0x4EB9F4, 5);    //  disable radio scrolling
+
+		MakeNOP(0x4E9F3F, 5, true); // CFont::SetScale(float,float)
+		MakeNOP(0x4E9F4D, 5, true); // CFont::SetAlignment(eFontAlignment)
+		MakeNOP(0x4E9FF1, 5, true); // CFont::PrintString(float,float,uchar *)
+	}
+	else
+	{
+		char originalData1[] = { '\xE8', '\x3C', '\xF4', '\x22', '\x00' }; // CFont::SetScale
+		char originalData2[] = { '\xE8', '\xBE', '\xF6', '\x22', '\x00' }; // CFont::SetAlignment
+		char originalData3[] = { '\xE8', '\x0A', '\x07', '\x23', '\x00' }; // CFont::PrintString
+
+		patch::SetRaw(0x4E9F3F, (void*)originalData1, sizeof(originalData1));
+		patch::SetRaw(0x4E9F4D, (void*)originalData2, sizeof(originalData2));
+		patch::SetRaw(0x4E9FF1, (void*)originalData3, sizeof(originalData3));
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "NoPedRain")) {
 
-		//write_memory 6189621 size 4 value 8752180 virtual_protect 1
-		WriteMemory<uint32_t>(0x5E7235, 0x858C34, true);
+		if(bReloading)
+			WriteMemory<uint32_t>(0x5E7235, 0x858C34, true);
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "ClimbOntoVehicles")) {
@@ -479,19 +499,19 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "ReceiveInstantMoney")) {
 
-		receiveInstantMoney = true;
+		MixSets::receiveInstantMoney = true;
 	}
 	else
 	{
-		receiveInstantMoney = false;
+		MixSets::receiveInstantMoney = false;
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "FixedCamera")) {
-		staticCarCamera = true;
+		MixSets::staticCarCamera = true;
 	}
 	else
 	{
-		staticCarCamera = false;
+		MixSets::staticCarCamera = false;
 	}
 
 
@@ -2279,8 +2299,6 @@ void MixSets::ReadIni()
 		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashOffsetZ", &f))
 			Gunflashes::SetUnderflashOffsetZ(f);
 
-
-		//Read Non-Moving Weapon Offsets
 
 		//Read Offsets&Multipliers Settings
 

@@ -975,15 +975,6 @@ void MixSets::VehFlipDamage_Process(CVehicle* veh)
 	}
 }
 
-void MixSets::InstallEmptyRadioPatches() {
-
-	//patch::Nop(0x4EB9F4, 5);    //  disable radio scrolling
-
-	MakeNOP(0x4E9F3F, 5, true); // SetRadioNameScale
-	MakeNOP(0x4E9F4D, 5, true); // DrawRadioName
-	MakeNOP(0x4E9FF1, 5, true); // SetRadioNameAlignment
-}
-
 
 void __fastcall PreRender_AddSingleWheelParticles_FixDouble(CVehicle* _this, int a, int wheelState, int a3, float a4, float a5, CColPoint* colPoint, CVector* from, int id, signed int wheelId, int skidMarkType, bool* _bloodState, char flags)
 {

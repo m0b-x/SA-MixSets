@@ -27,6 +27,8 @@ If you consider fixing something here, you should also consider fixing there: ht
 */
 #include "extensions\ScriptCommands.h"
 #include "ePedBones.h"
+#include "IMFX\GunflashConfig.h"
+#include <IMFX\WeaponData.h>
 
 using namespace plugin;
 
@@ -37,60 +39,13 @@ const ePedBones pedHands[2] = { BONE_LEFTWRIST, BONE_RIGHTWRIST };
 const int BikeAppereance = 2;
 const int weaponArraySize = WEAPON_MINIGUN + 1;
 
-// Underflash properties
-int UnderflashRComponent = 70;
-int UnderflashGComponent = 55;
-int UnderflashBComponent = 22;
-
-float UnderflashLightRange = 3.5f;
-
-int UnderflashShadowID = 3;
-int UnderflashShadowIntensity = 1;
-float UnderflashShadowRadius = 2.5f;
-float UnderflashShadowAngle = 0.0f;
-
-RwReal UnderflashPlayerOffsetX = 0.0f;
-RwReal UnderflashPlayerOffsetY = 1.3f;
-RwReal UnderflashPlayerOffsetZ = 1.0f;
-
 // Gunflashes
-PedExtendedData<Gunflashes::PedExtension> Gunflashes::pedExt;
 bool Gunflashes::bLeftHand = false;
 bool Gunflashes::bVehicleGunflash = false;
-float fpsFixTimeMult = 1.0f;
-bool computeFpsFix = true;
-
-// Offsets and factors
-RwReal surfingOffsetFactor = 0.0f;
-
-float pistolFixOffset = 0.005f;
-
-bool gunflashLowerLight = false;
-bool localParticleFix = false;
-
-// Time multipliers
-float surfingTimeMult = 1.0f;
-
-std::string defaultGunflashName = "gunflash";
-std::string defaultGunSmokeName = "gunsmoke";
-
-// Weapon data structure
-struct WeaponData {
-	std::string particleName;
-
-	bool rotate = true;
-	bool smoke = true;
-
-	WeaponData(
-		const std::string& pName = "gunflash",
-		bool r = true, bool s = true
-	) : particleName(pName), rotate(r), smoke(s) {
-	}
-};
-WeaponData weaponArray[weaponArraySize];
+static GunflashConfig g_gunflashConfig;
 
 
-// PedExtension implementation
+// PedExtension implementation & data
 Gunflashes::PedExtension::PedExtension(CPed*) {
 	bLeftHandGunflashThisFrame = false;
 	bRightHandGunflashThisFrame = false;
@@ -112,6 +67,31 @@ Gunflashes::PedExtension::~PedExtension() {
 	if (pMats[0] != nullptr) delete pMats[0];
 	if (pMats[1] != nullptr) delete pMats[1];
 }
+PedExtendedData<Gunflashes::PedExtension> Gunflashes::pedExt;
+
+// Weapon data structure
+WeaponData weaponArray[weaponArraySize];
+inline static WeaponData const defaultWeaponDataObj;
+
+// Config Setters
+void Gunflashes::SetLocalParticleFix(bool value) { g_gunflashConfig.setLocalParticleFix(value); }
+void Gunflashes::SetGunflashLowerLight(bool value) { g_gunflashConfig.setGunflashLowerLight(value); }
+void Gunflashes::SetUnderFlashLightRComponent(int r) { g_gunflashConfig.setUnderflashColor(r, g_gunflashConfig.getUnderflashColor().g, g_gunflashConfig.getUnderflashColor().b); }
+void Gunflashes::SetUnderFlashLightGComponent(int g) { g_gunflashConfig.setUnderflashColor(g_gunflashConfig.getUnderflashColor().r, g, g_gunflashConfig.getUnderflashColor().b); }
+void Gunflashes::SetUnderFlashLightBComponent(int b) { g_gunflashConfig.setUnderflashColor(g_gunflashConfig.getUnderflashColor().r, g_gunflashConfig.getUnderflashColor().g, b); }
+void Gunflashes::SetUnderflashLightRange(float range) { g_gunflashConfig.setUnderflashLightRange(range); }
+void Gunflashes::SetUnderflashShadowID(int id) { g_gunflashConfig.setUnderflashShadow(id, g_gunflashConfig.getUnderflashShadowIntensity(), g_gunflashConfig.getUnderflashShadowRadius(), g_gunflashConfig.getUnderflashShadowAngle()); }
+void Gunflashes::SetUnderflashShadowIntensity(int intensity) { g_gunflashConfig.setUnderflashShadow(g_gunflashConfig.getUnderflashShadowID(), intensity, g_gunflashConfig.getUnderflashShadowRadius(), g_gunflashConfig.getUnderflashShadowAngle()); }
+void Gunflashes::SetUnderflashShadowRadius(float radius) { g_gunflashConfig.setUnderflashShadow(g_gunflashConfig.getUnderflashShadowID(), g_gunflashConfig.getUnderflashShadowIntensity(), radius, g_gunflashConfig.getUnderflashShadowAngle()); }
+void Gunflashes::SetUnderFlashShadowAngle(float angle) { g_gunflashConfig.setUnderflashShadow(g_gunflashConfig.getUnderflashShadowID(), g_gunflashConfig.getUnderflashShadowIntensity(), g_gunflashConfig.getUnderflashShadowRadius(), angle); }
+void Gunflashes::SetUnderflashOffsetX(float x) { g_gunflashConfig.setUnderflashOffset(x, g_gunflashConfig.getUnderflashOffsetY(), g_gunflashConfig.getUnderflashOffsetZ()); }
+void Gunflashes::SetUnderflashOffsetY(float y) { g_gunflashConfig.setUnderflashOffset(g_gunflashConfig.getUnderflashOffsetX(), y, g_gunflashConfig.getUnderflashOffsetZ()); }
+void Gunflashes::SetUnderflashOffsetZ(float z) { g_gunflashConfig.setUnderflashOffset(g_gunflashConfig.getUnderflashOffsetX(), g_gunflashConfig.getUnderflashOffsetY(), z); }
+void Gunflashes::SetPistolFixOffset(float f) { g_gunflashConfig.setPistolFixOffset(f); }
+void Gunflashes::SetSurfingOffsetFactor(float f) { g_gunflashConfig.setSurfingOffsetFactor(f); }
+void Gunflashes::SetFpsFixTimeMult(float f) { g_gunflashConfig.setFpsFixTimeMult(f); }
+void Gunflashes::SetFpsFixComputing(bool b) { g_gunflashConfig.setComputeFpsFix(b); }
+void Gunflashes::SetSurfingTimeMult(float f) { g_gunflashConfig.setSurfingTimeMult(f); }
 
 // Enums for Bikes
 enum Bikes : unsigned int {
@@ -151,93 +131,20 @@ enum DriveByAnimIndex {
 	DRIVEBY_RIGHT = 2
 };
 
-
-void Gunflashes::SetPistolFixOffset(const float newValue) {
-	pistolFixOffset = newValue;
-}
-
-void Gunflashes::SetUnderFlashLightRComponent(const int newValue) {
-	UnderflashRComponent = newValue;
-}
-
-void Gunflashes::SetUnderFlashLightGComponent(const int newValue) {
-	UnderflashGComponent = newValue;
-}
-
-void Gunflashes::SetUnderFlashLightBComponent(const int newValue) {
-	UnderflashBComponent = newValue;
-}
-
-void Gunflashes::SetUnderflashLightRange(const float newValue) {
-	UnderflashLightRange = newValue;
-}
-
-void Gunflashes::SetUnderflashShadowID(const int newValue) {
-	UnderflashShadowID = newValue;
-}
-
-void Gunflashes::SetUnderflashShadowIntensity(const int newValue) {
-	UnderflashShadowIntensity = newValue;
-}
-
-void Gunflashes::SetUnderflashShadowRadius(const float newValue) {
-	UnderflashShadowRadius = newValue;
-}
-
-void Gunflashes::SetUnderFlashShadowAngle(const float newValue) {
-	UnderflashShadowAngle = newValue;
-}
-
-void Gunflashes::SetUnderflashOffsetX(const float newValue) {
-	UnderflashPlayerOffsetX = newValue;
-}
-
-void Gunflashes::SetUnderflashOffsetY(const float newValue) {
-	UnderflashPlayerOffsetY = newValue;
-}
-
-void Gunflashes::SetUnderflashOffsetZ(const float newValue) {
-	UnderflashPlayerOffsetZ = newValue;
-}
-
-void Gunflashes::SetSurfingOffsetFactor(const RwReal newValue) {
-	surfingOffsetFactor = newValue;
-}
-
-void Gunflashes::SetLocalParticleFix(const bool newValue) {
-	localParticleFix = newValue;
-}
-
-void Gunflashes::SetGunflashLowerLight(const bool newValue) {
-	gunflashLowerLight = newValue;
-}
-
-void Gunflashes::SetFpsFixTimeMult(const float newValue) {
-	fpsFixTimeMult = newValue;
-}
-void Gunflashes::SetFpsFixComputing(const bool newValue)
-{
-	computeFpsFix = newValue;
-}
-
-void Gunflashes::SetSurfingTimeMult(const float newValue) {
-	surfingTimeMult = newValue;
-}
-
 void Gunflashes::AddDefaultWeaponData()
 {
 	for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID) {
-		weaponArray[weaponID] = WeaponData(); // Use default constructor
+		weaponArray[weaponID] = WeaponData();
 	}
 	weaponArray[WEAPON_MINIGUN] = WeaponData();
 }
 
 
-void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke)
+void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke, bool underFlash)
 {
 	if (weaponID < weaponArraySize)
 	{
-		weaponArray[weaponID] = WeaponData(particle, rotate, smoke);
+		weaponArray[weaponID] = WeaponData(particle, rotate, smoke, underFlash);
 	}
 }
 
@@ -260,10 +167,13 @@ void Gunflashes::Setup(bool sampFix)
 }
 
 void Gunflashes::ProcessPerFrame() {
-	if (computeFpsFix)
+	auto& config = g_gunflashConfig;
+
+	if (config.computeFpsFix())
 	{
-		fpsFixTimeMult = CTimer::game_FPS / 30.0f;
-		surfingOffsetFactor = -CTimer::game_FPS / 60.0f + 2;
+		const float fps = CTimer::game_FPS;
+		config.setFpsFixTimeMult(fps / 30.0f);
+		config.setSurfingOffsetFactor(-fps / 60.0f + 2.0f);
 	}
 
 	for (int i = 0; i < CPools::ms_pPedPool->m_nSize; i++) {
@@ -333,17 +243,20 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
 		pedExtData.bInVehicle = bVehicleGunflash;
 	}
 	else {
+
 		if (DistanceBetweenPoints(target, origin) > 0.0f) {
+			const std::string& flashName = g_gunflashConfig.getDefaultGunflashParticleName();
+			const std::string& smokeName = g_gunflashConfig.getDefaultGunflashSmokeParticleName();
 			RwMatrix fxMat;
 			fx->CreateMatFromVec(&fxMat, &origin, &target);
 			RwV3d offset = { 0.0f, 0.0f, 0.0f };
-			FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(defaultGunflashName.data(), &offset, &fxMat, false);
+			FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(const_cast<char*>(flashName.c_str()), &offset, &fxMat, false);
 			if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 			if (gunflashFx) {
 				gunflashFx->CopyParentMatrix();
 				gunflashFx->PlayAndKill();
 			}
-			FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(defaultGunSmokeName.data(), &offset, &fxMat, false);
+			FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(const_cast<char*>(smokeName.c_str()), &offset, &fxMat, false);
 			if (smokeFx) {
 				smokeFx->CopyParentMatrix();
 				smokeFx->PlayAndKill();
@@ -499,16 +412,24 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& gunflashOffset, Rw
 
 void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset)
 {
-	/*Source: DK22Pac - GTA IV Lights
-	04C4: store_coords_to 10@ 11@ 12@ from_actor 3@ with_offset PED_OFFSET_X PED_OFFSET_Y PED_OFFSET_Z
-	09E5: create_flash_light_at 10@ 11@ 12@ SHOT_LIGHT_R SHOT_LIGHT_G SHOT_LIGHT_B SHOT_FLASH_LIGHT_RADIUS
-	016F: particle 3 rot 0.0 size SHOT_LIGHT_SIZE SHOT_LIGHT_INTENSITY SHOT_LIGHT_R SHOT_LIGHT_G SHOT_LIGHT_B at 10@ 11@ 12@
-	*/
 	float x = 0.0f, y = 0.0f, z = 0.0f;
-	Command<Commands::GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS>(ped, newOffset.x, newOffset.y, newOffset.z, &x, &y, &z);
-	Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, UnderflashRComponent, UnderflashGComponent, UnderflashBComponent, UnderflashLightRange);
-	Command<Commands::DRAW_SHADOW>(UnderflashShadowID, x, y, z, UnderflashShadowAngle, UnderflashShadowRadius, UnderflashShadowIntensity, UnderflashRComponent, UnderflashGComponent, UnderflashBComponent);
+	Command<Commands::GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS>(
+		ped, newOffset.x, newOffset.y, newOffset.z, &x, &y, &z);
+
+	const auto& config = g_gunflashConfig;
+	const auto& color = config.getUnderflashColor();
+	const float& range = config.getUnderflashLightRange();
+	const int& shadowID = config.getUnderflashShadowID();
+	const int& shadowIntensity = config.getUnderflashShadowIntensity();
+	const float& shadowRadius = config.getUnderflashShadowRadius();
+	const float& shadowAngle = config.getUnderflashShadowAngle();
+
+	Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, color.r, color.g, color.b, range);
+	Command<Commands::DRAW_SHADOW>(
+		shadowID, x, y, z, shadowAngle, shadowRadius, shadowIntensity,
+		color.r, color.g, color.b);
 }
+
 
 eTaskType Gunflashes::GetPedActiveTask(CPed* ped)
 {
@@ -551,22 +472,23 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				// Initial particle time multiplier
 				float particleTimeMult = 1.0f;
 
-				WeaponData weapon = (arrayIndex < weaponArraySize) ? weaponArray[arrayIndex] : WeaponData();
+				const WeaponData& weapon = (arrayIndex < weaponArraySize) ? weaponArray[arrayIndex] : defaultWeaponDataObj;
 
-				std::string& fxName = weapon.particleName;
-				bool rotate = weapon.rotate;
-				bool smoke = weapon.smoke;
+				const std::string& fxName = weapon.particleName;
+				const bool rotate = weapon.rotate;
+				const bool smoke = weapon.smoke;
+				const bool underFlash = weapon.underFlash;
 
 				bool attachedToBone = true;
 
 				const auto pedWeaponSkill = ped->GetWeaponSkill(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
-				CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, pedWeaponSkill);
+				const CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, pedWeaponSkill);
 				const auto isDualWeilding = weapInfo->m_nFlags.bTwinPistol;
 
 				if (!isDualWeilding && ped->m_pedIK.bUseArm) attachedToBone = false;
 
 				RwV3d gunflashOffset = weapInfo->m_vecFireOffset.ToRwV3d();
-				RwV3d underflashOffset = { UnderflashPlayerOffsetX, UnderflashPlayerOffsetY, UnderflashPlayerOffsetZ };
+				RwV3d underflashOffset = { g_gunflashConfig.getUnderflashOffsetX(), g_gunflashConfig.getUnderflashOffsetY(), g_gunflashConfig.getUnderflashOffsetZ() };
 
 				float additionalOffsetX = 0.0f, additionalOffsetY = 0.0f, additionalOffsetZ = 0.0f;
 
@@ -582,7 +504,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				int boneIDToAttachTo = pedHands[i];
 
 
-				if (localParticleFix)
+				if (g_gunflashConfig.isLocalParticleFixEnabled())
 				{
 					attachedToBone = true;
 					particleTimeMult = 1.0f;
@@ -604,6 +526,11 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				//TODO: REMOVE THIS AFTER ROTATION ISSUE IS FIXED
 				else
 				{
+					const float& surfingOffsetFactor = g_gunflashConfig.getSurfingOffsetFactor();
+					const float& surfingTimeMult = g_gunflashConfig.getSurfingTimeMult();
+					const float& fpsFixTimeMult = g_gunflashConfig.getFpsFixTimeMult();
+					const float& pistolFixOffset = g_gunflashConfig.getPistolFixOffset();
+
 					ProcessGunflashLogicWithoutLocalParticles(
 						ped,
 						isInVehicle,
@@ -638,7 +565,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				memcpy(mat, boneMat, sizeof(RwMatrix));
 				RwMatrixUpdate(mat);
 
-				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(fxName.data(), &gunflashOffset, mat, true);
+				// In order to avoid string copying, static_cast is used (fxName is not modified in the function)
+				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(const_cast<char*>(fxName.c_str()), &gunflashOffset, mat, true);
 
 				if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 
@@ -657,12 +585,12 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 						RwMatrixRotate(&gunflashFx->m_localMatrix, &axis_y, CGeneral::GetRandomNumberInRange(0.0f, 360.0f), rwCOMBINEPRECONCAT);
 					}
 
-					if (localParticleFix) gunflashFx->SetLocalParticles(true);
+					if (g_gunflashConfig.isLocalParticleFixEnabled()) gunflashFx->SetLocalParticles(true);
 
 					gunflashFx->PlayAndKill();
 
 				}
-				if (gunflashLowerLight)
+				if (g_gunflashConfig.isGunflashLowerLightEnabled() && underFlash)
 				{
 					DrawUnderflash(ped, underflashOffset);
 				}
@@ -670,8 +598,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				{
 					if (!ped->m_pVehicle || ped->m_pVehicle->m_vecMoveSpeed.Magnitude() < 0.15f)
 					{
-
-						FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(defaultGunSmokeName.data(), &gunflashOffset, mat, true);
+						const std::string& smokeName = g_gunflashConfig.getDefaultGunflashSmokeParticleName();
+						FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(const_cast<char*>(smokeName.c_str()), &gunflashOffset, mat, true);
 						if (smokeFx) {
 							RwMatrixRotate(&smokeFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 							smokeFx->PlayAndKill();

@@ -6,9 +6,13 @@
     <ClCompile Include="IMFX\Gunflashes.cpp">
       <Filter>IMFX</Filter>
     </ClCompile>
-    <ClCompile Include="AnimViewer.cpp">
-      <Filter>AnimNameViewer</Filter>
+    <ClCompile Include="IMFX\GunflashConfig.cpp">
+      <Filter>IMFX</Filter>
     </ClCompile>
+    <ClCompile Include="IMFX\WeaponData.cpp">
+      <Filter>IMFX</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimNameViewer\AnimNameViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ReadIni.h" />
@@ -22,6 +26,11 @@
       <Filter>IMFX</Filter>
     </ClInclude>
     <ClInclude Include="MixSets.h" />
+    <ClInclude Include="IMFX\WeaponData.h">
+      <Filter>IMFX</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimNameViewer\AnimNameViewer.h" />
+    <ClInclude Include="IMFX\GunflashConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IniReader">

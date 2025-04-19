@@ -441,11 +441,11 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	// -- New_Additions
 	if (ReadIniBool(ini, &lg, "New_Additions", "AnimViewer")) {
-		MixSets::showAnimNameViewer = true;
+		MixSets::G_ShowAnimNameViewer = true;
 	}
 	else
 	{
-		MixSets::showAnimNameViewer = false;
+		MixSets::G_ShowAnimNameViewer = false;
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "NoVehicleNameText")) {
@@ -478,7 +478,7 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "NoPedRain")) {
 
-		if(bReloading)
+		if (bReloading)
 			WriteMemory<uint32_t>(0x5E7235, 0x858C34, true);
 	}
 
@@ -499,19 +499,19 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "ReceiveInstantMoney")) {
 
-		MixSets::receiveInstantMoney = true;
+		MixSets::G_ReceiveInstantMoney = true;
 	}
 	else
 	{
-		MixSets::receiveInstantMoney = false;
+		MixSets::G_ReceiveInstantMoney = false;
 	}
 
 	if (ReadIniBool(ini, &lg, "New_Additions", "FixedCamera")) {
-		MixSets::staticCarCamera = true;
+		MixSets::G_StaticCarCamera = true;
 	}
 	else
 	{
-		MixSets::staticCarCamera = false;
+		MixSets::G_StaticCarCamera = false;
 	}
 
 
@@ -1049,6 +1049,7 @@ void MixSets::ReadIni()
 	G_NoTutorials = false;
 	G_SCMfixes = false;
 	G_TuningChoose2colors = false;
+
 	if (!inSAMP) {
 
 		if (ReadIniBool(ini, &lg, "Gameplay", "ParaLandingFix")) {
@@ -2023,10 +2024,14 @@ void MixSets::ReadIni()
 
 
 	if (ReadIniFloat(ini, &lg, "Interface", "CrosshairSize", &f)) {
-		if (f != 0.0)
+		if (!bReloading)
 		{
-			WriteMemory<float>(0x58E307, f, false);
-			WriteMemory<float>(0x58E321, f, false);
+			WriteMemory<float>(0x58E307, G_CrosshairSize, false);
+			WriteMemory<float>(0x58E321, G_CrosshairSize, false);
+		}
+		if (f > 0.0)
+		{
+			G_CrosshairSize = f;
 		}
 	}
 
@@ -2203,23 +2208,23 @@ void MixSets::ReadIni()
 
 
 	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt1", &i)) {
-		testInt1 = i;
+		G_TestInt1 = i;
 	}
 	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt2", &i)) {
-		testInt2 = i;
+		G_TestInt2 = i;
 	}
 	if (ReadIniInt(ini, &lg, "Testing_Vars", "testInt3", &i)) {
-		testInt3 = i;
+		G_TestInt3 = i;
 	}
 
 	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat1", &f)) {
-		testFloat1 = f;
+		G_TestFloat1 = f;
 	}
 	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat2", &f)) {
-		testFloat2 = f;
+		G_TestFloat2 = f;
 	}
 	if (ReadIniFloat(ini, &lg, "Testing_Vars", "testFloat3", &f)) {
-		testFloat3 = f;
+		G_TestFloat3 = f;
 	}
 
 	// -- New Gunflash System
@@ -2233,7 +2238,7 @@ void MixSets::ReadIni()
 	}
 	else G_GunflashEmissionMult = -1.0f;
 
-	if (ReadIniBool(ini, &lg, "New_Gunflash_System", "ReloadWeaponDat"))
+	if (bReloading && ReadIniBool(ini, &lg, "New_Gunflash_System", "ReloadWeaponDat"))
 	{
 		CWeaponInfo::LoadWeaponData();
 	}
@@ -2314,29 +2319,19 @@ void MixSets::ReadIni()
 		}
 		if (ReadIniBool(ini, &lg, "Multipliers_and_Offsets", "FpsOffsetFix"))
 		{
-			Gunflashes::SetFpsFixTimeMult(true);
+			Gunflashes::SetFpsFixComputing(true);
 		}
 		else
 		{
-			Gunflashes::SetFpsFixTimeMult(true);
+			Gunflashes::SetFpsFixComputing(false);
 		}
 
 		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "SurfingTimeMult", &f))
 			Gunflashes::SetSurfingTimeMult(f);
 
-		std::vector<int> weaponIDs;
 
-		// Populate the list with weapon IDs
-
-		for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID)
+		for (int weaponID : MixSets::FIREARM_WEAPONS_ARRAY)
 		{
-			weaponIDs.push_back(weaponID);
-		}
-		weaponIDs.push_back(WEAPON_MINIGUN);
-
-		for (int weaponID : weaponIDs)
-		{
-
 			std::ostringstream weaponStringStream;
 			weaponStringStream << weaponID;
 
@@ -2346,18 +2341,19 @@ void MixSets::ReadIni()
 
 				std::istringstream iss(weaponString);
 				std::string particleName;
-				int rotate, smoke;
+				int rotate, smoke, underFlash;
 
 				if (!(iss >> particleName)) {
 					particleName = "gunflash";
 				}
 
-				if (!(iss >> rotate >> smoke)) {
+				if (!(iss >> rotate >> smoke >> underFlash)) {
 					rotate = true;
 					smoke = true;
+					underFlash = true;
 				}
 
-				Gunflashes::UpdateWeaponData(weaponID, particleName, (bool)rotate, (bool)smoke);
+				Gunflashes::UpdateWeaponData(weaponID, particleName, (bool)rotate, (bool)smoke, (bool) underFlash);
 			}
 		}
 

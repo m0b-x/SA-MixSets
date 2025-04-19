@@ -108,17 +108,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnimViewer.cpp" />
+    <ClCompile Include="AnimNameViewer\AnimNameViewer.cpp" />
+    <ClCompile Include="IMFX\GunflashConfig.cpp" />
     <ClCompile Include="IMFX\Gunflashes.cpp" />
     <ClCompile Include="MixSets.cpp" />
     <ClCompile Include="ReadIni.cpp" />
+    <ClCompile Include="IMFX\WeaponData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimNameViewer\AnimNameViewer.h" />
+    <ClInclude Include="IMFX\GunflashConfig.h" />
     <ClInclude Include="IMFX\Gunflashes.h" />
     <ClInclude Include="IniReader\IniReader.h" />
     <ClInclude Include="IniReader\ini_parser.hpp" />
     <ClInclude Include="MixSets.h" />
     <ClInclude Include="ReadIni.h" />
+    <ClInclude Include="IMFX\WeaponData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

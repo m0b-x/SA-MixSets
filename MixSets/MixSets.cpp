@@ -46,6 +46,7 @@ MixSets::MixSets()
 
 	G_WeaponIconScaleFix = 47.0f;
 	G_VehFlipDamage = 0.1f;
+	G_CrosshairSize = 64.0f;
 
 	forceUpdateQualityFuncs = true;
 	bProcessOnceOnScripts = false;
@@ -547,17 +548,18 @@ MixSets::MixSets()
 				}
 			}
 
-			if (receiveInstantMoney)
+			if (G_ReceiveInstantMoney)
 			{
 				auto var = ReadMemory<uint32_t>(0xB7CE50, true);
 				WriteMemory<uint32_t>(0xB7CE54, var, true);
 			}
 
-			if (staticCarCamera)
+			if (G_StaticCarCamera)
 			{
 				const static float FIXED_CAMERA_TIMER = 50.0f;
 				WriteMemory<float>(0xB70118, FIXED_CAMERA_TIMER, true);
 			}
+
 		};
 
 

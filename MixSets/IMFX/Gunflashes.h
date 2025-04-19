@@ -8,6 +8,7 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "game_sa\Fx_c.h"
 #include "game_sa\CPed.h"
 #include "game_sa\CTaskSimpleUseGun.h"
+#include "GunflashConfig.h"
 
 class Gunflashes {
 public:
@@ -31,7 +32,7 @@ public:
 	// Setup and configuration
 	static void Setup(bool sampFix);
 	static void AddDefaultWeaponData();
-	static void UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke);
+	static void UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke, bool underFlash);
 
 	// Frame and effects processing
 	static void ProcessPerFrame();
@@ -45,27 +46,6 @@ public:
 
 	//Underflash Handling
 	static void DrawUnderflash(CPed* ped, RwV3d& newOffset);
-	static void DrawUnderflash(CPed* ped);
-
-	// Settings configuration
-	static void SetPistolFixOffset(const float newValue);
-	static void SetUnderFlashLightRComponent(const int newValue);
-	static void SetUnderFlashLightGComponent(const int newValue);
-	static void SetUnderFlashLightBComponent(const int newValue);
-	static void SetUnderflashLightRange(const float newValue);
-	static void SetUnderflashShadowID(const int newValue);
-	static void SetUnderflashShadowIntensity(const int newValue);
-	static void SetUnderflashShadowRadius(const float newValue);
-	static void SetUnderFlashShadowAngle(const float newValue);
-	static void SetUnderflashOffsetX(const float newValue);
-	static void SetUnderflashOffsetY(const float newValue);
-	static void SetUnderflashOffsetZ(const float newValue);
-	static void SetSurfingOffsetFactor(const RwReal newValue);
-	static void SetLocalParticleFix(const bool newValue);
-	static void SetGunflashLowerLight(const bool newValue);
-	static void SetSurfingTimeMult(const float value);
-	static void SetFpsFixTimeMult(const float newValue);
-	static void SetFpsFixComputing(const bool newValue);
 
 	//Utility
 	static eTaskType GetPedActiveTask(CPed* ped);
@@ -93,4 +73,25 @@ public:
 		float surfingTimeMult,
 		float fpsFixTimeMult,
 		float pistolFixOffset);
+
+	// Config Setters
+	static void SetLocalParticleFix(bool value);
+	static void SetGunflashLowerLight(bool value);
+	static void SetUnderFlashLightRComponent(int r);
+	static void SetUnderFlashLightGComponent(int g);
+	static void SetUnderFlashLightBComponent(int b);
+	static void SetUnderflashLightRange(float range);
+	static void SetUnderflashShadowID(int id);
+	static void SetUnderflashShadowIntensity(int intensity);
+	static void SetUnderflashShadowRadius(float radius);
+	static void SetUnderFlashShadowAngle(float angle);
+	static void SetUnderflashOffsetX(float x);
+	static void SetUnderflashOffsetY(float y);
+	static void SetUnderflashOffsetZ(float z);
+	static void SetPistolFixOffset(float f);
+	static void SetSurfingOffsetFactor(float f);
+	static void SetFpsFixTimeMult(float f);
+	static void SetFpsFixComputing(bool b);
+	static void SetSurfingTimeMult(float f);
+
 };

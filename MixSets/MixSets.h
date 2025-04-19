@@ -6,14 +6,15 @@
 #include "Common.h"
 #include "IniReader/IniReader.h"
 #include "CFont.h"
+#include "eWeaponType.h"
 
 using namespace std;
 
 class MixSets
 {
 public:
-	static inline int testInt1 = 0, testInt2 = 0, testInt3 = 0;
-	static inline float testFloat1 = 0.0f, testFloat2 = 0.0f, testFloat3 = 0.0f;
+	static inline int G_TestInt1 = 0, G_TestInt2 = 0, G_TestInt3 = 0;
+	static inline float G_TestFloat1 = 0.0f, G_TestFloat2 = 0.0f, G_TestFloat3 = 0.0f;
 
 	static inline const float FIXED_CAMERA_TIMER = 50.0f;
 
@@ -21,8 +22,9 @@ public:
 	static inline std::fstream lg;
 
 	static inline float G_VehFlipDamage;
+	static inline float G_CrosshairSize;
 
-	static inline bool showAnimNameViewer = false, receiveInstantMoney = false, staticCarCamera = false;
+	static inline bool G_ShowAnimNameViewer = false, G_ReceiveInstantMoney = false, G_StaticCarCamera = false;
 
 	static inline DWORD RETURN_FixMouseStuck;
 	static inline DWORD altRETURN_FixMouseStuck;
@@ -79,6 +81,23 @@ public:
 	static inline char G_NoMoneyZeros_Neg[5];
 
 	static inline CVehicle* secPlayerVehicle;
+
+	static inline const eWeaponType FIREARM_WEAPONS_ARRAY[14] = {
+		WEAPON_PISTOL,
+		WEAPON_PISTOL_SILENCED,
+		WEAPON_DESERT_EAGLE,
+		WEAPON_SHOTGUN,
+		WEAPON_SAWNOFF,
+		WEAPON_SPAS12,
+		WEAPON_MICRO_UZI,
+		WEAPON_MP5,
+		WEAPON_AK47,
+		WEAPON_M4,
+		WEAPON_TEC9,
+		WEAPON_COUNTRYRIFLE,
+		WEAPON_SNIPERRIFLE,
+		WEAPON_MINIGUN
+	};
 
 	////////////////////////////////////////////////
 

@@ -1,17 +1,21 @@
 #pragma once
 
-#include <string>
-
 struct WeaponData {
-	std::string particleName;
-	bool        rotate = true;
-	bool        smoke = true;
-	bool        underFlash = true;
+    const char* particleName;
+    bool        rotate;
+    bool        smoke;
+    bool        underFlash;
 
-	WeaponData(
-		const std::string& pName = "gunflash",
-		bool               r = true,
-		bool               s = true,
-		bool               u = true
-	);
+    constexpr WeaponData(
+        const char* pName = "gunflash",
+        bool         r = true,
+        bool         s = true,
+        bool         u = true
+    ) noexcept
+        : particleName(pName)
+        , rotate(r)
+        , smoke(s)
+        , underFlash(u)
+    {
+    }
 };

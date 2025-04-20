@@ -10,5 +10,5 @@ public:
     AnimViewer();
 
 private:
-    static std::map<unsigned int, std::string> animNamesMap;
+    static std::unordered_map<unsigned int, std::string> animNamesMap;
 };

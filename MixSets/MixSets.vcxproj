@@ -113,7 +113,6 @@
     <ClCompile Include="IMFX\Gunflashes.cpp" />
     <ClCompile Include="MixSets.cpp" />
     <ClCompile Include="ReadIni.cpp" />
-    <ClCompile Include="IMFX\WeaponData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimNameViewer\AnimNameViewer.h" />

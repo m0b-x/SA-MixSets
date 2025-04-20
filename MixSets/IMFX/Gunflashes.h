@@ -32,7 +32,7 @@ public:
 	// Setup and configuration
 	static void Setup(bool sampFix);
 	static void AddDefaultWeaponData();
-	static void UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke, bool underFlash);
+	static void UpdateWeaponData(unsigned int weaponID, const char* particle, bool rotate, bool smoke, bool underFlash);
 
 	// Frame and effects processing
 	static void ProcessPerFrame();
@@ -47,15 +47,14 @@ public:
 	//Underflash Handling
 	static void DrawUnderflash(CPed* ped, RwV3d& newOffset);
 
-	//Utility
-	static eTaskType GetPedActiveTask(CPed* ped);
-
 	//Temporary, will be deleted
 	static void ProcessGunflashLogicWithoutLocalParticles(
 		CPed* ped,
 		bool isInVehicle,
 		bool isUsingJetpack,
 		bool driverDriveby,
+		CTask* task,
+		eTaskType taskType,
 		bool isInBike,
 		bool isInMoped,
 		bool isDualWeilding,
@@ -68,11 +67,7 @@ public:
 		float& additionalOffsetY,
 		float& additionalOffsetZ,
 		int handIndex,
-		bool isLeftHand,
-		float surfingOffsetFactor,
-		float surfingTimeMult,
-		float fpsFixTimeMult,
-		float pistolFixOffset);
+		bool isLeftHand);
 
 	// Config Setters
 	static void SetLocalParticleFix(bool value);

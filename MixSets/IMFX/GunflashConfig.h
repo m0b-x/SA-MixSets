@@ -1,46 +1,50 @@
+﻿// GunflashConfig.h
 #pragma once
-#include <string>
 
 class GunflashConfig {
 public:
     struct Color { int r, g, b; };
 
-    // ctor: initializes all values to their defaults
+    // constructor
     GunflashConfig();
 
     // getters
-    const Color& getUnderflashColor() const;
-    const float& getUnderflashLightRange() const;
-    const int& getUnderflashShadowID() const;
-    const int& getUnderflashShadowIntensity() const;
-    const float& getUnderflashShadowRadius() const;
-    const float& getUnderflashShadowAngle() const;
-    const float& getUnderflashOffsetX() const;
-    const float& getUnderflashOffsetY() const;
-    const float& getUnderflashOffsetZ() const;
-    const float& getSurfingOffsetFactor() const;
-    const float& getSurfingTimeMult() const;
-    const float& getPistolFixOffset() const;
-    const float& getFpsFixTimeMult() const;
-    const bool& computeFpsFix() const;
-    const bool& isLocalParticleFixEnabled() const;
-    const bool& isGunflashLowerLightEnabled() const;
-    const std::string& getDefaultGunflashSmokeParticleName();
-    const std::string& getDefaultGunflashParticleName();
+    const Color&  getUnderflashColor()         const noexcept;
+    float         getUnderflashLightRange()    const noexcept;
+    int           getUnderflashShadowID()      const noexcept;
+    int           getUnderflashShadowIntensity() const noexcept;
+    float         getUnderflashShadowRadius()  const noexcept;
+    float         getUnderflashShadowAngle()   const noexcept;
+    float         getUnderflashOffsetX()       const noexcept;
+    float         getUnderflashOffsetY()       const noexcept;
+    float         getUnderflashOffsetZ()       const noexcept;
+    float         getSurfingOffsetFactor()     const noexcept;
+    float         getSurfingTimeMult()         const noexcept;
+    float         getPistolFixOffset()         const noexcept;
+    float         getFpsFixTimeMult()          const noexcept;
+    bool          computeFpsFix()              const noexcept;
+    bool          isLocalParticleFixEnabled()  const noexcept;
+    bool          isGunflashLowerLightEnabled() const noexcept;
+
+    // FX name getters now return raw C strings
+    const char* getDefaultGunflashParticleName() const noexcept;
+    const char* getDefaultGunflashSmokeParticleName() const noexcept;
 
     // setters
-    void setUnderflashColor(int r, int g, int b);
-    void setUnderflashLightRange(float range);
-    void setUnderflashShadow(int id, int intensity, float radius, float angle);
-    void setUnderflashOffset(float x, float y, float z);
-    void setSurfingOffsetFactor(float factor);
-    void setSurfingTimeMult(float mult);
-    void setPistolFixOffset(float offset);
-    void setFpsFixTimeMult(float mult);
-    void setComputeFpsFix(bool flag);
-    void setLocalParticleFix(bool flag);
-    void setGunflashLowerLight(bool flag);
-    void setDefaultFxNames(const std::string& flash, const std::string& smoke);
+    void setUnderflashColor(int r, int g, int b) noexcept;
+    void setUnderflashLightRange(float range) noexcept;
+    void setUnderflashShadow(int id, int intensity, float radius, float angle) noexcept;
+    void setUnderflashOffset(float x, float y, float z) noexcept;
+    void setSurfingOffsetFactor(float factor) noexcept;
+    void setSurfingTimeMult(float mult) noexcept;
+    void setPistolFixOffset(float offset) noexcept;
+    void setFpsFixTimeMult(float mult) noexcept;
+    void setComputeFpsFix(bool flag) noexcept;
+    void setLocalParticleFix(bool flag) noexcept;
+    void setGunflashLowerLight(bool flag) noexcept;
+
+    // now takes C‑strings (no allocation)
+    void setDefaultFxNames(const char* flash, const char* smoke) noexcept;
 
 private:
     Color      underflashColor_;
@@ -59,6 +63,8 @@ private:
     bool       computeFpsFix_;
     bool       localParticleFix_;
     bool       gunflashLowerLight_;
-    std::string defaultGunflashFx_;
-    std::string defaultGunSmokeFx_;
+
+    // C‑string pointers only
+    const char* defaultGunflashFx_;
+    const char* defaultGunSmokeFx_;
 };

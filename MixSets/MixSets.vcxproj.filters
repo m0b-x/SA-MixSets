@@ -9,9 +9,6 @@
     <ClCompile Include="IMFX\GunflashConfig.cpp">
       <Filter>IMFX</Filter>
     </ClCompile>
-    <ClCompile Include="IMFX\WeaponData.cpp">
-      <Filter>IMFX</Filter>
-    </ClCompile>
     <ClCompile Include="AnimNameViewer\AnimNameViewer.cpp" />
   </ItemGroup>
   <ItemGroup>

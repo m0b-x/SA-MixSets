@@ -13,6 +13,7 @@ using namespace std;
 class MixSets
 {
 public:
+	static inline std::unordered_map<unsigned int, std::string> g_weaponNameStore;
 	static inline int G_TestInt1 = 0, G_TestInt2 = 0, G_TestInt3 = 0;
 	static inline float G_TestFloat1 = 0.0f, G_TestFloat2 = 0.0f, G_TestFloat3 = 0.0f;
 

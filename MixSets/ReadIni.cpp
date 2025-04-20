@@ -1,4 +1,4 @@
-#include "Common.h"
+ï»¿#include "Common.h"
 #include "MixSets.h"
 #include "..\injector\assembly.hpp"
 #include <game_sa\common.h>
@@ -30,7 +30,7 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 
 	if (ini.data.size() <= 0) {
-		lg << "\nERROR: MixSets.ini not found - MixSets.ini não encontrado \n";
+		lg << "\nERROR: MixSets.ini not found - MixSets.ini nÃ£o encontrado \n";
 		bIniFailed = true;
 		return;
 	} bIniFailed = false;
@@ -44,7 +44,7 @@ void MixSets::ReadIni_BeforeFirstFrame()
 	else {
 		bReadOldINI = true;
 		if (lang == languages::PT)
-			lg << "\n'MixSets old.ini' encontrado. As configurações serão movidas para o 'MixSets.ini'.\n\n";
+			lg << "\n'MixSets old.ini' encontrado. As configuraÃ§Ãµes serÃ£o movidas para o 'MixSets.ini'.\n\n";
 		else
 			lg << "\n'MixSets old.ini' found. The settings will be moved to 'MixSets.ini'.\n\n";
 	}
@@ -88,7 +88,7 @@ void MixSets::ReadIni_BeforeFirstFrame()
 	if (gameVersion != GAME_10US_COMPACT && gameVersion != GAME_10US_HOODLUM)
 	{
 		if (lang == languages::PT)
-			lg << "\nERROR: O executável do seu jogo não é compatível. Use Crack 1.0 US Hoodlum ou Compact.\n";
+			lg << "\nERROR: O executÃ¡vel do seu jogo nÃ£o Ã© compatÃ­vel. Use Crack 1.0 US Hoodlum ou Compact.\n";
 		else
 			lg << "\nERROR: Your game executable isn't compatible. Use Crack 1.0 US Hoodlum or Compact.\n";
 		bVersionFailed = true;
@@ -211,7 +211,7 @@ void MixSets::ReadIni_BeforeFirstFrame()
 		}
 		else {
 			if (lang == languages::PT)
-				lg << "\nAVISO: 'FxDistanceMult' não foi ativada pois outro mod alterou o valor.\n";
+				lg << "\nAVISO: 'FxDistanceMult' nÃ£o foi ativada pois outro mod alterou o valor.\n";
 			else
 				lg << "\nWARNING: 'FxDistanceMult' was not activated because another mod changed the value.\n";
 		}
@@ -2178,7 +2178,7 @@ void MixSets::ReadIni()
 		if (numOldCfgNotFound > 0)
 		{
 			if (lang == languages::PT)
-				lg << "\nAviso: " << numOldCfgNotFound << " configurações não foram encontradas no .ini antigo. Verifique acima.\n";
+				lg << "\nAviso: " << numOldCfgNotFound << " configuraÃ§Ãµes nÃ£o foram encontradas no .ini antigo. Verifique acima.\n";
 			else
 				lg << "\nWarning: " << numOldCfgNotFound << " configurations has not found on old ini. Check it above.\n";
 		}
@@ -2193,7 +2193,7 @@ void MixSets::ReadIni()
 		catch (std::filesystem::filesystem_error& e) {
 			if (lang == languages::PT)
 			{
-				lg << "\nERRO: Não foi possível renomear o arquivo 'MixSets old.ini'. Provavelmente você está com o jogo instalado na pasta Arquivos de Programas ou o arquivo está em uso.\n";
+				lg << "\nERRO: NÃ£o foi possÃ­vel renomear o arquivo 'MixSets old.ini'. Provavelmente vocÃª estÃ¡ com o jogo instalado na pasta Arquivos de Programas ou o arquivo estÃ¡ em uso.\n";
 				lg << "Mova seu jogo para outra pasta para o melhor funcionamento deste e outros mods. Ou verifique o arquivo, tente de novo, renomei-o ou delete-o manualmente.\n";
 			}
 			else {
@@ -2329,31 +2329,39 @@ void MixSets::ReadIni()
 		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "SurfingTimeMult", &f))
 			Gunflashes::SetSurfingTimeMult(f);
 
-
-		for (int weaponID : MixSets::FIREARM_WEAPONS_ARRAY)
-		{
+		g_weaponNameStore.clear();
+		for (int weaponID : MixSets::FIREARM_WEAPONS_ARRAY) {
 			std::ostringstream weaponStringStream;
 			weaponStringStream << weaponID;
+			std::string weaponKey = weaponStringStream.str();
 
-			std::string weaponString = weaponStringStream.str();
+			std::string iniValue;
+			if (ReadIniString(ini, &lg, "IMFX_Gunflashes", weaponKey, &iniValue)) {
+				std::istringstream iss(iniValue);
 
-			if (ReadIniString(ini, &lg, "IMFX_Gunflashes", weaponString, &weaponString)) {
-
-				std::istringstream iss(weaponString);
 				std::string particleName;
-				int rotate, smoke, underFlash;
+				bool rotate, smoke, underFlash;
 
 				if (!(iss >> particleName)) {
 					particleName = "gunflash";
 				}
-
 				if (!(iss >> rotate >> smoke >> underFlash)) {
 					rotate = true;
 					smoke = true;
 					underFlash = true;
 				}
 
-				Gunflashes::UpdateWeaponData(weaponID, particleName, (bool)rotate, (bool)smoke, (bool) underFlash);
+				// Save the string into our longâ€‘lived container (safety reasons)
+				auto& storedName = g_weaponNameStore[weaponID];
+				storedName = particleName;
+
+				Gunflashes::UpdateWeaponData(
+					weaponID,
+					storedName.c_str(),    
+					rotate,
+					smoke,
+					underFlash
+				);
 			}
 		}
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Credits for DK22Pac - IMFX
 If you consider fixing something here, you should also consider fixing there: https://github.com/DK22Pac/imfx
 */
@@ -11,7 +11,6 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "game_sa\CTimer.h"
 
 #include "../MixSets.h"
-#include <string>
 
 /*
 #include <Windows.h>
@@ -29,6 +28,7 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "ePedBones.h"
 #include "IMFX\GunflashConfig.h"
 #include <IMFX\WeaponData.h>
+#include <CTaskSimpleGangDriveBy.h>
 
 using namespace plugin;
 
@@ -111,6 +111,22 @@ enum Bikes : unsigned int {
 	WAYFARER = 586
 };
 
+enum eDrivebyStyle : char {
+	FIXED_LHS,
+	FIXED_RHS,
+
+	START_FROM_LHS,
+	START_FROM_RHS,
+
+	AI_SIDE,
+
+	FIXED_FWD,
+	FIXED_BAK,
+
+	AI_FWD_BAK,
+	AI_ALL_DIRN,
+};
+
 static constexpr unsigned int BIKE_DRIVE_DB_ANIM_IDS[][3] = {
 	{0, 0, 0},
 	{0, 0, 0},
@@ -140,7 +156,7 @@ void Gunflashes::AddDefaultWeaponData()
 }
 
 
-void Gunflashes::UpdateWeaponData(unsigned int weaponID, const std::string& particle, bool rotate, bool smoke, bool underFlash)
+void Gunflashes::UpdateWeaponData(unsigned int weaponID, const char* particle, bool rotate, bool smoke, bool underFlash)
 {
 	if (weaponID < weaponArraySize)
 	{
@@ -245,18 +261,18 @@ void __fastcall Gunflashes::MyTriggerGunflash(Fx_c* fx, int, CEntity* entity, CV
 	else {
 
 		if (DistanceBetweenPoints(target, origin) > 0.0f) {
-			const std::string& flashName = g_gunflashConfig.getDefaultGunflashParticleName();
-			const std::string& smokeName = g_gunflashConfig.getDefaultGunflashSmokeParticleName();
+			const char* flashName = g_gunflashConfig.getDefaultGunflashParticleName();
+			const char* smokeName = g_gunflashConfig.getDefaultGunflashSmokeParticleName();
 			RwMatrix fxMat;
 			fx->CreateMatFromVec(&fxMat, &origin, &target);
 			RwV3d offset = { 0.0f, 0.0f, 0.0f };
-			FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(const_cast<char*>(flashName.c_str()), &offset, &fxMat, false);
+			FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(const_cast<char*>(flashName), &offset, &fxMat, false);
 			if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 			if (gunflashFx) {
 				gunflashFx->CopyParentMatrix();
 				gunflashFx->PlayAndKill();
 			}
-			FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(const_cast<char*>(smokeName.c_str()), &offset, &fxMat, false);
+			FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(const_cast<char*>(smokeName), &offset, &fxMat, false);
 			if (smokeFx) {
 				smokeFx->CopyParentMatrix();
 				smokeFx->PlayAndKill();
@@ -303,112 +319,65 @@ static void DebugPedAnim(CPed* ped)
 	}
 }
 */
-static bool IsPedInBike(CPed* ped)
+static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOffset, RwReal reversingFactor)
 {
-	return IsVehiclePointerValid(ped->m_pVehicle) &&
-		(ped->m_pVehicle->GetVehicleAppearance() == BikeAppereance ||
-			ped->m_pVehicle->m_nModelIndex == QUAD);
-}
+	if (!ped->m_pRwClump || !ped->m_pVehicle)
+		return;
 
-static bool IsPedInMoped(CPed* ped)
-{
-	return IsVehiclePointerValid(ped->m_pVehicle) &&
-		(ped->m_pVehicle->m_nModelIndex == FAGGIO ||
-			ped->m_pVehicle->m_nModelIndex == PIZZABOY);
-}
+	const auto bikeGroup = ped->m_pVehicle->GetRideAnimData()->m_nAnimGroup;
+	const auto dFrontAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeGroup][DRIVEBY_FRONT];
+	const auto dLeftAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeGroup][DRIVEBY_LEFT];
+	const auto dRightAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeGroup][DRIVEBY_RIGHT];
 
-static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOFfset, RwReal reversingFactor)
-{
-	if (ped->m_pRwClump)
-	{
-		const auto totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
+	auto* assoc = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, dFrontAnim);
+	if (!assoc) assoc = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, dLeftAnim);
+	if (!assoc) assoc = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, dRightAnim);
+	if (!assoc)
+		return;
 
-		if (totalAnims > 0)
-		{
-			const auto bikeAnimGroup = ped->m_pVehicle->GetRideAnimData()->m_nAnimGroup;
+	const RwReal posDelta = ped->m_pVehicle->m_fMovingSpeed * reversingFactor;
+	const auto animID = assoc->m_nAnimId;
 
-			const auto
-				dFrontAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeAnimGroup][DRIVEBY_FRONT],
-				dLeftAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeAnimGroup][DRIVEBY_LEFT],
-				dRightAnim = BIKE_DRIVE_DB_ANIM_IDS[bikeAnimGroup][DRIVEBY_RIGHT];
+	if (animID == dFrontAnim) {
+		gunflashOffset.x += posDelta;
+	}
+	else {
+		std::swap(underflashOffset.x, underflashOffset.y);
 
-			RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * reversingFactor;
-			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-
-			while (association)
-			{
-				const auto animID = association->m_nAnimId;
-
-				if (animID == dFrontAnim)
-				{
-					gunflashOffset.x += posDeltaDriver;
-					return;
-				}
-				else if (animID == dLeftAnim)
-				{
-					std::swap(underflashOFfset.x, underflashOFfset.y);
-					underflashOFfset.x *= -1.0f;
-
-					gunflashOffset.z -= posDeltaDriver;
-					return;
-				}
-				else if (animID == dRightAnim)
-				{
-					std::swap(underflashOFfset.x, underflashOFfset.y);
-
-					gunflashOffset.z += posDeltaDriver;
-					return;
-				}
-				association = RpAnimBlendGetNextAssociation(association);
-			}
+		if (animID == dLeftAnim) {
+			underflashOffset.x *= -1.0f;
+			gunflashOffset.z -= posDelta;
+		}
+		else {
+			gunflashOffset.z += posDelta;
 		}
 	}
 }
 
-static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOFfset, RwReal& reversingFactor)
+static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOffset, RwReal& reversingFactor)
 {
-	if (ped->m_pRwClump)
-	{
-		unsigned int totalAnims = RpAnimBlendClumpGetNumAssociations(ped->m_pRwClump);
-		if (totalAnims > 0)
-		{
-			const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * reversingFactor;
+	if (!ped->m_pRwClump || !ped->m_pVehicle)
+		return;
 
-			CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-			while (association)
-			{
-				const unsigned int animID = association->m_nAnimId;
+	auto* driveByAnim = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, ANIM_DEFAULT_DRIVEBY_R);
+	if (!driveByAnim) driveByAnim = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, ANIM_DEFAULT_DRIVEBY_L);
+	if (!driveByAnim) driveByAnim = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, ANIM_DEFAULT_DRIVEBYL_R);
+	if (!driveByAnim) driveByAnim = RpAnimBlendClumpGetAssociation(ped->m_pRwClump, ANIM_DEFAULT_DRIVEBYL_L);
 
-				switch (animID)
-				{
-					// DRIVER DRIVEBY
-				case ANIM_DEFAULT_DRIVEBY_R:
-				{
-					gunflashOffset.z += posDeltaDriver;
-					return;
-				}
-				case ANIM_DEFAULT_DRIVEBY_L:
-				{
-					gunflashOffset.z -= posDeltaDriver;
-					return;
-				}
-				// DRIVER DRIVEBY
-				case ANIM_DEFAULT_DRIVEBYL_R:
-				{
-					gunflashOffset.z += posDeltaDriver;
-					return;
-				}
-				case ANIM_DEFAULT_DRIVEBYL_L:
-				{
-					gunflashOffset.z -= posDeltaDriver;
-					return;
-				}
-				}
-				association = RpAnimBlendGetNextAssociation(association);
-			}
-		}
-	}
+	if (!driveByAnim)
+		return;
+
+	const RwReal posDeltaDriver = ped->m_pVehicle->m_fMovingSpeed * reversingFactor;
+
+	const auto anim = driveByAnim->m_nAnimId;
+	const RwReal sign =
+		(anim == ANIM_DEFAULT_DRIVEBY_L || anim == ANIM_DEFAULT_DRIVEBYL_L)
+		? -1.0f
+		: +1.0f;
+
+	gunflashOffset.z += sign * posDeltaDriver;
 }
+
 
 void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset)
 {
@@ -431,53 +400,65 @@ void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset)
 }
 
 
-eTaskType Gunflashes::GetPedActiveTask(CPed* ped)
-{
-	CTask* activeTask = ped->m_pIntelligence->m_TaskMgr.GetSimplestActiveTask();
-	if (activeTask)
-	{
-		return activeTask->GetId();
-	}
-	else
-	{
-		return TASK_NONE;
-	}
-}
-
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 	auto& pedExtData = pedExt.Get(ped);
 	bool handThisFrame[2] = { pedExtData.bLeftHandGunflashThisFrame , pedExtData.bRightHandGunflashThisFrame };
 
-
-	for (int i = 0; i < 2; i++) {
-		if (handThisFrame[i])
+	for (int handFiring = 0; handFiring < 2; handFiring++) {
+		if (handThisFrame[handFiring])
 		{
-			if (pedExtData.pMats[i] == nullptr) pedExtData.pMats[i] = new RwMatrix();
-			RwMatrix* mat = pedExtData.pMats[i];
+			if (pedExtData.pMats[handFiring] == nullptr) pedExtData.pMats[handFiring] = new RwMatrix();
+			RwMatrix* mat = pedExtData.pMats[handFiring];
 			if (!mat) break;
 
 			if (ped->m_pRwObject && ped->m_pRwObject->type == rpCLUMP) {
 
-				const eTaskType task = GetPedActiveTask(ped);
+				CTask* activeTask = ped->m_pIntelligence->m_TaskMgr.GetSimplestActiveTask();
+				const eTaskType taskType = (activeTask) ? activeTask->GetId() : TASK_NONE;
+
+				bool driverDriveby = false;
+				bool passengerDriveby = false;
+				bool isUsingJetpack = false;
+
+				switch (taskType) {
+				case TASK_SIMPLE_CAR_DRIVE:
+					driverDriveby = true;
+					break;
+				case TASK_SIMPLE_GANG_DRIVEBY:
+					passengerDriveby = true;
+					break;
+				case TASK_SIMPLE_JETPACK:
+					isUsingJetpack = true;
+					break;
+				default:
+					break;
+				}
+
+				CVehicle* veh = ped->m_pVehicle;
+				bool hasVeh = IsVehiclePointerValid(veh);
+
+				bool isInVehicle = false;
+				bool isInBike = false;
+				bool isInMoped = false;
+
+				if (hasVeh) {
+					isInVehicle = driverDriveby || passengerDriveby;
+
+					auto model = veh->m_nModelIndex;
+					auto app = veh->GetVehicleAppearance();
+
+					isInBike = (app == BikeAppereance) || (model == QUAD);
+					isInMoped = (model == FAGGIO) || (model == PIZZABOY);
+				}
+
+				// Get Array Index
 
 				const unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
-
-				const bool driverDriveby = (task == TASK_SIMPLE_CAR_DRIVE);
-				const bool isUsingJetpack = (task == TASK_SIMPLE_JETPACK);
-
-				const bool isInVehicle = IsVehiclePointerValid(ped->m_pVehicle) && (driverDriveby || (task == TASK_SIMPLE_GANG_DRIVEBY));
-				const bool isInBike = IsPedInBike(ped);
-				const bool isInMoped = IsPedInMoped(ped);
 
 				// Initial particle time multiplier
 				float particleTimeMult = 1.0f;
 
 				const WeaponData& weapon = (arrayIndex < weaponArraySize) ? weaponArray[arrayIndex] : defaultWeaponDataObj;
-
-				const std::string& fxName = weapon.particleName;
-				const bool rotate = weapon.rotate;
-				const bool smoke = weapon.smoke;
-				const bool underFlash = weapon.underFlash;
 
 				bool attachedToBone = true;
 
@@ -492,7 +473,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 				float additionalOffsetX = 0.0f, additionalOffsetY = 0.0f, additionalOffsetZ = 0.0f;
 
-				if (isLeftHand[i])
+				if (isLeftHand[handFiring])
 				{
 					gunflashOffset.z *= -1.0f;
 				}
@@ -501,8 +482,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				static RwV3d axis_y = { 0.0f, 1.0f, 0.0f };
 				static RwV3d axis_z = { 0.0f, 0.0f, 1.0f };
 
-				int boneIDToAttachTo = pedHands[i];
-
+				int boneIDToAttachTo = pedHands[handFiring];
 
 				if (g_gunflashConfig.isLocalParticleFixEnabled())
 				{
@@ -513,29 +493,34 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 						RwReal reversingfactor = 0.0f;
 						RwV3d emptyOffset;
 
-						if (isInBike)
+						if (driverDriveby)
 						{
-							ChangeOffsetForDriverBikeDriveBy(ped, emptyOffset, underflashOffset, reversingfactor);
+							if (isInBike)
+							{
+								ChangeOffsetForDriverBikeDriveBy(ped, emptyOffset, underflashOffset, reversingfactor);
+							}
+							else
+							{
+								ChangeOffsetForCarDriverDriveBy(ped, emptyOffset, underflashOffset, reversingfactor);
+							}
 						}
 						else
 						{
-							ChangeOffsetForCarDriverDriveBy(ped, emptyOffset, underflashOffset, reversingfactor);
+							
 						}
 					}
 				}
 				//TODO: REMOVE THIS AFTER ROTATION ISSUE IS FIXED
 				else
 				{
-					const float& surfingOffsetFactor = g_gunflashConfig.getSurfingOffsetFactor();
-					const float& surfingTimeMult = g_gunflashConfig.getSurfingTimeMult();
-					const float& fpsFixTimeMult = g_gunflashConfig.getFpsFixTimeMult();
-					const float& pistolFixOffset = g_gunflashConfig.getPistolFixOffset();
 
 					ProcessGunflashLogicWithoutLocalParticles(
 						ped,
 						isInVehicle,
 						isUsingJetpack,
 						driverDriveby,
+						activeTask,
+						taskType,
 						isInBike,
 						isInMoped,
 						isDualWeilding,
@@ -547,26 +532,26 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 						additionalOffsetX,
 						additionalOffsetY,
 						additionalOffsetZ,
-						i,
-						isLeftHand[i],
-						surfingOffsetFactor,
-						surfingTimeMult,
-						fpsFixTimeMult,
-						pistolFixOffset
-					);
+						handFiring,
+						isLeftHand[handFiring]);
 				}
 
 				mat->pos.x += additionalOffsetX;
 				mat->pos.y += additionalOffsetY;
 				mat->pos.z += additionalOffsetZ;
 
+				const char* fxName = weapon.particleName;
+				const bool  rotate = weapon.rotate;
+				const bool  smoke = weapon.smoke;
+				const bool  underFlash = weapon.underFlash;
+
 				RpHAnimHierarchy* hierarchy = GetAnimHierarchyFromSkinClump(ped->m_pRwClump);
 				RwMatrix* boneMat = &RpHAnimHierarchyGetMatrixArray(hierarchy)[RpHAnimIDGetIndex(hierarchy, boneIDToAttachTo)];
 				memcpy(mat, boneMat, sizeof(RwMatrix));
 				RwMatrixUpdate(mat);
 
-				// In order to avoid string copying, static_cast is used (fxName is not modified in the function)
-				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(const_cast<char*>(fxName.c_str()), &gunflashOffset, mat, true);
+				// In order to avoid string copying, const_cast is used (fxName is not modified in the function)
+				FxSystem_c* gunflashFx = g_fxMan.CreateFxSystem(const_cast<char*>(fxName), &gunflashOffset, mat, true);
 
 				if (MixSets::G_GunflashEmissionMult > -1.0f) gunflashFx->SetRateMult(MixSets::G_GunflashEmissionMult);
 
@@ -598,8 +583,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 				{
 					if (!ped->m_pVehicle || ped->m_pVehicle->m_vecMoveSpeed.Magnitude() < 0.15f)
 					{
-						const std::string& smokeName = g_gunflashConfig.getDefaultGunflashSmokeParticleName();
-						FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(const_cast<char*>(smokeName.c_str()), &gunflashOffset, mat, true);
+						const char* smokeName = g_gunflashConfig.getDefaultGunflashSmokeParticleName();
+						FxSystem_c* smokeFx = g_fxMan.CreateFxSystem(const_cast<char*>(smokeName), &gunflashOffset, mat, true);
 						if (smokeFx) {
 							RwMatrixRotate(&smokeFx->m_localMatrix, &axis_z, -90.0f, rwCOMBINEPRECONCAT);
 							smokeFx->PlayAndKill();
@@ -617,6 +602,8 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 	bool isInVehicle,
 	bool isUsingJetpack,
 	bool driverDriveby,
+	CTask* task,
+	eTaskType taskType,
 	bool isInBike,
 	bool isInMoped,
 	bool isDualWeilding,
@@ -629,16 +616,17 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 	float& additionalOffsetY,
 	float& additionalOffsetZ,
 	int handIndex,
-	bool isLeftHand,
-	float surfingOffsetFactor,
-	float surfingTimeMult,
-	float fpsFixTimeMult,
-	float pistolFixOffset) {
+	bool isLeftHand) {
 
 	const auto msMagnitude = ped->m_vecMoveSpeed.Magnitude();
 	const auto animMsMagnitude = ped->m_vecAnimMovingShift.Magnitude();
 	const bool surfing = !isInVehicle && (msMagnitude > animMsMagnitude) && !isUsingJetpack;
 	const auto* playerData = ped->m_pPlayerData;
+
+	const float& surfingOffsetFactor = g_gunflashConfig.getSurfingOffsetFactor();
+	const float& surfingTimeMult = g_gunflashConfig.getSurfingTimeMult();
+	const float& fpsFixTimeMult = g_gunflashConfig.getFpsFixTimeMult();
+	const float& pistolFixOffset = g_gunflashConfig.getPistolFixOffset();
 
 	if (!isInVehicle) {
 
@@ -695,6 +683,7 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 			gunflashOffset.y -= ped->m_vecAnimMovingShiftLocal.x;
 		}
 	}
+	//Is in vehicle
 	else {
 		particleTimeMult = fpsFixTimeMult;
 		RwReal reversingFactor = (ped->m_pVehicle->m_nCurrentGear == 0) ? -1.0f : 1.0f;
@@ -715,6 +704,10 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 			else {
 				ChangeOffsetForCarDriverDriveBy(ped, gunflashOffset, underflashOffset, reversingFactor);
 			}
+		}
+		else
+		{
+			
 		}
 	}
 }

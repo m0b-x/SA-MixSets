@@ -1,9 +1,7 @@
-#include "plugin.h"
 #include "game_sa\common.h"
 #include "game_sa\CFont.h"
 #include "game_sa\CSprite2d.h"
 #include "game_sa\CKeyGen.h"
-#include <map>
 
 #include <CAnimBlendAssociation.h>
 #include <CAnimBlendHierarchy.h>
@@ -15,11 +13,20 @@ using namespace plugin;
 class AnimViewer {
 public:
     AnimViewer() {
-        static std::map<unsigned int, std::string> animNamesMap;
+        static std::unordered_map<unsigned int, std::string> animNamesMap;
+        animNamesMap.reserve(4096);
+        //0x4CF2D8 = Get UpperCaseKey inside LoadAnimFile
         static CdeclEvent<AddressList<0x4CF2D8, H_CALL>, PRIORITY_AFTER, ArgPickN<char*, 0>, unsigned int(char*)> myStoreAnimNameEvent;
 
         myStoreAnimNameEvent += [](char* name) {
-            animNamesMap[CKeyGen::GetUppercaseKey(name)] = name;
+            unsigned int key = CKeyGen::GetUppercaseKey(name);
+            auto it = animNamesMap.find(key);
+            if (it == animNamesMap.end()) {
+                animNamesMap.emplace(
+                    key,
+                    std::string{ name }
+                );
+            }
             };
 
         Events::drawingEvent += [] {
@@ -42,7 +49,7 @@ public:
                         int counter = 0;
                         CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
                         while (association) {
-                            static char text[256];
+                            char text[256];
                             sprintf(text, "%d. %s", counter + 1, animNamesMap[association->m_pHierarchy->m_hashKey].c_str());
                             if (association->m_nFlags & 0x10)
                                 strcat(text, " (P)");

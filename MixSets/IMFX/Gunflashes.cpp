@@ -16,7 +16,6 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include <Windows.h>
 #include <shlobj.h>
 */
-
 /*
 #include <CAnimManager.h>
 #include <CAnimBlendAssociation.h>
@@ -111,20 +110,25 @@ enum Bikes : unsigned int {
 	WAYFARER = 586
 };
 
-enum eDrivebyStyle : char {
-	FIXED_LHS,
-	FIXED_RHS,
+enum RequiredAnimID
+{
+	// Bike Driveby Animations (Duplicates of rquired car anims)
+	// PASS_DRIVEBY_FORWARD = 233,
+	// PASS_DRIVEBY_RHS = 232,
+	// PASS_DRIVEBY_LHS = 231,
+	// PASS_DRIVEBY_BWD = 234,
 
-	START_FROM_LHS,
-	START_FROM_RHS,
+	// Gang Driveby RHS Animations
+	GANG_DRIVEBYRHS_FWD = 237,
+	GANG_DRIVEBYRHS = 235,
+	GANG_DRIVEBYRHS_BWD = 238,
+	GANG_DRIVEBYTOP_RHS = 236,
 
-	AI_SIDE,
-
-	FIXED_FWD,
-	FIXED_BAK,
-
-	AI_FWD_BAK,
-	AI_ALL_DIRN,
+	// Gang Driveby LHS Animations
+	GANG_DRIVEBYLHS_FWD = 233,
+	GANG_DRIVEBYLHS = 231,
+	GANG_DRIVEBYLHS_BWD = 234,
+	GANG_DRIVEBYTOP_LHS = 232
 };
 
 static constexpr unsigned int BIKE_DRIVE_DB_ANIM_IDS[][3] = {
@@ -319,6 +323,7 @@ static void DebugPedAnim(CPed* ped)
 	}
 }
 */
+
 static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOffset, RwReal reversingFactor)
 {
 	if (!ped->m_pRwClump || !ped->m_pVehicle)
@@ -353,6 +358,91 @@ static void ChangeOffsetForDriverBikeDriveBy(CPed* ped, RwV3d& gunflashOffset, R
 		}
 	}
 }
+
+static void ChangeOffsetForCarPassengerDriveBy(CPed* ped, CTask* task, eTaskType taskType, RwV3d& underflashOffset)
+{
+	if (!ped || !ped->m_pRwClump || !ped->m_pVehicle || !task)
+		return;
+
+	if (task->GetId() != TASK_SIMPLE_GANG_DRIVEBY)
+		return;
+
+	auto* gangDriveByTask = static_cast<CTaskSimpleGangDriveBy*>(task);
+	const auto animId = gangDriveByTask->m_nRequiredAnimID;
+
+	switch (animId)
+	{
+	case GANG_DRIVEBYRHS_FWD:
+		underflashOffset.x = underflashOffset.y;
+		break;
+
+	case GANG_DRIVEBYLHS_FWD:
+		underflashOffset.x = -underflashOffset.y;
+		break;
+
+	case GANG_DRIVEBYLHS:
+		std::swap(underflashOffset.x, underflashOffset.y);
+		underflashOffset.x *= -1.0f;
+		break;
+
+	case GANG_DRIVEBYRHS:
+		std::swap(underflashOffset.x, underflashOffset.y);
+		break;
+
+	case GANG_DRIVEBYRHS_BWD:
+		underflashOffset.x = underflashOffset.y;
+		underflashOffset.y *= -1.0f;
+		break;
+
+	case GANG_DRIVEBYLHS_BWD:
+		underflashOffset.y *= -1.0f;
+		underflashOffset.x = underflashOffset.y;
+		break;
+
+	case GANG_DRIVEBYTOP_RHS:
+		std::swap(underflashOffset.x, underflashOffset.y);
+		underflashOffset.x *= -1.0f;
+		break;
+
+	case GANG_DRIVEBYTOP_LHS:
+		std::swap(underflashOffset.x, underflashOffset.y);
+		break;
+
+	default:
+		break;
+	}
+}
+static void ChangeOffsetForBikePassengerDriveBy(CPed* ped, CTask* task, eTaskType taskType, RwV3d& underflashOffset)
+{
+	if (!ped || !ped->m_pRwClump || !ped->m_pVehicle || !task)
+		return;
+
+	if (task->GetId() != TASK_SIMPLE_GANG_DRIVEBY)
+		return;
+
+	auto* gangDriveByTask = static_cast<CTaskSimpleGangDriveBy*>(task);
+	const auto animId = gangDriveByTask->m_nRequiredAnimID;
+
+	switch (animId)
+	{
+	case GANG_DRIVEBYTOP_LHS:
+		std::swap(underflashOffset.x, underflashOffset.y);
+		break;
+
+	case GANG_DRIVEBYLHS:
+		std::swap(underflashOffset.x, underflashOffset.y);
+		underflashOffset.x *= -1.0f;
+		break;
+
+	case GANG_DRIVEBYLHS_BWD:
+		underflashOffset.y *= -1.0f;
+		break;
+
+	default:
+		break;
+	}
+}
+
 
 static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& gunflashOffset, RwV3d& underflashOffset, RwReal& reversingFactor)
 {
@@ -506,7 +596,14 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 						}
 						else
 						{
-							
+							if (isInBike)
+							{
+								ChangeOffsetForBikePassengerDriveBy(ped, activeTask, taskType, underflashOffset);
+							}
+							else
+							{
+								ChangeOffsetForCarPassengerDriveBy(ped, activeTask, taskType, underflashOffset);
+							}
 						}
 					}
 				}
@@ -602,7 +699,7 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 	bool isInVehicle,
 	bool isUsingJetpack,
 	bool driverDriveby,
-	CTask* task,
+	CTask* activeTask,
 	eTaskType taskType,
 	bool isInBike,
 	bool isInMoped,
@@ -707,7 +804,14 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 		}
 		else
 		{
-			
+			if (isInBike)
+			{
+				ChangeOffsetForBikePassengerDriveBy(ped, activeTask, taskType, underflashOffset);
+			}
+			else
+			{
+				ChangeOffsetForCarPassengerDriveBy(ped, activeTask, taskType, underflashOffset);
+			}
 		}
 	}
 }

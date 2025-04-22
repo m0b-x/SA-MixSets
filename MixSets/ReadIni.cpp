@@ -2307,17 +2307,17 @@ void MixSets::ReadIni()
 
 		//Read Offsets&Multipliers Settings
 
-		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "PistolFixOffset", &f))
+		if (ReadIniFloat(ini, &lg, "Legacy_Particle_Modifiers", "PistolFixOffset", &f))
 			Gunflashes::SetPistolFixOffset(f);
 
-		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "SurfingOffset", &f))
+		if (ReadIniFloat(ini, &lg, "Legacy_Particle_Modifiers", "SurfingOffset", &f))
 			Gunflashes::SetSurfingOffsetFactor(f);
 
-		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "FpsFixTimeMult", &f))
+		if (ReadIniFloat(ini, &lg, "Legacy_Particle_Modifiers", "FpsFixTimeMult", &f))
 		{
 			Gunflashes::SetFpsFixTimeMult(f);
 		}
-		if (ReadIniBool(ini, &lg, "Multipliers_and_Offsets", "FpsOffsetFix"))
+		if (ReadIniBool(ini, &lg, "Legacy_Particle_Modifiers", "FpsOffsetFix"))
 		{
 			Gunflashes::SetFpsFixComputing(true);
 		}
@@ -2326,7 +2326,7 @@ void MixSets::ReadIni()
 			Gunflashes::SetFpsFixComputing(false);
 		}
 
-		if (ReadIniFloat(ini, &lg, "Multipliers_and_Offsets", "SurfingTimeMult", &f))
+		if (ReadIniFloat(ini, &lg, "Legacy_Particle_Modifiers", "SurfingTimeMult", &f))
 			Gunflashes::SetSurfingTimeMult(f);
 
 		g_weaponNameStore.clear();

@@ -1,0 +1,43 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.42.34433.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///d:/alex/projects/asi or dlls/sa-mixsets/mixsets/imfx/gunflashconfig.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "1a0b70589dfbc1d0381bfa5af8d9c501af12870675aa9dee1983fcdf44afe38d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///d:/alex/projects/asi or dlls/sa-mixsets/mixsets/imfx/gunflashconfig.h"
+          },
+          "hashes": {
+            "sha-256": "79d95cef2e42f580e967737377965a9d6eb34422cb1ab2b99e50864b95bc6de9"
+          }
+        }
+      ]
+    }
+  ]
+}

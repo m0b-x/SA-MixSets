@@ -1,5 +1,4 @@
-﻿// GunflashConfig.h
-#pragma once
+﻿#pragma once
 
 class GunflashConfig {
 public:

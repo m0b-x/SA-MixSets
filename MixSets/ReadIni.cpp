@@ -2280,10 +2280,10 @@ void MixSets::ReadIni()
 		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashB", &i))
 			Gunflashes::SetUnderFlashLightBComponent(i);
 
-		if (ReadIniFloat(ini, &lg, "UnderFlash", "UnderflashRange", &f))
+		if (ReadIniFloat(ini, &lg, "UnderFlash", "UndeflashLightRange", &f))
 			Gunflashes::SetUnderflashLightRange(f);
 
-		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashShadowID", &i))
+		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashShadowType", &i))
 			Gunflashes::SetUnderflashShadowID(i);
 
 		if (ReadIniInt(ini, &lg, "UnderFlash", "UnderflashShadowIntensity", &i))

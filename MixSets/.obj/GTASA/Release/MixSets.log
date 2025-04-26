@@ -1,16 +1,17 @@
-﻿  Gunflashes.cpp
+﻿  AnimNameViewer.cpp
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(188,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'IMFX/Gunflashes.cpp')
+  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
   
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(192,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'IMFX/Gunflashes.cpp')
+  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
   
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(207,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'IMFX/Gunflashes.cpp')
+  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
   
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(211,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'IMFX/Gunflashes.cpp')
+  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
   
+  AnimNameViewer.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
   Generating code
   Finished generating code
   MixSets.vcxproj -> D:\Alex\Games\San Andreas\GTA San Andreas\modloader\_Essentials Pack\_MixSets\MixSets.asi

@@ -28,7 +28,9 @@ If you consider fixing something here, you should also consider fixing there: ht
 #include "IMFX\GunflashConfig.h"
 #include <IMFX\WeaponData.h>
 #include <CTaskSimpleGangDriveBy.h>
-
+#include "CShadows.h"
+#include <CPointLights.h>
+#include "eWeaponType.h"
 using namespace plugin;
 
 // Constants
@@ -36,7 +38,7 @@ const bool isLeftHand[2] = { true, false };
 const ePedBones pedHands[2] = { BONE_LEFTWRIST, BONE_RIGHTWRIST };
 
 const int BikeAppereance = 2;
-const int weaponArraySize = WEAPON_MINIGUN + 1;
+const int weaponArraySize = WEAPONTYPE_MINIGUN + 1;
 
 // Gunflashes
 bool Gunflashes::bLeftHand = false;
@@ -153,10 +155,10 @@ enum DriveByAnimIndex {
 
 void Gunflashes::AddDefaultWeaponData()
 {
-	for (int weaponID = WEAPON_PISTOL; weaponID <= WEAPON_SNIPERRIFLE; ++weaponID) {
+	for (int weaponID = WEAPONTYPE_PISTOL; weaponID <= WEAPONTYPE_SNIPERRIFLE; ++weaponID) {
 		weaponArray[weaponID] = WeaponData();
 	}
-	weaponArray[WEAPON_MINIGUN] = WeaponData();
+	weaponArray[WEAPONTYPE_MINIGUN] = WeaponData();
 }
 
 
@@ -206,7 +208,7 @@ void Gunflashes::ProcessPerFrame() {
 bool __fastcall Gunflashes::MyProcessUseGunTaskSAMP(CTaskSimpleUseGun* task, int, CPed* ped)
 {
 	//disabled for sa-mp
-	//if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, ped->GetWeaponSkill()))
+	//if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->GetWeapon()->m_eWeaponType, ped->GetWeaponSkill()))
 	{
 		if (task->bRightHand) {
 			bLeftHand = false;
@@ -226,7 +228,7 @@ bool __fastcall Gunflashes::MyProcessUseGunTaskSAMP(CTaskSimpleUseGun* task, int
 
 bool __fastcall Gunflashes::MyProcessUseGunTask(CTaskSimpleUseGun* task, int, CPed* ped)
 {
-	if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, ped->GetWeaponSkill()))
+	if (task->m_pWeaponInfo == CWeaponInfo::GetWeaponInfo(ped->GetWeapon()->m_eWeaponType, ped->GetWeaponSkill()))
 	{
 		if (task->bRightHand) {
 			bLeftHand = false;
@@ -468,27 +470,55 @@ static void ChangeOffsetForCarDriverDriveBy(CPed* ped, RwV3d& gunflashOffset, Rw
 	gunflashOffset.z += sign * posDeltaDriver;
 }
 
+void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset) {
+	const CMatrix& pedMatrix = *(CMatrix*)ped->m_matrix;
 
-void Gunflashes::DrawUnderflash(CPed* ped, RwV3d& newOffset)
-{
-	float x = 0.0f, y = 0.0f, z = 0.0f;
-	Command<Commands::GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS>(
-		ped, newOffset.x, newOffset.y, newOffset.z, &x, &y, &z);
+	const CVector lightAndShadowPos = pedMatrix.pos +
+		pedMatrix.right * newOffset.x +
+		pedMatrix.up * newOffset.y +
+		pedMatrix.at * newOffset.z;
 
-	const auto& config = g_gunflashConfig;
-	const auto& color = config.getUnderflashColor();
-	const float& range = config.getUnderflashLightRange();
-	const int& shadowID = config.getUnderflashShadowID();
-	const int& shadowIntensity = config.getUnderflashShadowIntensity();
-	const float& shadowRadius = config.getUnderflashShadowRadius();
-	const float& shadowAngle = config.getUnderflashShadowAngle();
+	const auto& cfg = g_gunflashConfig;
+	const auto& color = cfg.getUnderflashColor();
+	const float shadowRadius = cfg.getUnderflashShadowRadius();
+	const float shadowAngle = cfg.getUnderflashShadowAngle();
+	const int shadowID = cfg.getUnderflashShadowID();
+	const int shadowIntensity = cfg.getUnderflashShadowIntensity();
+	const float lightRange = cfg.getUnderflashLightRange();
 
-	Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, color.r, color.g, color.b, range);
-	Command<Commands::DRAW_SHADOW>(
-		shadowID, x, y, z, shadowAngle, shadowRadius, shadowIntensity,
+	const float angleRad = DegToRad(shadowAngle);
+	const float frontX = std::cos(angleRad) * shadowRadius;
+	const float frontY = std::sin(angleRad) * shadowRadius;
+	const float sideX = -frontY;
+	const float sideY = frontX;
+
+	//Command<Commands::DRAW_SHADOW>(
+	//    shadowID, x, y, z, shadowAngle, shadowRadius, shadowIntensity,
+	//    color.r, color.g, color.b);
+	//Command<Commands::DRAW_LIGHT_WITH_RANGE>(x, y, z, color.r, color.g, color.b, range);
+
+	// see eShadowTextureType for shadow types
+	CShadows::StoreShadowToBeRendered(
+		static_cast<unsigned char>(shadowID),
+		&lightAndShadowPos,
+		frontX, frontY,
+		sideX, sideY,
+		static_cast<short>(shadowIntensity),
 		color.r, color.g, color.b);
-}
 
+	CPointLights::AddLight(
+		ePointLightType::PLTYPE_POINTLIGHT,
+		lightAndShadowPos,
+		CVector(0.0F, 0.0F, 0.0F),
+		lightRange,
+		color.r,
+		color.g,
+		color.b,
+		RwFogType::rwFOGTYPENAFOGTYPE,
+		true,
+		nullptr
+	);
+}
 
 void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 	auto& pedExtData = pedExt.Get(ped);
@@ -543,7 +573,7 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 				// Get Array Index
 
-				const unsigned int arrayIndex = ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType;
+				const unsigned int arrayIndex = ped->GetWeapon()->m_eWeaponType;
 
 				// Initial particle time multiplier
 				float particleTimeMult = 1.0f;
@@ -552,8 +582,8 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 
 				bool attachedToBone = true;
 
-				const auto pedWeaponSkill = ped->GetWeaponSkill(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType);
-				const CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType, pedWeaponSkill);
+				const auto pedWeaponSkill = ped->GetWeaponSkill(ped->GetWeapon()->m_eWeaponType);
+				const CWeaponInfo* weapInfo = CWeaponInfo::GetWeaponInfo(ped->GetWeapon()->m_eWeaponType, pedWeaponSkill);
 				const auto isDualWeilding = weapInfo->m_nFlags.bTwinPistol;
 
 				if (!isDualWeilding && ped->m_pedIK.bUseArm) attachedToBone = false;
@@ -672,10 +702,6 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 					gunflashFx->PlayAndKill();
 
 				}
-				if (g_gunflashConfig.isGunflashLowerLightEnabled() && underFlash)
-				{
-					DrawUnderflash(ped, underflashOffset);
-				}
 				if (smoke)
 				{
 					if (!ped->m_pVehicle || ped->m_pVehicle->m_vecMoveSpeed.Magnitude() < 0.15f)
@@ -687,6 +713,10 @@ void Gunflashes::CreateGunflashEffectsForPed(CPed* ped) {
 							smokeFx->PlayAndKill();
 						}
 					}
+				}
+				if (g_gunflashConfig.isGunflashLowerLightEnabled() && underFlash)
+				{
+					DrawUnderflash(ped, underflashOffset);
 				}
 			}
 		}
@@ -754,7 +784,7 @@ void Gunflashes::ProcessGunflashLogicWithoutLocalParticles(
 						if (isLeftHand) {
 							gunflashOffset.z *= -1.0f;
 						}
-						else if (ped->m_aWeapons[ped->m_nActiveWeaponSlot].m_eWeaponType == WEAPON_PISTOL) {
+						else if (ped->GetWeapon()->m_eWeaponType == WEAPONTYPE_PISTOL) {
 							gunflashOffset.z += pistolFixOffset;
 						}
 					}

@@ -440,7 +440,7 @@ void MixSets::ReadIni_BeforeFirstFrame()
 
 
 	// -- New_Additions
-	if (ReadIniBool(ini, &lg, "New_Additions", "AnimViewer")) {
+	if (ReadIniBool(ini, &lg, "New_Additions", "AnimNameViewer")) {
 		MixSets::G_ShowAnimNameViewer = true;
 	}
 	else

@@ -2,13 +2,17 @@
 
 #include "plugin.h"
 #include "game_sa/CPed.h"
-#include <map>
+#include <unordered_map>
 #include <string>
 
-class AnimViewer {
+class AnimNameViewer {
 public:
-    AnimViewer();
+    static AnimNameViewer& GetInstance();
 
 private:
+    AnimNameViewer();
+    AnimNameViewer(const AnimNameViewer&) = delete;
+    AnimNameViewer& operator=(const AnimNameViewer&) = delete;
+
     static std::unordered_map<unsigned int, std::string> animNamesMap;
 };

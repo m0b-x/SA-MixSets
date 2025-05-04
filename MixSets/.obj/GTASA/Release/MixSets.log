@@ -1,16 +1,20 @@
-﻿  AnimNameViewer.cpp
+﻿  ReadIni.cpp
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(188,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
+  (compiling source file 'ReadIni.cpp')
   
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(192,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
+  (compiling source file 'ReadIni.cpp')
   
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(207,39): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
+  (compiling source file 'ReadIni.cpp')
   
 D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\IniReader\IniReader.h(211,35): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'AnimNameViewer/AnimNameViewer.cpp')
+  (compiling source file 'ReadIni.cpp')
   
+D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(357,47): warning C4244: '=': conversion from 'float' to 'uintptr_t', possible loss of data
+D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(366,47): warning C4244: '=': conversion from 'float' to 'uintptr_t', possible loss of data
+D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(411,8): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+D:\Alex\Projects\Asi or Dlls\SA-MixSets\MixSets\ReadIni.cpp(847,8): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
   AnimNameViewer.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
   Generating code
   Finished generating code

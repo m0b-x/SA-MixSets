@@ -23,6 +23,7 @@
 #include "..\injector\assembly.hpp"
 #include "IniReader/IniReader.h"
 #include "TestCheat.h"
+#include <AnimNameViewer/AnimNameViewer.h>
 
 using namespace plugin;
 using namespace injector;
@@ -82,6 +83,9 @@ MixSets::MixSets()
 		MessageBoxA(0, "Game version not supported. Download GTA SA Crack 1.0.", "MixSets", 0);
 		return;
 	}
+
+	// Singleton Instances
+	AnimNameViewer::GetInstance();
 
 	Events::initRwEvent += []
 		{

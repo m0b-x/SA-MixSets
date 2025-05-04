@@ -10,16 +10,20 @@
 
 using namespace plugin;
 
-class AnimViewer
-{
+class AnimNameViewer {
 public:
-    AnimViewer()
-    {
-        // Map of animation hash keys to their original names
-        static std::unordered_map<unsigned int, std::string> animNamesMap;
+    static AnimNameViewer& GetInstance() {
+        static AnimNameViewer instance;
+        return instance;
+    }
+
+private:
+    std::unordered_map<unsigned int, std::string> animNamesMap;
+
+    AnimNameViewer() {
         animNamesMap.reserve(4096);
 
-        // Hook into the animation loader to store names
+        // Hook into animation loader to store animation names
         static CdeclEvent<
             AddressList<0x4CF2D8, H_CALL>,
             PRIORITY_AFTER,
@@ -27,15 +31,14 @@ public:
             unsigned int(char*)
         > storeAnimNameEvent;
 
-        storeAnimNameEvent += [](char* name) {
+        storeAnimNameEvent += [this](char* name) {
             unsigned int key = CKeyGen::GetUppercaseKey(name);
-            if (animNamesMap.find(key) == animNamesMap.end())
-            {
+            if (animNamesMap.find(key) == animNamesMap.end()) {
                 animNamesMap.emplace(key, std::string{ name });
             }
             };
 
-        Events::drawingEvent += [] {
+        Events::drawingEvent += [this] {
             if (!MixSets::G_ShowAnimNameViewer)
                 return;
 
@@ -68,29 +71,25 @@ public:
 
             int counter = 0;
             CAnimBlendAssociation* association = RpAnimBlendClumpGetFirstAssociation(ped->m_pRwClump);
-            while (association)
-            {
+            while (association) {
                 unsigned int key = association->m_pHierarchy->m_hashKey;
+                const char* animName = "Unknown";
                 auto it = animNamesMap.find(key);
-                const char* animName = (it != animNamesMap.end()) ? it->second.c_str() : "Unknown";
+                if (it != animNamesMap.end()) {
+                    animName = it->second.c_str();
+                }
 
                 char text[256];
-                if (association->m_nFlags & 0x10)
-                {
+                if (association->m_nFlags & 0x10) {
                     snprintf(text, sizeof(text), "%d. %s (P)", counter + 1, animName);
                 }
-                else
-                {
+                else {
                     snprintf(text, sizeof(text), "%d. %s", counter + 1, animName);
                 }
 
-                CFont::SetScale(
-                    SCREEN_MULTIPLIER(0.6f),
-                    SCREEN_MULTIPLIER(1.2f)
-                );
+                CFont::SetScale(SCREEN_MULTIPLIER(0.6f), SCREEN_MULTIPLIER(1.2f));
                 float width = CFont::GetStringWidth(text, true, false);
-                if (width > SCREEN_COORD(250.0f))
-                {
+                if (width > SCREEN_COORD(250.0f)) {
                     CFont::SetScale(
                         SCREEN_MULTIPLIER(0.6f * SCREEN_COORD(250.0f) / width),
                         SCREEN_MULTIPLIER(1.2f)
@@ -132,6 +131,9 @@ public:
             CFont::DrawFonts();
             };
     }
+
+    AnimNameViewer(const AnimNameViewer&) = delete;
+    AnimNameViewer& operator=(const AnimNameViewer&) = delete;
 };
 
-static AnimViewer animNamesView;
+static auto& animViewerSingleton = AnimNameViewer::GetInstance();
